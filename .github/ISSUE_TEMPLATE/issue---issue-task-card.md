@@ -3,7 +3,7 @@ name: 'Issue : Issue Task card'
 about: Describe this issue template's purpose here.
 title: ''
 labels: ''
-assignees: JIAHLEE0213, yawning5
+assignees: ''
 
 ---
 
