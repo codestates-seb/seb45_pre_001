@@ -1,11 +1,10 @@
 package com.stackoverflow.Server.member.entity;
 
 import com.stackoverflow.Server.comment.entity.Comment;
-import com.stackoverflow.Server.post.entity.Post;
+import com.stackoverflow.Server.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class Member {
     private String password;
 
     @OneToMany(mappedBy = "member")
-    private List<Post> posts = new ArrayList<>();
+    private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Comment> comments = new ArrayList<>();
