@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import Editor from '../component/Editor';
+import Editor5 from '../components/Editor5';
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
@@ -138,8 +138,8 @@ function AskQuestionPage() {
               ></input>
             </div>
           </div>
-          <Editor />
         </main>
+        <Editor5 />
       </div>
     </StyleAskPage>
   );
