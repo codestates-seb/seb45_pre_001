@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 @Slf4j
 public class MemberController {
-    private MemberMapper mapper;
+//    private MemberMapper mapper;
 
     private MemberService memberService;
 
-    public MemberController(MemberMapper mapper, MemberService memberService) {
-        this.mapper = mapper;
+    public MemberController(MemberService memberService) {
+//        this.mapper = mapper;
         this.memberService = memberService;
     }
 
