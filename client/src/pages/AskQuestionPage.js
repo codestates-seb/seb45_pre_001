@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import Editor from '../component/Editor';
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
@@ -47,7 +48,8 @@ const StyleAskPage = styled.div`
     margin-bottom: 48px;
   }
 
-  .title-container {
+  .title-container,
+  .tag-container {
     max-width: 800px;
     height: 124px;
     padding: 24px;
@@ -56,13 +58,15 @@ const StyleAskPage = styled.div`
     flex-direction: column;
     justify-content: center;
     border-radius: 7px;
+    background-color: #ffffff;
   }
 
   .explanation-box {
     font-size: 13px;
   }
 
-  .title-input {
+  .title-input,
+  .tag-input {
     height: 33px;
     width: 100%;
     padding: 8px;
@@ -118,6 +122,23 @@ function AskQuestionPage() {
               ></input>
             </div>
           </div>
+          <div className="tag-container">
+            <div className="tag-box">
+              <div className="tag">Tags</div>
+              <div className="explanation-box">
+                Add up to 5 tags to describe what your question is about. Start
+                typing to see suggestions.
+              </div>
+            </div>
+            <div>
+              <input
+                className="tag-input"
+                type="text"
+                placeholder="e.g. (c flutter django)"
+              ></input>
+            </div>
+          </div>
+          <Editor />
         </main>
       </div>
     </StyleAskPage>
