@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/question")
+@RequestMapping("/questions")
 public class QuestionController {
 
     private final QuestionService questionService;
     private final QuestionMapper mapper;
 
-    @PostMapping
+    @PostMapping("/new-questions")
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postDto) {
 
         Question question = mapper.questionPostToQuestion(postDto);
