@@ -19,6 +19,6 @@ public class MemberService {
         member.setPassword("123123!");
         member.setNickname("test");
 
-        return member;
+        return memberRepository.save(member);
     }
 }
