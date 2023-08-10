@@ -10,5 +10,8 @@ public class QuestionDto {
     public static class Post {
         private String title;
         private String questionBody;
+
+        public Post() {
+        }
     }
 }
