@@ -1,19 +1,24 @@
 import { styled } from 'styled-components';
 import Editor5 from '../components/Editor5';
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 const StyleAskPage = styled.div`
+  height: 1830px;
   background-color: #f8f9f9;
-  height: 1124px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
+  // 사이드 여백 조정
   .inner {
     width: 1216px;
     height: 1200px;
     padding: 0 24px 24px 24px;
   }
 
+  // Ask a public question 부분
   .question-header {
     display: flex;
     align-items: center;
@@ -23,6 +28,8 @@ const StyleAskPage = styled.div`
     background-repeat: no-repeat;
     background-position: right bottom;
   }
+
+  // Writing a good question 공지 부분
   .notice-container {
     max-width: 800px;
     padding: 24px;
@@ -43,15 +50,18 @@ const StyleAskPage = styled.div`
     }
   }
 
+  // title ~ duplicate 박스들 감싸고 있는 부모 ( 메인 컨텐츠 )
   main {
-    height: 1233px;
-    margin-bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 
+  // 각 박스들 부모
   .title-container,
-  .tag-container {
+  .tag-container,
+  .duplicate-check-container {
     max-width: 800px;
-    height: 124px;
     padding: 24px;
     border: 1px solid #d5d9dc;
     display: flex;
@@ -61,28 +71,119 @@ const StyleAskPage = styled.div`
     background-color: #ffffff;
   }
 
+  // 설명 박스
   .explanation-box {
     font-size: 13px;
   }
 
+  // input창
   .title-input,
   .tag-input {
-    height: 33px;
     width: 100%;
     padding: 8px;
     border: 1px solid #d5d9dc;
     margin-top: 5px;
     border-radius: 7px;
   }
+  // next 버튼 hidden클래스와 같이 쓰임
+  .next-button {
+    height: 36px;
+    width: 50px;
+    padding: 10px;
+    color: white;
+    background-color: #0a95ff;
+    border-radius: 5px;
+    margin-top: 16px;
+  }
+
+  // 중복체크 박스
+  .duplicate-check-container {
+    gap: 16px;
+  }
+
+  // 드롭다운 부모
+  .dropdown-container {
+    height: 43px;
+    background-color: #f4f6f6;
+  }
+
+  // 드롭다운
+  .dropdown-button {
+    padding: 12px 16px;
+    display: flex;
+    width: 100%;
+  }
+
+  // 드롭다운 내부 텍스터 내용박스
+  .dropdown-box {
+    color: #6a737c;
+    font-size: 16px;
+    width: 100%;
+    display: flex;
+  }
+
+  .icon-button {
+    margin-left: auto;
+  }
+
+  // 체크 박스 부모
+  .check-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  // 체크 박스
+  .check-box {
+    background-color: #f2f2f3;
+    height: 33px;
+    padding: 8px;
+  }
+
+  // 체크표시
+  .checkbox {
+    margin-right: 5px;
+  }
+
+  // 버튼요소에 사용
+  /* .hidden {
+    display: none;
+  } */
+
+  // 중복체크 확인 버튼
+  .review-button {
+    width: 150px;
+    height: 36px;
+    padding: 10px;
+    background-color: #0a95ff;
+    color: white;
+    border-radius: 5px;
+  }
 `;
 
 function AskQuestionPage() {
+  const handleButtonClick = () => {
+    // 버튼이 클릭되었을 때 실행할 작업을 여기에 작성필요
+    console.log('Button clicked!');
+  };
+
+  // 드롭다운 상태를 관리하는 상태 변수
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // 드롭다운 토글 함수
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
     <StyleAskPage>
       <div className="inner">
+        {/* 질문 헤더 부분 */}
         <div className="question-header">
           <h1>Ask a public question</h1>
         </div>
+
+        {/* 안내 메시지 부분 */}
         <div className="notice-container">
           <h2>Writing a good question</h2>
           <p>
@@ -105,7 +206,10 @@ function AskQuestionPage() {
             <li>Review your question and post it to the site.</li>
           </ul>
         </div>
+
+        {/* 메인 컨텐츠 */}
         <main>
+          {/* 제목 입력 부분 */}
           <div className="title-container">
             <div className="title-box">
               <div className="title">Title</div>
@@ -122,6 +226,21 @@ function AskQuestionPage() {
               ></input>
             </div>
           </div>
+
+          {/* 문제 내용 입력 부분 */}
+          <Editor5
+            title="What are the details of your problem?"
+            explanation="Introduce the problem and expand on what you put in the title. Minimum 20 characters."
+          />
+
+          {/* 시도한 내용 입력 부분 */}
+          <Editor5
+            title="What did you try and what were you expecting?"
+            explanation="Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters."
+            handleButtonClick={handleButtonClick}
+          />
+
+          {/* 태그 입력 부분 */}
           <div className="tag-container">
             <div className="tag-box">
               <div className="tag">Tags</div>
@@ -136,10 +255,79 @@ function AskQuestionPage() {
                 type="text"
                 placeholder="e.g. (c flutter django)"
               ></input>
+              <button
+                className="hidden next-button"
+                onClick={handleButtonClick}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
+          {/* 중복 확인 부분 */}
+          <div className="duplicate-check-container">
+            <div className="duplicate-box">
+              <div className="title">
+                Review questions already on Stack Overflow to see if your
+                question is a duplicate.
+              </div>
+              <div className="explanation-box">
+                Clicking on these questions will open them in a new tab for you
+                to review. Your progress here will be saved so you can come back
+                and continue.
+              </div>
+            </div>
+            <div className="dropdown-container ">
+              <button
+                className="
+                dropdown-button"
+                onClick={handleDropdownToggle}
+              >
+                <div className="dropdown-box">
+                  Do any of these posts answer your question?
+                  {/* 드롭다운 버튼 */}
+                  <button className="icon-button">
+                    <FontAwesomeIcon
+                      className="faChevronUp"
+                      icon={faChevronUp}
+                    />
+                  </button>
+                </div>
+              </button>
+            </div>
+            <div className="check-container">
+              {/* 중복 질문 확인 부분 */}
+              <div className="title">
+                Confirm that none of these existing posts on Stack Overflow
+                answers your question.
+              </div>
+
+              {/* 중복 확인 체크박스 */}
+              <div className="check-box">
+                <input
+                  className="checkbox"
+                  id="verify-not-duplicate"
+                  type="checkbox"
+                ></input>
+
+                {/* 중복 확인 체크박스에 대한 라벨 */}
+                <label htmlFor="verify-not-duplicate">
+                  I confirm that none of these posts answers my question.
+                </label>
+              </div>
+            </div>
+
+            {/* 질문 검토 버튼 */}
+            <div>
+              <button
+                onClick={handleButtonClick}
+                className="review-button hidden"
+              >
+                Review your question
+              </button>
             </div>
           </div>
         </main>
-        <Editor5 />
       </div>
     </StyleAskPage>
   );
