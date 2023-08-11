@@ -1,11 +1,12 @@
 import './App.css';
-import AskQuestionPage from './pages/AskQuestionPage';
+import Header from './components/Header';
 
 function App() {
   return (
-    <div className="App">
-      <AskQuestionPage />
-    </div>
+    <>
+      <Header />
+      <div className="App"></div>
+    </>
   );
 }
 
