@@ -29,8 +29,9 @@ const StyledEditor = styled.div`
   }
 
   .ck-editor__editable {
+    // 568px이상 스크롤 생김
     max-height: 568px;
-    min-height: 230px;
+    min-height: 260px;
     overflow-y: auto;
   }
 
@@ -52,9 +53,6 @@ function Editor5({ title, explanation, handleButtonClick }) {
         <CKEditor
           editor={ClassicEditor}
           data=""
-          config={{
-            placeholder: '내용을 입력하세요.',
-          }}
           onReady={(editor) => {
             console.log('Editor is ready to use!', editor);
           }}

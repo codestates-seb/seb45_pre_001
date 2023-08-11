@@ -1,21 +1,23 @@
 import { styled } from 'styled-components';
 import Editor5 from '../components/Editor5';
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import QuestionPageDropdown from '../components/QuestionPageDropdown';
 
 const StyleAskPage = styled.div`
-  height: 1830px;
   background-color: #f8f9f9;
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* position: relative;
+  top: 56px; */
 
   // 사이드 여백 조정
   .inner {
     width: 1216px;
-    height: 1200px;
     padding: 0 24px 24px 24px;
+    margin-bottom: 165px;
   }
 
   // Ask a public question 부분
@@ -103,8 +105,9 @@ const StyleAskPage = styled.div`
 
   // 드롭다운 부모
   .dropdown-container {
-    height: 43px;
     background-color: #f4f6f6;
+    border: 1px solid #d5d9dc;
+    position: relative;
   }
 
   // 드롭다운
@@ -121,6 +124,25 @@ const StyleAskPage = styled.div`
     width: 100%;
     display: flex;
   }
+  // 드롭다운 내용 컨테이너
+  .dropdown-content {
+    position: absolute;
+    height: 210px;
+    top: 100%; /* 드롭다운 버튼 아래에 배치 */
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #d5d9dc;
+    z-index: 1;
+  }
+
+  .dropdown-text-container {
+    height: 100vh;
+  }
+  .dropdown-text {
+    height: 102px;
+    border-bottom: 1px solid #efeff2;
+    padding: 12px 16px;
+  }
 
   .icon-button {
     margin-left: auto;
@@ -136,7 +158,6 @@ const StyleAskPage = styled.div`
   // 체크 박스
   .check-box {
     background-color: #f2f2f3;
-    height: 33px;
     padding: 8px;
   }
 
@@ -145,16 +166,16 @@ const StyleAskPage = styled.div`
     margin-right: 5px;
   }
 
-  // 버튼요소에 사용
+  // 버튼요소,check-container에 사용
   /* .hidden {
     display: none;
   } */
 
   // 중복체크 확인 버튼
   .review-button {
-    width: 150px;
-    height: 36px;
-    padding: 10px;
+    width: 145px;
+    height: 37px;
+    /* padding: 10px; */
     background-color: #0a95ff;
     color: white;
     border-radius: 5px;
@@ -172,11 +193,13 @@ function AskQuestionPage() {
 
   // 드롭다운 토글 함수
   const handleDropdownToggle = () => {
+    console.log('dkdkdk');
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
     <StyleAskPage>
+      {/* header 넣을자리 */}
       <div className="inner">
         {/* 질문 헤더 부분 */}
         <div className="question-header">
@@ -277,25 +300,45 @@ function AskQuestionPage() {
                 and continue.
               </div>
             </div>
-            <div className="dropdown-container ">
+            {/* 추가부분!!!! */}
+            <div>
+              <QuestionPageDropdown
+                isOpen={isDropdownOpen}
+                onToggle={handleDropdownToggle}
+              />
+
+              {/* <div className="dropdown-container ">
               <button
                 className="
                 dropdown-button"
                 onClick={handleDropdownToggle}
               >
                 <div className="dropdown-box">
-                  Do any of these posts answer your question?
-                  {/* 드롭다운 버튼 */}
-                  <button className="icon-button">
+                  Do any of these posts answer your question? */}
+              {/* 드롭다운 버튼 */}
+              {/* <button className="icon-button">
                     <FontAwesomeIcon
-                      className="faChevronUp"
-                      icon={faChevronUp}
+                      className="faChevronIcon"
+                      icon={isDropdownOpen ? faChevronUp : faChevronDown}
                     />
                   </button>
                 </div>
-              </button>
+              </button> */}
+              {/* {isDropdownOpen && (
+                <div className="dropdown-content"> */}
+              {/* 드롭다운 컨텐츠 내용 */}
+              {/* <div className="dropdown-text-container">
+                    <div className="dropdown-text">
+                      질문 관련 상세 페이지 이동
+                    </div>
+                    <div className="dropdown-text">
+                      질문 관련 상세 페이지 이동
+                    </div>
+                  </div>
+                </div>
+              )} */}
             </div>
-            <div className="check-container">
+            <div className="check-container hidden">
               {/* 중복 질문 확인 부분 */}
               <div className="title">
                 Confirm that none of these existing posts on Stack Overflow
@@ -329,6 +372,7 @@ function AskQuestionPage() {
           </div>
         </main>
       </div>
+      {/* footer 넣을자리 */}
     </StyleAskPage>
   );
 }
