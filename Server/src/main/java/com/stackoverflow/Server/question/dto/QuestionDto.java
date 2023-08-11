@@ -14,4 +14,12 @@ public class QuestionDto {
         public Post() {
         }
     }
+
+    @AllArgsConstructor
+    @Getter
+    public static class response {
+        private long questionId;
+        private String title;
+        private String questionBody;
+    }
 }
