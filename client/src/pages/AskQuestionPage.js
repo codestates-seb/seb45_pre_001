@@ -1,8 +1,6 @@
 import { styled } from 'styled-components';
 import Editor5 from '../components/Editor5';
 import { useState } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import QuestionPageDropdown from '../components/QuestionPageDropdown';
 
 const StyleAskPage = styled.div`
@@ -10,8 +8,6 @@ const StyleAskPage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* position: relative;
-  top: 56px; */
 
   // 사이드 여백 조정
   .inner {
@@ -87,7 +83,7 @@ const StyleAskPage = styled.div`
     margin-top: 5px;
     border-radius: 7px;
   }
-  // next 버튼 hidden클래스와 같이 쓰임
+  // next 버튼
   .next-button {
     height: 36px;
     width: 50px;
@@ -101,51 +97,6 @@ const StyleAskPage = styled.div`
   // 중복체크 박스
   .duplicate-check-container {
     gap: 16px;
-  }
-
-  // 드롭다운 부모
-  .dropdown-container {
-    background-color: #f4f6f6;
-    border: 1px solid #d5d9dc;
-    position: relative;
-  }
-
-  // 드롭다운
-  .dropdown-button {
-    padding: 12px 16px;
-    display: flex;
-    width: 100%;
-  }
-
-  // 드롭다운 내부 텍스터 내용박스
-  .dropdown-box {
-    color: #6a737c;
-    font-size: 16px;
-    width: 100%;
-    display: flex;
-  }
-  // 드롭다운 내용 컨테이너
-  .dropdown-content {
-    position: absolute;
-    height: 210px;
-    top: 100%; /* 드롭다운 버튼 아래에 배치 */
-    width: 100%;
-    background-color: #ffffff;
-    border: 1px solid #d5d9dc;
-    z-index: 1;
-  }
-
-  .dropdown-text-container {
-    height: 100vh;
-  }
-  .dropdown-text {
-    height: 102px;
-    border-bottom: 1px solid #efeff2;
-    padding: 12px 16px;
-  }
-
-  .icon-button {
-    margin-left: auto;
   }
 
   // 체크 박스 부모
@@ -166,11 +117,6 @@ const StyleAskPage = styled.div`
     margin-right: 5px;
   }
 
-  // 버튼요소,check-container에 사용
-  /* .hidden {
-    display: none;
-  } */
-
   // 중복체크 확인 버튼
   .review-button {
     width: 145px;
@@ -183,9 +129,39 @@ const StyleAskPage = styled.div`
 `;
 
 function AskQuestionPage() {
-  const handleButtonClick = () => {
-    // 버튼이 클릭되었을 때 실행할 작업을 여기에 작성필요
-    console.log('Button clicked!');
+  const [checkContainerVisible, setCheckContainerVisible] = useState(false);
+
+  const [titleButtonVisible, setTitleButtonVisible] = useState(true);
+  const [editorButtonVisible, setEditorButtonVisible] = useState(false);
+  const [editor2ButtonVisible, setEditor2ButtonVisible] = useState(false);
+
+  const [tagButtonVisible, setTagButtonVisible] = useState(false);
+  const [reviewButtonVisible, setReviewButtonVisible] = useState(false);
+
+  const handleTitleButtonClick = () => {
+    setTitleButtonVisible(false);
+    setEditorButtonVisible(true);
+  };
+
+  const handleEditorButtonClick = () => {
+    setEditorButtonVisible(false);
+    setEditor2ButtonVisible(true);
+  };
+
+  const handleEditor2ButtonClick = () => {
+    setEditor2ButtonVisible(false);
+    setTagButtonVisible(true);
+  };
+
+  const handleTagButtonClick = () => {
+    setTagButtonVisible(false);
+    setReviewButtonVisible(true);
+    setCheckContainerVisible(true);
+  };
+
+  const handleReviewButtonClick = () => {
+    setReviewButtonVisible(false);
+    setCheckContainerVisible(false);
   };
 
   // 드롭다운 상태를 관리하는 상태 변수
@@ -193,7 +169,6 @@ function AskQuestionPage() {
 
   // 드롭다운 토글 함수
   const handleDropdownToggle = () => {
-    console.log('dkdkdk');
     setIsDropdownOpen(!isDropdownOpen);
   };
 
@@ -248,19 +223,28 @@ function AskQuestionPage() {
                 placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
               ></input>
             </div>
+
+            {titleButtonVisible && (
+              <button onClick={handleTitleButtonClick} className="next-button">
+                Next
+              </button>
+            )}
           </div>
 
           {/* 문제 내용 입력 부분 */}
           <Editor5
             title="What are the details of your problem?"
             explanation="Introduce the problem and expand on what you put in the title. Minimum 20 characters."
+            handleButtonClick={handleEditorButtonClick}
+            isButtonVisible={editorButtonVisible}
           />
 
           {/* 시도한 내용 입력 부분 */}
           <Editor5
             title="What did you try and what were you expecting?"
             explanation="Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters."
-            handleButtonClick={handleButtonClick}
+            handleButtonClick={handleEditor2ButtonClick}
+            isButtonVisible={editor2ButtonVisible}
           />
 
           {/* 태그 입력 부분 */}
@@ -274,16 +258,16 @@ function AskQuestionPage() {
             </div>
             <div>
               <input
+                // ref={myElementRef}
                 className="tag-input"
                 type="text"
                 placeholder="e.g. (c flutter django)"
-              ></input>
-              <button
-                className="hidden next-button"
-                onClick={handleButtonClick}
-              >
-                Next
-              </button>
+              />
+              {tagButtonVisible && (
+                <button className="next-button" onClick={handleTagButtonClick}>
+                  Next
+                </button>
+              )}
             </div>
           </div>
 
@@ -300,74 +284,47 @@ function AskQuestionPage() {
                 and continue.
               </div>
             </div>
-            {/* 추가부분!!!! */}
             <div>
               <QuestionPageDropdown
                 isOpen={isDropdownOpen}
                 onToggle={handleDropdownToggle}
               />
-
-              {/* <div className="dropdown-container ">
-              <button
-                className="
-                dropdown-button"
-                onClick={handleDropdownToggle}
-              >
-                <div className="dropdown-box">
-                  Do any of these posts answer your question? */}
-              {/* 드롭다운 버튼 */}
-              {/* <button className="icon-button">
-                    <FontAwesomeIcon
-                      className="faChevronIcon"
-                      icon={isDropdownOpen ? faChevronUp : faChevronDown}
-                    />
-                  </button>
-                </div>
-              </button> */}
-              {/* {isDropdownOpen && (
-                <div className="dropdown-content"> */}
-              {/* 드롭다운 컨텐츠 내용 */}
-              {/* <div className="dropdown-text-container">
-                    <div className="dropdown-text">
-                      질문 관련 상세 페이지 이동
-                    </div>
-                    <div className="dropdown-text">
-                      질문 관련 상세 페이지 이동
-                    </div>
-                  </div>
-                </div>
-              )} */}
+              {/*     */}
             </div>
-            <div className="check-container hidden">
-              {/* 중복 질문 확인 부분 */}
-              <div className="title">
-                Confirm that none of these existing posts on Stack Overflow
-                answers your question.
-              </div>
+            {checkContainerVisible && (
+              <div className="check-container">
+                {/* 중복 질문 확인 부분 */}
+                <div className="title">
+                  Confirm that none of these existing posts on Stack Overflow
+                  answers your question.
+                </div>
 
-              {/* 중복 확인 체크박스 */}
-              <div className="check-box">
-                <input
-                  className="checkbox"
-                  id="verify-not-duplicate"
-                  type="checkbox"
-                ></input>
+                {/* 중복 확인 체크박스 */}
+                <div className="check-box">
+                  <input
+                    className="checkbox"
+                    id="verify-not-duplicate"
+                    type="checkbox"
+                  ></input>
 
-                {/* 중복 확인 체크박스에 대한 라벨 */}
-                <label htmlFor="verify-not-duplicate">
-                  I confirm that none of these posts answers my question.
-                </label>
+                  {/* 중복 확인 체크박스에 대한 라벨 */}
+                  <label htmlFor="verify-not-duplicate">
+                    I confirm that none of these posts answers my question.
+                  </label>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* 질문 검토 버튼 */}
             <div>
-              <button
-                onClick={handleButtonClick}
-                className="review-button hidden"
-              >
-                Review your question
-              </button>
+              {reviewButtonVisible && (
+                <button
+                  onClick={handleReviewButtonClick}
+                  className="review-button "
+                >
+                  Review your question
+                </button>
+              )}
             </div>
           </div>
         </main>
@@ -378,3 +335,46 @@ function AskQuestionPage() {
 }
 
 export default AskQuestionPage;
+
+{
+  /* <div className="dropdown-container ">
+              <button
+                className="
+                dropdown-button"
+                onClick={handleDropdownToggle}
+              >
+                <div className="dropdown-box">
+                  Do any of these posts answer your question? */
+}
+{
+  /* 드롭다운 버튼 */
+}
+{
+  /* <button className="icon-button">
+                    <FontAwesomeIcon
+                      className="faChevronIcon"
+                      icon={isDropdownOpen ? faChevronUp : faChevronDown}
+                    />
+                  </button>
+                </div>
+              </button> */
+}
+{
+  /* {isDropdownOpen && (
+                <div className="dropdown-content"> */
+}
+{
+  /* 드롭다운 컨텐츠 내용 */
+}
+{
+  /* <div className="dropdown-text-container">
+                    <div className="dropdown-text">
+                      질문 관련 상세 페이지 이동
+                    </div>
+                    <div className="dropdown-text">
+                      질문 관련 상세 페이지 이동
+                    </div>
+                  </div>
+                </div>
+              )} */
+}

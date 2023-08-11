@@ -1,7 +1,7 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { styled } from 'styled-components';
-import PropTypes from 'prop-types'; // prop-types를 임포트해야 합니다.
+import PropTypes from 'prop-types';
 
 const StyledEditor = styled.div`
   max-width: 800px;
@@ -34,13 +34,9 @@ const StyledEditor = styled.div`
     min-height: 260px;
     overflow-y: auto;
   }
-
-  /* .hidden {
-    display: none;
-  } */
 `;
 
-function Editor5({ title, explanation, handleButtonClick }) {
+function Editor5({ title, explanation, isButtonVisible, handleButtonClick }) {
   return (
     <StyledEditor>
       <div className="editor-container">
@@ -50,25 +46,26 @@ function Editor5({ title, explanation, handleButtonClick }) {
             <div className="explanation-box">{explanation}</div>
           </div>
         </div>
+
         <CKEditor
           editor={ClassicEditor}
           data=""
           onReady={(editor) => {
             console.log('Editor is ready to use!', editor);
           }}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-          }}
+          // onChange={(event, editor) => {
+          //   const data = editor.getData();
+          //   console.log({ event, editor, data });
+          // }}
           onBlur={(event, editor) => {
             console.log('Blur.', editor);
           }}
           onFocus={(event, editor) => {
-            console.log('Focus.', editor);
+            console.log('focus.', editor);
           }}
         />
-        {title === 'What did you try and what were you expecting?' && (
-          <button className="hidden" onClick={handleButtonClick}>
+        {isButtonVisible && (
+          <button className="next-button" onClick={() => handleButtonClick()}>
             Next
           </button>
         )}
@@ -81,7 +78,10 @@ function Editor5({ title, explanation, handleButtonClick }) {
 Editor5.propTypes = {
   title: PropTypes.string.isRequired,
   explanation: PropTypes.string.isRequired,
-  handleButtonClick: PropTypes.func.isRequired, // handleButtonClick prop에 대한 정의 추가
+  handleButtonClick: PropTypes.func.isRequired,
+  refProp: PropTypes.object,
+  isButtonVisible: PropTypes.bool.isRequired,
+  isButtonHidden: PropTypes.bool.isRequired,
 };
 
 export default Editor5;

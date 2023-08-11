@@ -20,18 +20,19 @@ const DropdownContainer = styled.div`
     display: flex;
   }
 
-  .dropdown-content {
-    position: absolute;
-    height: 210px;
-    top: 100%;
-    width: 100%;
-    background-color: #ffffff;
-    border: 1px solid #d5d9dc;
-    z-index: 1;
+  .icon-button {
+    margin-left: auto;
   }
 
-  .dropdown-text-container {
-    height: 100vh;
+  .dropdown-content {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    border: 1px solid #d5d9dc;
+    overflow-x: hidden;
+    background-color: #ffffff;
+    z-index: 1;
+    height: 214px;
   }
 
   .dropdown-text {
@@ -63,8 +64,9 @@ function QuestionPageDropdown({ isOpen, onToggle }) {
         {isOpen && (
           <div className="dropdown-content">
             <div className="dropdown-text-container">
-              <div className="dropdown-text"></div>
-              <div className="dropdown-text"></div>
+              <div className="dropdown-text">질문 상세페이지 이동 1</div>
+              <div className="dropdown-text">질문 상세페이지 이동 2</div>
+              <div className="dropdown-text">질문 상세페이지 이동 3</div>
             </div>
           </div>
         )}
