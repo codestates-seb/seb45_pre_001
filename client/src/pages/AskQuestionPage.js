@@ -125,10 +125,25 @@ const StyleAskPage = styled.div`
     background-color: #0a95ff;
     color: white;
     border-radius: 5px;
+    cursor: ${(props) => (props.isButtonDisabled ? 'not-allowed' : 'pointer')};
+
+    /* 비활성화된 상태일 때 배경색 변경 */
+    &:disabled {
+      background-color: #d5d9dc;
+    }
   }
 `;
 
 function AskQuestionPage() {
+  const [isChecked, SetIsChecked] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    const checkedValue = event.target.checked;
+    SetIsChecked(checkedValue); // 체크박스 상태 업데이트
+  };
+
+  const isButtonDisabled = !isChecked;
+
   const [checkContainerVisible, setCheckContainerVisible] = useState(false);
 
   const [titleButtonVisible, setTitleButtonVisible] = useState(true);
@@ -173,7 +188,7 @@ function AskQuestionPage() {
   };
 
   return (
-    <StyleAskPage>
+    <StyleAskPage isButtonDisabled={isButtonDisabled}>
       {/* header 넣을자리 */}
       <div className="inner">
         {/* 질문 헤더 부분 */}
@@ -305,6 +320,7 @@ function AskQuestionPage() {
                     className="checkbox"
                     id="verify-not-duplicate"
                     type="checkbox"
+                    onClick={handleCheckboxChange}
                   ></input>
 
                   {/* 중복 확인 체크박스에 대한 라벨 */}
@@ -321,6 +337,7 @@ function AskQuestionPage() {
                 <button
                   onClick={handleReviewButtonClick}
                   className="review-button "
+                  disabled={isButtonDisabled}
                 >
                   Review your question
                 </button>

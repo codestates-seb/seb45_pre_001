@@ -51,9 +51,8 @@ function Editor5({ title, explanation, isButtonVisible, handleButtonClick }) {
     setEditorContent(data); // 텍스트 내용 업데이트
   };
 
-  // 처음 글자입력시 <p> 태그까지 글자로 인식하여 8부터 시작함 때문에 length를 27으로 설정
-  const isButtonDisabled = editorContent.length < 27;
-  console.log(editorContent.length);
+  // 처음 글자입력시 <p> 태그까지 글자로 인식하여 8부터 시작함 때문에 length를 26으로 설정
+  const isButtonDisabled = editorContent.length < 26;
   return (
     <StyledEditor isButtonDisabled={isButtonDisabled}>
       <div className="editor-container">
