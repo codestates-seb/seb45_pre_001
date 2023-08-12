@@ -51,8 +51,11 @@ function Editor5({ title, explanation, isButtonVisible, handleButtonClick }) {
     setEditorContent(data); // 텍스트 내용 업데이트
   };
 
+  // 처음 글자입력시 <p> 태그까지 글자로 인식하여 8부터 시작함 때문에 length를 27으로 설정
+  const isButtonDisabled = editorContent.length < 27;
+  console.log(editorContent.length);
   return (
-    <StyledEditor isButtonDisabled={editorContent.length < 20}>
+    <StyledEditor isButtonDisabled={isButtonDisabled}>
       <div className="editor-container">
         <div>
           <div className="title-box">
@@ -60,34 +63,17 @@ function Editor5({ title, explanation, isButtonVisible, handleButtonClick }) {
             <div className="explanation-box">{explanation}</div>
           </div>
         </div>
-
         <CKEditor
           editor={ClassicEditor}
           data=""
           onChange={handleEditorChange} // 텍스트 변경 시 호출되는 함수
-          onReady={(editor) => {
-            console.log('Editor is ready to use!', editor);
-          }}
-          // onChange={(event, editor) => {
-          //   const data = editor.getData();
-          //   console.log({ event, editor, data });
-          // }}
-          onBlur={(event, editor) => {
-            console.log('Blur.', editor);
-          }}
-          onFocus={(event, editor) => {
-            console.log('focus.', editor);
-          }}
         />
+
         {isButtonVisible && (
           <button
             className="next-button"
-            onClick={() => {
-              if (editorContent.length >= 20) {
-                handleButtonClick();
-              }
-            }}
-            disabled={editorContent.length < 20} // 텍스트 길이가 20 미만이면 버튼 비활성화
+            onClick={handleButtonClick}
+            disabled={isButtonDisabled}
           >
             Next
           </button>
