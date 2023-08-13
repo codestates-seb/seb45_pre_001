@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 @Slf4j
 public class MemberController {
-//    private MemberMapper mapper;
+    private MemberMapper mapper;
 
     private MemberService memberService;
 
-    public MemberController(MemberService memberService) {
-//        this.mapper = mapper;
+    public MemberController(MemberService memberService, MemberMapper mapper) {
+        this.mapper = mapper;
         this.memberService = memberService;
     }
 
     @PostMapping("/new-user")
     public ResponseEntity postMember(@RequestBody MemberPostDto memberPostDto) {
 
-        Member member = memberService.creatMember();
+        Member member = memberService.creatMember(mapper.memberPostDtoToMember(memberPostDto));
 
         return new ResponseEntity(member, HttpStatus.CREATED);
     }
