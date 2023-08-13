@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import Editor5 from '../components/Editor5';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import QuestionPageDropdown from '../components/QuestionPageDropdown';
 
 const StyleAskPage = styled.div`
@@ -153,19 +153,38 @@ function AskQuestionPage() {
   const [tagButtonVisible, setTagButtonVisible] = useState(false);
   const [reviewButtonVisible, setReviewButtonVisible] = useState(false);
 
+  const editorRef = useRef(null);
+  const editor2Ref = useRef(null);
+  const TagRef = useRef(null);
+
   const handleTitleButtonClick = () => {
     setTitleButtonVisible(false);
     setEditorButtonVisible(true);
+
+    // 첫 번째 에디터에 포커스 설정
+    if (editorRef.current && editorRef.current.editor) {
+      const editorInstance = editorRef.current.editor;
+      editorInstance.focus();
+    }
   };
 
   const handleEditorButtonClick = () => {
     setEditorButtonVisible(false);
     setEditor2ButtonVisible(true);
+    // 두 번째 에디터에 포커스 설정
+    if (editor2Ref.current && editor2Ref.current.editor) {
+      const editorInstance = editor2Ref.current.editor;
+      editorInstance.focus();
+    }
   };
 
   const handleEditor2ButtonClick = () => {
     setEditor2ButtonVisible(false);
     setTagButtonVisible(true);
+    // 태그에 포커스 설정
+    if (TagRef.current) {
+      TagRef.current.focus();
+    }
   };
 
   const handleTagButtonClick = () => {
@@ -252,6 +271,7 @@ function AskQuestionPage() {
             explanation="Introduce the problem and expand on what you put in the title. Minimum 20 characters."
             handleButtonClick={handleEditorButtonClick}
             isButtonVisible={editorButtonVisible}
+            editorRef={editorRef} // 첫 번째 에디터의 ref 전달
           />
 
           {/* 시도한 내용 입력 부분 */}
@@ -260,6 +280,7 @@ function AskQuestionPage() {
             explanation="Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters."
             handleButtonClick={handleEditor2ButtonClick}
             isButtonVisible={editor2ButtonVisible}
+            editorRef={editor2Ref}
           />
 
           {/* 태그 입력 부분 */}
@@ -273,10 +294,10 @@ function AskQuestionPage() {
             </div>
             <div>
               <input
-                // ref={myElementRef}
                 className="tag-input"
                 type="text"
                 placeholder="e.g. (c flutter django)"
+                ref={TagRef}
               />
               {tagButtonVisible && (
                 <button className="next-button" onClick={handleTagButtonClick}>

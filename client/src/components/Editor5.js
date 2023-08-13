@@ -43,7 +43,13 @@ const StyledEditor = styled.div`
   }
 `;
 
-function Editor5({ title, explanation, isButtonVisible, handleButtonClick }) {
+function Editor5({
+  title,
+  explanation,
+  isButtonVisible,
+  handleButtonClick,
+  editorRef,
+}) {
   const [editorContent, setEditorContent] = useState(''); // 텍스트 내용을 상태로 관리
 
   const handleEditorChange = (event, editor) => {
@@ -63,6 +69,7 @@ function Editor5({ title, explanation, isButtonVisible, handleButtonClick }) {
           </div>
         </div>
         <CKEditor
+          ref={editorRef} // 전달받은 ref를 CKEditor 컴포넌트에 적용
           editor={ClassicEditor}
           data=""
           onChange={handleEditorChange} // 텍스트 변경 시 호출되는 함수
@@ -87,7 +94,12 @@ Editor5.propTypes = {
   title: PropTypes.string.isRequired,
   explanation: PropTypes.string.isRequired,
   handleButtonClick: PropTypes.func.isRequired,
-  refProp: PropTypes.object,
+
+  editorRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]).isRequired, // editorRef prop의 유효성 검사
+
   isButtonVisible: PropTypes.bool.isRequired,
   isButtonHidden: PropTypes.bool.isRequired,
 };
