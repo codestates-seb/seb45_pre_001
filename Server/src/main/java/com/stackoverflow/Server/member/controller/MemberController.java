@@ -32,6 +32,6 @@ public class MemberController {
 
         Member member = memberService.creatMember(mapper.memberPostDtoToMember(memberPostDto));
 
-        return new ResponseEntity(member, HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 }
