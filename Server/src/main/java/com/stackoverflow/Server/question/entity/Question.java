@@ -1,4 +1,4 @@
-package com.stackoverflow.Server.post.entity;
+package com.stackoverflow.Server.question.entity;
 
 import com.stackoverflow.Server.comment.entity.Comment;
 import com.stackoverflow.Server.member.entity.Member;
@@ -15,21 +15,24 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class Post {
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Long questionId;
 
+    @Column(nullable = false)
     private String title;
 
-    private String postBody;
+    @Column(nullable = false)
+    private String questionBody;
 
+    @Column(name = "CREATED_AT")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "question")
     private List<Comment> comments = new ArrayList<>();
 }

@@ -1,7 +1,7 @@
 package com.stackoverflow.Server.comment.entity;
 
 import com.stackoverflow.Server.member.entity.Member;
-import com.stackoverflow.Server.post.entity.Post;
+import com.stackoverflow.Server.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -30,5 +29,5 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "POST_ID")
-    private Post post;
+    private Question question;
 }
