@@ -10,11 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class MemberService {
     private MemberRepository memberRepository;
     private PasswordEncoder passwordEncoder;
@@ -37,13 +39,15 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public Member findMember(long memberId) {
-        Optional<Member> findMember = memberRepository.findById(memberId);
+    @Transactional(readOnly = true)
+    public Member findMember(long userId) {
+        Optional<Member> findMember = memberRepository.findById(userId);
         Member responseMember = findMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return responseMember;
     }
 
+    @Transactional(readOnly = true)
     public Page<Member> findMembers(Pageable pageable) {
         return memberRepository.findAll(pageable);
     }

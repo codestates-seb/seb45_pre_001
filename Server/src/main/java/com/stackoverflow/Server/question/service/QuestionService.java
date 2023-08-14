@@ -10,6 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -28,4 +30,9 @@ public class QuestionService {
                 PageRequest.of(page, size, Sort.by("questionId").descending())
         );
     }
+
+//    public Page<Question> searchQuestions(String title) {
+//        List<Question> findQuestion = questionRepository.findByTitle(title);
+//
+//    }
 }
