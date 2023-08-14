@@ -35,7 +35,6 @@ public class QuestionController {
 
 
         Question question = mapper.questionPostToQuestion(postDto);
-
         Question createQuestion = questionService.createQuestion(question);
 
         return new ResponseEntity<>(createQuestion, HttpStatus.CREATED);

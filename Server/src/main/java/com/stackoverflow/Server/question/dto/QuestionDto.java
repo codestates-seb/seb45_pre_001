@@ -1,18 +1,25 @@
 package com.stackoverflow.Server.question.dto;
 
+import com.stackoverflow.Server.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 public class QuestionDto {
 
     @Getter
-    @AllArgsConstructor
+    @Setter
+    @NoArgsConstructor
     public static class Post {
+        private long memberId;
         private String title;
         private String questionBody;
 
-        public Post() {
+        public Member getMember() {
+            Member member = new Member();
+            member.setMemberId(memberId);
+            return member;
         }
     }
 
