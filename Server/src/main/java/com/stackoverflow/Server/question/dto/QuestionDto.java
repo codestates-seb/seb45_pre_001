@@ -22,4 +22,10 @@ public class QuestionDto {
         private String title;
         private String questionBody;
     }
+
+    @Getter
+    public static class search {
+        private String title;
+        private String questionBody;
+    }
 }

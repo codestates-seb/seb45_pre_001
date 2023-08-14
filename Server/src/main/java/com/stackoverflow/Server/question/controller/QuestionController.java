@@ -7,8 +7,12 @@ import com.stackoverflow.Server.question.mapper.QuestionMapper;
 import com.stackoverflow.Server.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +32,8 @@ public class QuestionController {
     @PostMapping("/new-questions")
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postDto) {
 
+
+
         Question question = mapper.questionPostToQuestion(postDto);
 
         Question createQuestion = questionService.createQuestion(question);
@@ -45,5 +51,15 @@ public class QuestionController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(mapper.questionsToQuestionResponse(questions),
                         pages), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity questionFindByTitle(@RequestBody QuestionDto.search search,
+                                              @RequestParam @Positive int page) {
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+        Page<Question> questionPage = questionService.searchQuestions(search.getTitle(), pageable);
+        List<Question> questions = questionPage.getContent();
+
+        return new ResponseEntity(new MultiResponseDto(mapper.questionsToQuestionResponse(questions), questionPage), HttpStatus.OK);
     }
 }
