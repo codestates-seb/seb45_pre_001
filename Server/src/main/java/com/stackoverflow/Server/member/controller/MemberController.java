@@ -8,10 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.Positive;
 
 @RestController
 @Validated
@@ -33,5 +32,10 @@ public class MemberController {
         Member member = memberService.creatMember(mapper.memberPostDtoToMember(memberPostDto));
 
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{member_id}")
+    public ResponseEntity getMember(@PathVariable("member_id") @Positive long memberId) {
+        return new ResponseEntity(mapper.memberToMemberResponseDto(memberService.findMember(memberId)), HttpStatus.OK);
     }
 }
