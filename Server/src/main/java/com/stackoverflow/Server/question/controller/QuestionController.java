@@ -53,7 +53,7 @@ public class QuestionController {
                         pages), HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity questionFindByTitle(@RequestBody QuestionDto.search search,
                                               @RequestParam @Positive int page) {
         Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
