@@ -14,9 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 
 import java.util.Optional;
 
@@ -46,6 +44,6 @@ public class QuestionService {
     }
 
     public Page<Question> searchQuestions(String title, Pageable pageable) {
-        return questionRepository.findByTitle(title, pageable);
+        return questionRepository.findByTitleContaining(title, pageable);
     }
 }
