@@ -101,7 +101,6 @@ Editor5.propTypes = {
   ]).isRequired, // editorRef prop의 유효성 검사
 
   isButtonVisible: PropTypes.bool.isRequired,
-  isButtonHidden: PropTypes.bool.isRequired,
 };
 
 export default Editor5;
