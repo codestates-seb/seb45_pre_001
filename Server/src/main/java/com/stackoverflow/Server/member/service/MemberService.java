@@ -5,6 +5,8 @@ import com.stackoverflow.Server.exception.BusinessLogicException;
 import com.stackoverflow.Server.exception.ExceptionCode;
 import com.stackoverflow.Server.member.entity.Member;
 import com.stackoverflow.Server.member.repository.MemberRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,9 @@ public class MemberService {
         return responseMember;
     }
 
+    public Page<Member> findMembers(Pageable pageable) {
+        return memberRepository.findAll(pageable);
+    }
 
     public void verifyExistsEmail(String email) {
         Optional<Member> findMember = memberRepository.findByEmail(email);
