@@ -12,6 +12,10 @@ const StyledFooter = styled.footer`
   padding-bottom: 0;
   display: block;
   font-size: 13px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
   .footer-container {
     max-width: 1264px;
@@ -84,13 +88,14 @@ const StyledFooter = styled.footer`
   .sns-link-list {
     display: flex;
     list-style: none;
-    margin: 0;
+    margin-right: 0;
     padding: 0;
   }
 
   .sns-link-item {
     color: rgba(145, 153, 161, 1);
     padding: 4px 0;
+    margin-right: 1.5em;
     line-height: calc((13+4) / 13);
     display: inline-block;
     text-decoration: none;
