@@ -2,12 +2,16 @@ import { styled } from 'styled-components';
 import Editor5 from '../components/Editor5';
 import { useState, useRef } from 'react';
 import QuestionPageDropdown from '../components/QuestionPageDropdown';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
+  margin-top: 56px;
 
   // 사이드 여백 조정
   .inner {
@@ -208,6 +212,8 @@ function AskQuestionPage() {
 
   return (
     <StyleAskPage isButtonDisabled={isButtonDisabled}>
+      <Header />
+
       {/* header 넣을자리 */}
       <div className="inner">
         {/* 질문 헤더 부분 */}
@@ -367,6 +373,7 @@ function AskQuestionPage() {
           </div>
         </main>
       </div>
+      <Footer />
       {/* footer 넣을자리 */}
     </StyleAskPage>
   );

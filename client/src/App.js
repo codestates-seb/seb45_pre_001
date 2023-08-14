@@ -1,15 +1,11 @@
 import './App.css';
 
-import Sidebar from './components/sidebar';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Sidebar />
-      <Footer />
+      <LoginPage />
     </div>
   );
 }
