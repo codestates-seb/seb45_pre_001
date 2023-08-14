@@ -1,5 +1,6 @@
 package com.stackoverflow.Server.question.dto;
 
+import com.stackoverflow.Server.member.entity.Member;
 import lombok.*;
 
 public class QuestionDto {
@@ -12,6 +13,11 @@ public class QuestionDto {
         private String title;
         private String body;
 
+        public Member getMember() {
+            Member member = new Member();
+            member.setMemberId(memberId);
+            return member;
+        }
     }
 
     @AllArgsConstructor

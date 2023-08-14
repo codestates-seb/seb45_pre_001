@@ -24,7 +24,7 @@ public class Question {
     private String title;
 
     @Column(nullable = false)
-    private String questionBody;
+    private String body;
 
     @Column(name = "CREATED_AT")
     private LocalDateTime createdAt = LocalDateTime.now();
