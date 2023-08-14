@@ -24,13 +24,17 @@
   </tr>
   <tr>
   <td align="left">
-    - 고민중...
+    - jap 엔티티 클래스 설정<br/>
+    - 로그인/회원가입 기능<br/>    
+    - 검색 기능
   </td>
   <td align="left">
-    - 고민중...
+    - server 환경 구축<br/> 
+    - 답변 CRUD
   </td>
   <td align="left">
-    - 고민중...
+    - 게시글 목록 조회<br/>    
+    - 질문 CRUD
   </td>
   </tr>
   </tbody>
@@ -53,13 +57,18 @@
   </tr>
   <tr>
   <td align="left">
-    - 고민중...
+    - Figma<br/>    
+    - 질문 상세페이지<br/>
+    - 답변 CRUD
   </td>
   <td align="left">
-    - 고민중...
+    - 메인페이지<br/>(글목록 조회, 페이지네이션, 검색)<br/>    
+    - 회원가입 페이지
   </td>
   <td align="left">
-    - 고민중...
+    - 질문페이지<br/>
+    - 질문 CRUD<br/>    
+    - 로그인 페이지
   </td>
   </tr>
   </tbody>
@@ -76,12 +85,10 @@
 ## 🗂️프로젝트 핵심기술 및 기능
 
 ### ✨ Back-end
-
-![Java](https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white")
 ![Spring](https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/spring_boot_jpa-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/spring_security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white)
-![Mysql](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white)  
+![Mysql](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Apache Tomcat](https://img.shields.io/badge/apachetomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white)
 ![Ngrok](https://img.shields.io/badge/ngrok-1F1E37?style=for-the-badge&logo=ngrok&logoColor=white)
 
@@ -90,7 +97,9 @@
 ![HTML](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![NodeJS](https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=black)
 ![React](https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![React Router](https://img.shields.io/badge/react_router-CA4245?style=for-the-badge&logo=reactrouter&logoColor=black)
 ![Redux](https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white)
 
 ## 🛠️협업툴
