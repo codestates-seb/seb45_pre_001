@@ -13,7 +13,7 @@ public interface QuestionMapper {
         Question question = new Question();
         question.setMember(questionDto.getMember());
         question.setTitle(questionDto.getTitle());
-        question.setBody(questionDto.getBody());
+        question.setQuestionBody(questionDto.getQuestionBody());
         return question;
     }
     List<QuestionDto.response> questionsToQuestionResponse(List<Question> questions);

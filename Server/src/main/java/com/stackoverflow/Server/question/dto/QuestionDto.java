@@ -14,7 +14,7 @@ public class QuestionDto {
     public static class Post {
         private long memberId;
         private String title;
-        private String body;
+        private String questionBody;
 
         public Member getMember() {
             Member member = new Member();
@@ -28,7 +28,7 @@ public class QuestionDto {
     public static class response {
         private long questionId;
         private String title;
-        private String body;
+        private String questionBody;
     }
 
     @Getter
@@ -37,6 +37,6 @@ public class QuestionDto {
     public static class search {
         private long questionId;
         private String title;
-        private String body;
+        private String questionBody;
     }
 }
