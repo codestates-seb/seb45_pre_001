@@ -46,6 +46,6 @@ public class QuestionService {
     }
 
     public Page<Question> searchQuestions(String title, Pageable pageable) {
-        return questionRepository.findByTitleContaining(title, pageable);
+        return questionRepository.findByTitle(title, pageable);
     }
 }
