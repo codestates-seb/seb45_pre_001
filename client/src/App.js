@@ -1,10 +1,11 @@
 import './App.css';
-import AskQuestionPage from './pages/AskQuestionPage';
+
+import Sidebar from './components/sidebar';
 
 function App() {
   return (
     <div className="App">
-      <AskQuestionPage />
+      <Sidebar />
     </div>
   );
 }
