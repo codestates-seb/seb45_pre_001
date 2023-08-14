@@ -29,7 +29,6 @@ public class QuestionController {
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postDto) {
 
         Question question = mapper.questionPostToQuestion(postDto);
-
         Question createQuestion = questionService.createQuestion(question);
 
         return new ResponseEntity<>(createQuestion, HttpStatus.CREATED);

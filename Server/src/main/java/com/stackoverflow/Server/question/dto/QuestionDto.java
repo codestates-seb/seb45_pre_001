@@ -1,18 +1,17 @@
 package com.stackoverflow.Server.question.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 public class QuestionDto {
 
     @Getter
-    @AllArgsConstructor
+    @Setter
+    @NoArgsConstructor
     public static class Post {
+        private long memberId;
         private String title;
-        private String questionBody;
+        private String body;
 
-        public Post() {
-        }
     }
 
     @AllArgsConstructor
@@ -20,6 +19,6 @@ public class QuestionDto {
     public static class response {
         private long questionId;
         private String title;
-        private String questionBody;
+        private String body;
     }
 }
