@@ -10,9 +10,13 @@ import com.stackoverflow.Server.question.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 import java.util.Optional;
 
@@ -39,5 +43,9 @@ public class QuestionService {
         return questionRepository.findAll(
                 PageRequest.of(page, size, Sort.by("questionId").descending())
         );
+    }
+
+    public Page<Question> searchQuestions(String title, Pageable pageable) {
+        return questionRepository.findByTitleContaining(title, pageable);
     }
 }
