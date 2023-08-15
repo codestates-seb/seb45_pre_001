@@ -1,15 +1,17 @@
 import './App.css';
+import SignupPage from './pages/SignupPage';
 
-import Sidebar from './components/sidebar';
-import Header from './components/Header';
-import Footer from './components/Footer';
+// import Sidebar from './components/sidebar';
+// import Header from './components/Header';
+// import Footer from './components/Footer';
 
 function App() {
   return (
     <div className="App">
-      <Header />
+      {/* <Header />
       <Sidebar />
-      <Footer />
+      <Footer /> */}
+      <SignupPage />
     </div>
   );
 }
