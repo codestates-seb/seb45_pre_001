@@ -16,6 +16,7 @@ const StyledHeader = styled.header`
   background-color: white;
   border-top: 3px solid rgba(255, 153, 0, 1);
   border-bottom: 1px solid rgba(214, 217, 220, 1);
+  white-space: nowrap;
 
   .header-container {
     width: 97.2307692rem;
@@ -33,12 +34,23 @@ const StyledHeader = styled.header`
     padding: 0 8px;
 
     span {
-      color: black;
+      margin-top: -4px;
+      margin-left: 0;
+      width: 150px;
+      height: 30px;
+      text-indent: -9999em;
+      display: inline-block;
+      background-position: 0 -500px;
+      background-image: url('/stackoverflow.svg');
     }
 
     b {
       color: black;
     }
+  }
+
+  .logo-box:hover {
+    background-color: rgba(227, 230, 232, 1);
   }
 
   .logo-box img {
@@ -109,6 +121,14 @@ const StyledHeader = styled.header`
     color: rgba(57, 115, 157, 1);
   }
 
+  .login-button:hover {
+    background-color: rgba(179, 211, 234, 1);
+    color: rgba(44, 88, 119, 1);
+  }
+
+  .login-button::selection {
+  }
+
   .signup-button {
     background-color: rgba(10, 149, 255, 1);
     border-radius: 5px;
@@ -153,9 +173,7 @@ export default function Header() {
     <StyledHeader>
       <div className="header-container">
         <a href="/" className="logo-box">
-          <img src="/small-logo.png" alt="logo-img" />
-          <span>Stack</span>
-          <b>overflow</b>
+          <span className="logo-img">Stack Overflow</span>
         </a>
         <StyledOl>
           <li className="small-nav">
@@ -176,12 +194,12 @@ export default function Header() {
         </form>
         <Styelnav>
           <StyledOl className="membership-button-box">
-            <li>
+            <li className="membership-btn">
               <a href="/login" className="login-button">
                 Log in
               </a>
             </li>
-            <li>
+            <li className="membership-btn">
               <a href="/signup" className="signup-button">
                 Sign up
               </a>
