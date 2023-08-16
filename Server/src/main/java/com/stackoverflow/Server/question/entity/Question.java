@@ -23,6 +23,9 @@ public class Question {
     @Column(nullable = false)
     private String title;
 
+    @Enumerated(value = EnumType.STRING)
+    private QuestionStatus questionStatus = QuestionStatus.QUESTION_NOT_COMMENTED;
+
     @Column(nullable = false)
     private String questionBody;
 
@@ -35,4 +38,15 @@ public class Question {
 
     @OneToMany(mappedBy = "question")
     private List<Comment> comments = new ArrayList<>();
+
+    public enum QuestionStatus {
+        QUESTION_COMMENTED("답변 존재"),
+        QUESTION_NOT_COMMENTED("답변 없음");
+
+        @Getter
+        private String status;
+        QuestionStatus(String status) {
+            this.status = status;
+        }
+    }
 }

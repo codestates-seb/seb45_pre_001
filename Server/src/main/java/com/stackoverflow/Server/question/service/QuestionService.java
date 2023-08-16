@@ -37,6 +37,11 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
+    public Question findQuestion(long questionId) {
+        return questionRepository.findByIdWithAll(questionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+    }
+
     public Page<Question> findQuestions(int page, int size) {
         return questionRepository.findAll(
                 PageRequest.of(page, size, Sort.by("questionId").descending())
