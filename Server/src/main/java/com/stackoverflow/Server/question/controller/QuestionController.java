@@ -66,8 +66,9 @@ public class QuestionController {
 
     @GetMapping("/search")
     public ResponseEntity questionFindByTitle(@RequestBody QuestionDto.search search,
-                                              @RequestParam @Positive int page) {
-        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+                                              @RequestParam(required = false, defaultValue = "1") @Positive int page,
+                                              @RequestParam(required = false, defaultValue = "15") int size) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("createdAt").descending());
         Page<Question> questionPage = questionService.searchQuestions(search.getTitle(), pageable);
         List<Question> questions = questionPage.getContent();
 
