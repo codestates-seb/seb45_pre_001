@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,16 +31,20 @@ public class QuestionController {
     @PostMapping("/new-questions")
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postDto) {
 
-
-
         Question question = mapper.questionPostToQuestion(postDto);
         Question createQuestion = questionService.createQuestion(question);
 
-        return new ResponseEntity<>(createQuestion, HttpStatus.CREATED);
+        return new ResponseEntity<>(question, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{questionId}")
+    public ResponseEntity getQuestion(@PathVariable("questionId") @Positive long questionId) {
+        Question question = questionService.findQuestion(questionId);
+        return new ResponseEntity<>(mapper.questionToQuestionResponse(question), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity findQuestions(@Positive @RequestParam int page,
+    public ResponseEntity getQuestions(@Positive @RequestParam int page,
                                         @Positive @RequestParam int size) {
 
         Page<Question> pages = questionService.findQuestions(page - 1, size);
