@@ -37,6 +37,18 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
+    public Question updateQuestion(Question question) {
+        Question findquestion = findQuestion(question.getQuestionId());
+        Optional.ofNullable(question.getTitle())
+                .ifPresent(content -> findquestion.setTitle(content));
+        Optional.ofNullable(question.getQuestionBody())
+                .ifPresent(content -> findquestion.setQuestionBody(content));
+
+        Question savedQuestion = questionRepository.save(findquestion);
+
+        return savedQuestion;
+    }
+
     public Question findQuestion(long questionId) {
         return questionRepository.findByIdWithAll(questionId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
