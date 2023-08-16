@@ -48,6 +48,12 @@ public class QuestionService {
         );
     }
 
+    public void removeQuestion(long questionId) {
+
+        Question question = findQuestion(questionId);
+        questionRepository.deleteById(questionId);
+    }
+
     public Page<Question> searchQuestions(String title, Pageable pageable) {
         return questionRepository.findByTitleContaining(title, pageable);
     }

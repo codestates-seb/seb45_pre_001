@@ -37,15 +37,15 @@ public class QuestionController {
         return new ResponseEntity<>(question, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{questionId}")
-    public ResponseEntity getQuestion(@PathVariable("questionId") @Positive long questionId) {
+    @GetMapping("/{question-id}")
+    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId) {
         Question question = questionService.findQuestion(questionId);
         return new ResponseEntity<>(mapper.questionToQuestionResponse(question), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity getQuestions(@Positive @RequestParam int page,
-                                        @Positive @RequestParam int size) {
+                                        @Positive @RequestParam(required = false,defaultValue = "15") int size) {
 
         Page<Question> pages = questionService.findQuestions(page - 1, size);
         List<Question> questions = pages.getContent();
@@ -63,5 +63,12 @@ public class QuestionController {
         List<Question> questions = questionPage.getContent();
 
         return new ResponseEntity(new MultiResponseDto(mapper.questionsToQuestionResponse(questions), questionPage), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{question-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") long questionId){
+        questionService.removeQuestion(questionId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
