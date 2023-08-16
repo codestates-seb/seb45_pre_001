@@ -26,6 +26,24 @@ public class QuestionDto {
         }
     }
     @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class Patch{
+        private long questionId;
+        private long memberId;
+        private String nickname;
+        private String title;
+        private String questionBody;
+
+        public Member getMember() {
+            Member member = new Member();
+            member.setMemberId(memberId);
+            member.setNickname(nickname);
+            return member;
+        }
+    }
+
+    @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class search {
