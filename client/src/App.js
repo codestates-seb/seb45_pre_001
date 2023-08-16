@@ -1,15 +1,12 @@
 import './App.css';
+import AskQuestionPage from './pages/AskQuestionPage';
 
-import Sidebar from './components/sidebar';
-import Header from './components/Header';
-import Footer from './components/Footer';
+// import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Sidebar />
-      <Footer />
+      <AskQuestionPage />
     </div>
   );
 }
