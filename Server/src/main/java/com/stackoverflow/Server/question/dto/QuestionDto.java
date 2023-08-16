@@ -1,6 +1,7 @@
 package com.stackoverflow.Server.question.dto;
 
 import com.stackoverflow.Server.member.entity.Member;
+import com.stackoverflow.Server.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,11 @@ public class QuestionDto {
         private long questionId;
         private String title;
         private String questionBody;
+        private Question.QuestionStatus questionStatus;
+
+        public String getQuestionStatus() {
+            return questionStatus.getStatus();
+        }
     }
 
     @Getter
