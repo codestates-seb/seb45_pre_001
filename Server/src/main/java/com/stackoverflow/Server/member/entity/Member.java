@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-public class Member {
+public class Member{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
@@ -29,6 +30,10 @@ public class Member {
 
     @Column(nullable = false)
     private String password;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "member")
     private List<Question> questions = new ArrayList<>();
