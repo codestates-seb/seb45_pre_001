@@ -100,7 +100,7 @@ export default function QuestionListPage() {
             <button className="qa_btn">Ask Question</button>
           </div>
           <div className="main_question_filer">
-            <div className="question_item">questions</div>
+            <div className="question_item">{questions.length} questions</div>
             <div className="question_filters">
               <div className="question_filters_item">
                 {/* 버튼 클릭시 필터 기능이용해서 구현 진행 */}
