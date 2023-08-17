@@ -4,21 +4,16 @@ spring:
     url: ${MYSQL_DATABASE_URL}
     username: ${MYSQL_DATABASE_USERNAME}
     password: ${MYSQL_DATABASE_PASSWORD}
-  sql:
-    init:
-      data-locations: classpath*:data.sql
-      mode: always
-    test: server
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
     suffix: .html
     enabled: true
-#  profiles:
-#    include: ignore
+  profiles:
+    include: ignore
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
