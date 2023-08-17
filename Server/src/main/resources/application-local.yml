@@ -12,6 +12,7 @@ spring:
     init:
       data-locations: classpath*:data.sql
       mode: always
+    test: local
   jpa:
     hibernate:
       ddl-auto: create

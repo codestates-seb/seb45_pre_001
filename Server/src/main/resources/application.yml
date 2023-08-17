@@ -4,3 +4,7 @@
 spring:
   profiles:
     include: ignore
+    active: local
+
+common: common
+test: commmon
