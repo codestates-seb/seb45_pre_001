@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,6 +20,7 @@ import java.util.List;
 @Validated
 @CrossOrigin
 public class CommentController {
+    private final static String REPLY_DEFAULT_URL = "/questions/{question-id}/comments";
     private final CommentService commentService;
     private final CommentMapper mapper;
 
@@ -31,12 +34,23 @@ public class CommentController {
     public ResponseEntity postComment(@RequestBody @Valid CommentPostDto commentPostDto,
                                       @PathVariable("question-id") @Positive long questionId){
 
+        commentPostDto.setQuestionId(questionId);
         Comment postComment = mapper.commentPostDtoToComment(commentPostDto);
         Comment response = commentService.createComment(postComment);
 
-        return new ResponseEntity<>(mapper.commentToCommentResponseDto(response), HttpStatus.CREATED);
+        URI location = UriComponentsBuilder.newInstance()
+                .path(REPLY_DEFAULT_URL+"/{comment-id}")
+                .buildAndExpand(questionId,response.getCommentId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     //답변 조회
-    //@GetMapping
+    @GetMapping
+    public ResponseEntity getComments (@PathVariable("question-id") @Positive long questionId){
+
+        Comment response = (Comment) commentService.findCommentAll(questionId);
+        return new ResponseEntity<>(mapper.commentToCommentResponseDto(response),HttpStatus.OK);
+    }
 }
