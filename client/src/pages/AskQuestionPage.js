@@ -5,13 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import QuestionPageDropdown from '../components/QuestionPageDropdown';
 // import Header from '../components/Header';
 // import Footer from '../components/Footer';
+import axios from 'axios';
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   margin-top: 56px;
 
   // 사이드 여백 조정
@@ -224,11 +224,45 @@ function AskQuestionPage() {
   };
 
   // 질문 검토 버튼 클릭 핸들러
-  const handleReviewButtonClick = () => {
+  const handleReviewButtonClick = async () => {
     // reviewButtonVisible 상태를 숨김(false)으로 변경
     dispatch({ type: 'SET_REVIEW_BUTTON_VISIBLE', payload: false });
     //checkContainerVisible 상태를 숨김(false)으로 변경
     dispatch({ type: 'SET_CHECK_CONTAINER_VISIBLE', payload: false });
+
+    const titleInput = document.querySelector('.title-input');
+    const contentInput = editorRef.current.editor.getData();
+
+    const title = titleInput.value; // 유저가 입력한 제목
+    const questionBody = contentInput; // 유저가 입력한 내용
+
+    console.log(title, questionBody);
+
+    // 요청 할 데이터값 정의
+    const requestData = {
+      memberId: 2,
+      title,
+      questionBody,
+      nickname: '닉네임1',
+    };
+
+    console.log(requestData);
+
+    // 주소값 정의
+    const ipv4 = 'http://13.124.105.17:8080';
+
+    try {
+      // 백엔드 API로 HTTP POST 요청 보내기
+      const response = await axios.post(
+        `${ipv4}/questions/new-questions`,
+        requestData,
+      );
+      // 응답 처리 (예: 성공 메시지 표시)
+      console.log('질문이 성공적으로 제출되었습니다:', response);
+    } catch (error) {
+      // 오류 처리 (예: 오류 메시지 표시)
+      console.error('질문 제출 오류:', error);
+    }
   };
 
   // 체크박스 변경 핸들러 함수
