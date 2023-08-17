@@ -5,6 +5,8 @@ import icon from '../images/small-logo.svg';
 import googleIcon from '../images/google-icon.svg';
 import githubIcon from '../images/github-icon.svg';
 import facebookIcon from '../images/facebook-icon.svg';
+import axios from 'axios'; // Import axios here
+import { useState } from 'react';
 
 const StyleLoginPage = styled.div`
   background-color: #f1f2f3;
@@ -88,7 +90,6 @@ const StyleLoginPage = styled.div`
   #login-form {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     gap: 15px;
   }
 
@@ -148,6 +149,31 @@ const StyleLoginPage = styled.div`
 `;
 
 function LoginPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const ipv4 = 'http://13.124.105.17:8080'; // 서버 주소
+
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    for (const keyValue of formData) console.log(keyValue);
+
+    try {
+      const response = await axios.post(`${ipv4}/users/login`, formData);
+
+      if (response.status === 201) {
+        console.log('로그인 성공:', response.data);
+      }
+    } catch (error) {
+      console.error('로그인 오류:', error);
+    }
+  };
+
   return (
     <StyleLoginPage>
       <div className="container">
@@ -186,15 +212,17 @@ function LoginPage() {
           </button>
         </div>
         <div className="form-container">
-          <form id="login-form">
+          <form id="login-form" onSubmit={handleSubmit}>
             <div className="login-box">
-              <form className="login-form">
+              <form className="email-form">
                 <label htmlFor="email">Email</label>
                 <div>
                   <input
                     className="email-input"
                     id="email"
                     type="email"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                   ></input>
                 </div>
               </form>
@@ -212,12 +240,16 @@ function LoginPage() {
                     className="password-input"
                     id="password"
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   ></input>
                 </div>
               </form>
             </div>
             <div className="login-button-container">
-              <button className="login-button">Log in</button>
+              <button className="login-button" type="submit">
+                Log in
+              </button>
             </div>
           </form>
         </div>
