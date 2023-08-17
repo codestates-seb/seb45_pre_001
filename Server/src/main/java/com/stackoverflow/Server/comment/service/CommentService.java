@@ -26,19 +26,26 @@ public class CommentService {
 
     //질문에 대한 답변 생성
     public Comment createComment (Comment comment) {
-        //회원이 존재하는지 확인
-        //memberService.findMember(comment.getMember().getMemberId());
-
         //질문이 존재하는지 확인
-        //Question question = questionService.findQuestions();
+       // verifyExistQuestion(comment);
 
-        //comment.setQuestion(question);
+        //회원이 존재하는지 확인
+       // memberService.findMember(comment.getMember().getMemberId());
 
         return commentRepository.save(comment);
     }
 
     //답변 조회
-    public Comment findComments(){
-        return null;
+    public List<Comment> findCommentAll(long questionId){
+        //질문이 존재하는지 확인
+       // Question question = questionService.findQuestion(questionId);
+
+        return commentRepository.findAll();
+    }
+
+    //질문이 존재하는지 확인
+    public Question verifyExistQuestion (Comment comment){
+        Question question = questionService.findQuestion(comment.getQuestionId());
+        return question;
     }
 }
