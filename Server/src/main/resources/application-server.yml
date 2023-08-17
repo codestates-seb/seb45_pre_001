@@ -8,6 +8,7 @@ spring:
     init:
       data-locations: classpath*:data.sql
       mode: always
+    test: server
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
