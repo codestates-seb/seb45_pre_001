@@ -135,84 +135,88 @@ const SignupFormContainer = styled.div`
 
 export default function SignupPage() {
   return (
-    <SignUpPage>
+    <>
       <Header />
-      <div className="signup_page">
-        <div className="signup_page_container">
-          <SignUpCommunity>
-            <div className="signup_community">
-              <h1>Join the Stack Overflow community</h1>
-              <div className="signup_community_question">
-                <Icon icon={faCircleQuestion} className="icon_question" />
-                <span className="text_question">
-                  Get unstuck - ask a question
-                </span>
-              </div>
-              <div className="signup_community_comment">
-                <div className="icon_comment_set">
-                  <Icon icon={faSort} className="icon_arrow" />
-                </div>
-                <span className="text_comment">
-                  Unlock new privileges like voting and commenting
-                </span>
-              </div>
-              <div className="signup_community_etc">
-                <Icon icon={faTags} className="icon_etc" />
-                <span className="text_etc">
-                  Save your favorite questions, answers, watch tags, and more
-                </span>
-              </div>
-              <div className="signup_community_badges">
-                <Icon icon={faTrophy} className="icon_badges" />
-                <span className="text_badges">Earn reputation and badges</span>
-              </div>
-              <div className="signup_community_collabogroup">
-                Collaborate and share knowledge with a private group for FREE.
-                Get Stack Overflow for Teams free for up to 50 users
-              </div>
-            </div>
-          </SignUpCommunity>
-          <SignupForm>
-            <div className="signup_form_container">
-              <div className="signup_form">
-                <SignupFormContainer className="signup_form_name">
-                  <label htmlFor="sinup_form_displayname">Display name</label>
-                  <input type="text"></input>
-                </SignupFormContainer>
-                <SignupFormContainer className="signup_form_id">
-                  <label htmlFor="sinup_form_email">Email</label>
-                  <input type="text"></input>
-                </SignupFormContainer>
-                <SignupFormContainer className="signup_form_security">
-                  <label htmlFor="sinup_form_password">Password</label>
-                  <input type="text"></input>
-                </SignupFormContainer>
-                <p>
-                  Password munst contatin at least eight characters, including
-                  at least 1 letter and 1 number
-                </p>
-                <div className="signup_form_check">
-                  <input type="checkbox" />
-                  <span className="text_check">
-                    Opt-in to receive occastional product updates, user research
-                    invitations, company announcements, and digests.
+      <SignUpPage>
+        <div className="signup_page">
+          <div className="signup_page_container">
+            <SignUpCommunity>
+              <div className="signup_community">
+                <h1>Join the Stack Overflow community</h1>
+                <div className="signup_community_question">
+                  <Icon icon={faCircleQuestion} className="icon_question" />
+                  <span className="text_question">
+                    Get unstuck - ask a question
                   </span>
                 </div>
-                <div className="signup_form_submit">
-                  <button className="sinup_submit_btn">Sign up</button>
-                </div>
-                <div className="signup_form_agree">
-                  <span className="signup_agree_text">
-                    By clicking {"'"}Sign up{"'"}, you agree to our terms fo
-                    servicea and acknowledge that you have read and understand
-                    our privacy and code of conduct
+                <div className="signup_community_comment">
+                  <div className="icon_comment_set">
+                    <Icon icon={faSort} className="icon_arrow" />
+                  </div>
+                  <span className="text_comment">
+                    Unlock new privileges like voting and commenting
                   </span>
                 </div>
+                <div className="signup_community_etc">
+                  <Icon icon={faTags} className="icon_etc" />
+                  <span className="text_etc">
+                    Save your favorite questions, answers, watch tags, and more
+                  </span>
+                </div>
+                <div className="signup_community_badges">
+                  <Icon icon={faTrophy} className="icon_badges" />
+                  <span className="text_badges">
+                    Earn reputation and badges
+                  </span>
+                </div>
+                <div className="signup_community_collabogroup">
+                  Collaborate and share knowledge with a private group for FREE.
+                  Get Stack Overflow for Teams free for up to 50 users
+                </div>
               </div>
-            </div>
-          </SignupForm>
+            </SignUpCommunity>
+            <SignupForm>
+              <div className="signup_form_container">
+                <div className="signup_form">
+                  <SignupFormContainer className="signup_form_name">
+                    <label htmlFor="sinup_form_displayname">Display name</label>
+                    <input type="text"></input>
+                  </SignupFormContainer>
+                  <SignupFormContainer className="signup_form_id">
+                    <label htmlFor="sinup_form_email">Email</label>
+                    <input type="text"></input>
+                  </SignupFormContainer>
+                  <SignupFormContainer className="signup_form_security">
+                    <label htmlFor="sinup_form_password">Password</label>
+                    <input type="text"></input>
+                  </SignupFormContainer>
+                  <p>
+                    Password munst contatin at least eight characters, including
+                    at least 1 letter and 1 number
+                  </p>
+                  <div className="signup_form_check">
+                    <input type="checkbox" />
+                    <span className="text_check">
+                      Opt-in to receive occastional product updates, user
+                      research invitations, company announcements, and digests.
+                    </span>
+                  </div>
+                  <div className="signup_form_submit">
+                    <button className="sinup_submit_btn">Sign up</button>
+                  </div>
+                  <div className="signup_form_agree">
+                    <span className="signup_agree_text">
+                      By clicking {"'"}Sign up{"'"}, you agree to our terms fo
+                      servicea and acknowledge that you have read and understand
+                      our privacy and code of conduct
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </SignupForm>
+          </div>
         </div>
-      </div>
-    </SignUpPage>
+      </SignUpPage>
+    </>
   );
 }
