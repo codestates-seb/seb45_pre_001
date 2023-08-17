@@ -6,6 +6,7 @@ import QuestionPageDropdown from '../components/QuestionPageDropdown';
 // import Header from '../components/Header';
 // import Footer from '../components/Footer';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
@@ -140,6 +141,8 @@ const StyleAskPage = styled.div`
 `;
 
 function AskQuestionPage() {
+  const navigate = useNavigate();
+
   const editorRef = useRef(null);
   const editor2Ref = useRef(null);
   const TagRef = useRef(null);
@@ -236,17 +239,13 @@ function AskQuestionPage() {
     const title = titleInput.value; // 유저가 입력한 제목
     const questionBody = contentInput; // 유저가 입력한 내용
 
-    console.log(title, questionBody);
-
     // 요청 할 데이터값 정의
     const requestData = {
       memberId: 2,
+      nickname: '닉네임1',
       title,
       questionBody,
-      nickname: '닉네임1',
     };
-
-    console.log(requestData);
 
     // 주소값 정의
     const ipv4 = 'http://13.124.105.17:8080';
@@ -259,6 +258,9 @@ function AskQuestionPage() {
       );
       // 응답 처리 (예: 성공 메시지 표시)
       console.log('질문이 성공적으로 제출되었습니다:', response);
+      if (response.status === 201) {
+        navigate(`/questions/${response.data.questionId}`); //질문디테일페이지로 이동
+      }
     } catch (error) {
       // 오류 처리 (예: 오류 메시지 표시)
       console.error('질문 제출 오류:', error);
