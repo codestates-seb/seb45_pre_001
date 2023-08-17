@@ -19,7 +19,7 @@ const StyledHeader = styled.header`
   white-space: nowrap;
 
   .header-container {
-    width: 97.2307692rem;
+    width: 82vw;
     max-width: 100%;
     height: 100%;
     display: flex;
@@ -147,6 +147,7 @@ const StyledOl = styled.ol`
   display: flex;
   gap: 4px;
   padding: 2px 0;
+  font-size: 13px;
 
   .small-nav {
     display: flex;
@@ -195,12 +196,12 @@ export default function Header() {
         <Styelnav>
           <StyledOl className="membership-button-box">
             <li className="membership-btn">
-              <a href="/login" className="login-button">
+              <a href="/users/login" className="login-button">
                 Log in
               </a>
             </li>
             <li className="membership-btn">
-              <a href="/signup" className="signup-button">
+              <a href="/users/new-user" className="signup-button">
                 Sign up
               </a>
             </li>
