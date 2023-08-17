@@ -1,4 +1,5 @@
 import './App.css';
+
 import SignupPage from './pages/SignupPage';
 
 // import Sidebar from './components/sidebar';
@@ -8,10 +9,12 @@ import SignupPage from './pages/SignupPage';
 function App() {
   return (
     <div className="App">
+
       {/* <Header />
       <Sidebar />
       <Footer /> */}
       <SignupPage />
+
     </div>
   );
 }
