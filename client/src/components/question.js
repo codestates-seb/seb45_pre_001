@@ -1,6 +1,6 @@
 // 필수 데이터 : 닉네임, 작성시간, 제목, 본문
 // 선택 데이터 : 태그, 조회수
-export default function Question() {
+export default function Question({ data }) {
   // 월에 해당하는 문자열
   // const months = [
   //   'Jan',
@@ -23,7 +23,10 @@ export default function Question() {
   return (
     <li className="qusestion_container">
       <div className="question_content">
-        <h3 className="question_content_title">{/* 링크 넣기 */}</h3>
+        <h3 className="question_content_title">
+          {data.title}
+          {/* 링크 넣기 */}
+        </h3>
         <span className="question_content_body">{/* 본문 */}</span>
         <div className="question_content_post">
           <div className="question_post_user">{/* 작성자 */}</div>

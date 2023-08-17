@@ -1,7 +1,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownWideShort } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
+import Question from '../components/question';
 
 export default function QuestionListPage() {
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://13.124.105.17:8080/questions?page=1`)
+      .then((res) => res.json())
+      .then((json) => {
+        setQuestions(json.data);
+        console.log(json);
+      });
+  }, []);
+
   return (
     <div className="main_container">
       <div className="main_header">
@@ -28,6 +41,11 @@ export default function QuestionListPage() {
             <div className="select_filer_text">Filter</div>
           </button>
         </div>
+      </div>
+      <div className="main_questions">
+        {questions.map((data, questionId) => {
+          <Question data={data} key={questionId} />;
+        })}
       </div>
     </div>
   );
