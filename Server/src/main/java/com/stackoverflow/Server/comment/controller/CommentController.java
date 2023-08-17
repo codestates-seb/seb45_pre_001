@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/questions/{question-id}/comments")
 @Validated
+@CrossOrigin
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper mapper;
