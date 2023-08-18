@@ -169,6 +169,7 @@ const StyleLoginPage = styled.div`
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setemailError] = useState('');
   const [error, setError] = useState('');
 
   const isEmailValid = (email) => {
@@ -181,12 +182,12 @@ function LoginPage() {
 
     // 이메일 양식 유효성 검사
     if (!isEmailValid(username)) {
-      setError('The email is not a valid email address.');
+      setemailError('The email is not a valid email address.');
       return;
     }
 
     if (!username || !password) {
-      setError('The email is not a valid email address.');
+      setemailError('The email is not a valid email address.');
       return;
     }
 
@@ -201,12 +202,12 @@ function LoginPage() {
     try {
       const response = await axios.post(`${ipv4}/users/login`, formData);
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log('로그인 성공:', response.data);
       }
     } catch (error) {
       console.error('로그인 오류:', error);
-      setError('Invalid email or password.');
+      setError('로그인 정보가 올바르지 않습니다. 다시 확인하고 로그인하세요.'); // 에러 메시지 설정
     }
   };
 
@@ -260,7 +261,7 @@ function LoginPage() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   ></input>
-                  {error && <p className="error-message">{error}</p>}
+                  {emailError && <p className="error-message">{emailError}</p>}
                 </div>
               </form>
             </div>
@@ -281,6 +282,8 @@ function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                   ></input>
                 </div>
+                {error && <p className="error-message">{error}</p>}{' '}
+                {/* 에러 메시지 표시 */}
               </form>
             </div>
 
