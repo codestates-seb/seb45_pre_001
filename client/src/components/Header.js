@@ -12,6 +12,7 @@ const StyledHeader = styled.header`
   width: 100%;
   height: 56px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   background-color: white;
   border-top: 3px solid rgba(255, 153, 0, 1);
@@ -134,6 +135,10 @@ const StyledHeader = styled.header`
     border-radius: 5px;
     color: white;
   }
+
+  .signup-button:hover {
+    background-color: #0054a3;
+  }
 `;
 
 const Styelnav = styled.nav`
@@ -177,13 +182,13 @@ export default function Header() {
           <span className="logo-img">Stack Overflow</span>
         </a>
         <StyledOl>
-          <li className="small-nav">
+          <li className="small-nav hidden-menu">
             <a href="https://stackoverflow.co/">About</a>
           </li>
           <li className="small-nav">
             <span>Product</span>
           </li>
-          <li className="small-nav">
+          <li className="small-nav hidden-menu">
             <a href="https://stackoverflow.co/teams/">For Teams</a>
           </li>
         </StyledOl>
