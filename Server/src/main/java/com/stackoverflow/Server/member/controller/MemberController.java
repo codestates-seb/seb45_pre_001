@@ -23,7 +23,6 @@ import java.util.List;
 @Validated
 @RequestMapping("/users")
 @Slf4j
-@CrossOrigin
 public class MemberController {
     private MemberMapper mapper;
 

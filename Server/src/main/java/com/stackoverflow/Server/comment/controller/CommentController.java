@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/questions/{question-id}/comments")
 @Validated
-@CrossOrigin
 public class CommentController {
     private final static String REPLY_DEFAULT_URL = "/questions/{question-id}/comments";
     private final CommentService commentService;
