@@ -11,7 +11,6 @@ import QuestionListPage from './pages/QuestionPageList';
 function App() {
   return (
     <div className="App">
-
       {/* <Header />
       <Sidebar />
       <Footer /> */}

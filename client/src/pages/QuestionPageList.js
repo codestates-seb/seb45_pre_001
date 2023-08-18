@@ -85,23 +85,33 @@ export default function QuestionListPage() {
   const itemsPerPage = 15;
 
   useEffect(() => {
-    fetch(`http://13.124.105.17:8080/questions?size=30&page=${currentPage}`)
+    fetch(`http://13.124.105.17:8080/questions`)
       .then((res) => res.json())
       .then((json) => {
-        setQuestions(json.data);
+        setQuestions(json);
+        console.log(json);
       });
-  }, [currentPage]);
+  }, []);
 
-  const changePage = (newPage) => {
-    fetch(`http://13.124.105.17:8080/questions?size=30&page=${newPage}`)
-      .then((res) => res.json())
-      .then((json) => {
-        setQuestions(json.data);
-        setCurrentPage(newPage);
-      });
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const visibleQuestions = questions.slice(startIndex, endIndex);
+
   const totalPages = Math.ceil(questions.length / itemsPerPage);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1,
+  );
+
+  const renderPageNumbers = pageNumbers.map((number) => (
+    <Button key={number} onClick={() => handlePageChange(number)}>
+      {number}
+    </Button>
+  ));
 
   return (
     <>
@@ -140,23 +150,11 @@ export default function QuestionListPage() {
             </div>
           </div>
           <div className="main_questions">
-            {questions.map((question, idx) => (
+            {visibleQuestions.map((question, idx) => (
               <Question question={question} key={idx} />
             ))}
           </div>
-          <div className="pagination">
-            {Array.from({ length: totalPages }, (_, index) => (
-              <Button
-                key={index}
-                onClick={() => changePage(index + 1)}
-                style={{
-                  fontWeight: currentPage === index + 1 ? 'bold' : 'normal',
-                }}
-              >
-                {index + 1}
-              </Button>
-            ))}
-          </div>
+          <div className="pagination">{renderPageNumbers}</div>
         </div>
       </QuestionPage>
     </>
