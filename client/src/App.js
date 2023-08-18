@@ -1,17 +1,22 @@
 import './App.css';
+// import LoginPage from './pages/LoginPage';
+import QuestionListPage from './pages/QuestionPageList';
 
-import Sidebar from './components/sidebar';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Navbar from './components/navbar';
+// import SignupPage from './pages/SignupPage';
+
+// import Sidebar from './components/sidebar';
+// import Header from './components/Header';
+// import Footer from './components/Footer';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Navbar />
+
+      {/* <Header />
       <Sidebar />
-      <Footer />
+      <Footer /> */}
+      {/* <SignupPage /> */}
+      <QuestionListPage />
     </div>
   );
 }
