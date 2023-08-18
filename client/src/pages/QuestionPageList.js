@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Question from '../components/question';
 import Header from '../components/Header';
 import { styled } from 'styled-components';
+import PaginationBtn from '../components/paginationBtn';
 
 const QuestionPage = styled.div`
   display: flex;
@@ -80,9 +81,14 @@ const Button = styled.button`
 
 export default function QuestionListPage() {
   const [questions, setQuestions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
+  const totalPages = Math.ceil(30 / itemsPerPage);
 
   useEffect(() => {
-    fetch(`http://13.124.105.17:8080/questions?page=1`)
+    fetch(
+      `http://13.124.105.17:8080/questions?size=${itemsPerPage}&page=${currentPage}`,
+    )
       .then((res) => res.json())
       .then((json) => {
         setQuestions(json.data);
@@ -131,6 +137,11 @@ export default function QuestionListPage() {
               <Question question={question} key={idx} />
             ))}
           </div>
+          <PaginationBtn
+            currentPage={currentPage}
+            totatalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </QuestionPage>
     </>
