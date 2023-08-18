@@ -12,13 +12,15 @@ const StyledHeader = styled.header`
   width: 100%;
   height: 56px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   background-color: white;
   border-top: 3px solid rgba(255, 153, 0, 1);
   border-bottom: 1px solid rgba(214, 217, 220, 1);
+  white-space: nowrap;
 
   .header-container {
-    width: 97.2307692rem;
+    width: 82vw;
     max-width: 100%;
     height: 100%;
     display: flex;
@@ -33,12 +35,23 @@ const StyledHeader = styled.header`
     padding: 0 8px;
 
     span {
-      color: black;
+      margin-top: -4px;
+      margin-left: 0;
+      width: 150px;
+      height: 30px;
+      text-indent: -9999em;
+      display: inline-block;
+      background-position: 0 -500px;
+      background-image: url('/stackoverflow.svg');
     }
 
     b {
       color: black;
     }
+  }
+
+  .logo-box:hover {
+    background-color: rgba(227, 230, 232, 1);
   }
 
   .logo-box img {
@@ -109,10 +122,22 @@ const StyledHeader = styled.header`
     color: rgba(57, 115, 157, 1);
   }
 
+  .login-button:hover {
+    background-color: rgba(179, 211, 234, 1);
+    color: rgba(44, 88, 119, 1);
+  }
+
+  .login-button::selection {
+  }
+
   .signup-button {
     background-color: rgba(10, 149, 255, 1);
     border-radius: 5px;
     color: white;
+  }
+
+  .signup-button:hover {
+    background-color: #0054a3;
   }
 `;
 
@@ -127,6 +152,7 @@ const StyledOl = styled.ol`
   display: flex;
   gap: 4px;
   padding: 2px 0;
+  font-size: 13px;
 
   .small-nav {
     display: flex;
@@ -153,18 +179,16 @@ export default function Header() {
     <StyledHeader>
       <div className="header-container">
         <a href="/" className="logo-box">
-          <img src="/small-logo.png" alt="logo-img" />
-          <span>Stack</span>
-          <b>overflow</b>
+          <span className="logo-img">Stack Overflow</span>
         </a>
         <StyledOl>
-          <li className="small-nav">
+          <li className="small-nav hidden-menu">
             <a href="https://stackoverflow.co/">About</a>
           </li>
           <li className="small-nav">
             <span>Product</span>
           </li>
-          <li className="small-nav">
+          <li className="small-nav hidden-menu">
             <a href="https://stackoverflow.co/teams/">For Teams</a>
           </li>
         </StyledOl>
@@ -176,13 +200,13 @@ export default function Header() {
         </form>
         <Styelnav>
           <StyledOl className="membership-button-box">
-            <li>
-              <a href="/login" className="login-button">
+            <li className="membership-btn">
+              <a href="/users/login" className="login-button">
                 Log in
               </a>
             </li>
-            <li>
-              <a href="/signup" className="signup-button">
+            <li className="membership-btn">
+              <a href="/users/new-user" className="signup-button">
                 Sign up
               </a>
             </li>
