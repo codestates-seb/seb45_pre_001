@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Question from '../components/question';
 import Header from '../components/Header';
 import { styled } from 'styled-components';
-import PaginationBtn from '../components/paginationBtn';
+// import PaginationBtn from '../components/paginationBtn';
 
 const QuestionPage = styled.div`
   display: flex;
@@ -83,18 +83,25 @@ export default function QuestionListPage() {
   const [questions, setQuestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
-  const totalPages = Math.ceil(30 / itemsPerPage);
 
   useEffect(() => {
-    fetch(
-      `http://13.124.105.17:8080/questions?size=${itemsPerPage}&page=${currentPage}`,
-    )
+    fetch(`http://13.124.105.17:8080/questions?size=30&page=${currentPage}`)
       .then((res) => res.json())
       .then((json) => {
         setQuestions(json.data);
-        console.log(json);
       });
-  }, []);
+  }, [currentPage]);
+
+  const changePage = (newPage) => {
+    fetch(`http://13.124.105.17:8080/questions?size=30&page=${newPage}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setQuestions(json.data);
+        setCurrentPage(newPage);
+      });
+  };
+
+  const totalPages = Math.ceil(questions.length / itemsPerPage);
 
   return (
     <>
@@ -137,11 +144,19 @@ export default function QuestionListPage() {
               <Question question={question} key={idx} />
             ))}
           </div>
-          <PaginationBtn
-            currentPage={currentPage}
-            totatalPages={totalPages}
-            setCurrentPage={setCurrentPage}
-          />
+          <div className="pagination">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <Button
+                key={index}
+                onClick={() => changePage(index + 1)}
+                style={{
+                  fontWeight: currentPage === index + 1 ? 'bold' : 'normal',
+                }}
+              >
+                {index + 1}
+              </Button>
+            ))}
+          </div>
         </div>
       </QuestionPage>
     </>
