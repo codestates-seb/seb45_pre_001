@@ -1,5 +1,7 @@
 package com.stackoverflow.Server.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stackoverflow.Server.comment.entity.Comment;
 import com.stackoverflow.Server.member.entity.Member;
 import lombok.Getter;
@@ -34,9 +36,11 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
+    @JsonBackReference
     private Member member;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
     public enum QuestionStatus {
