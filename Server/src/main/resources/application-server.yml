@@ -23,3 +23,6 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+
+  config:
+    domain: http://bprojectbucket01.s3-website.ap-northeast-2.amazonaws.com
