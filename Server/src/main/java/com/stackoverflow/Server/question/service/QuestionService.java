@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -54,10 +55,8 @@ public class QuestionService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
     }
 
-    public Page<Question> findQuestions(int page, int size) {
-        return questionRepository.findAll(
-                PageRequest.of(page, size, Sort.by("questionId").descending())
-        );
+    public List<Question> findQuestions() {
+        return questionRepository.findAll();
     }
 
     public void removeQuestion(long questionId) {
