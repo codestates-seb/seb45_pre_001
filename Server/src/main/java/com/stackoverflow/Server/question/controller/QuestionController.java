@@ -53,15 +53,11 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity getQuestions(@Positive @RequestParam int page,
-                                        @Positive @RequestParam(required = false,defaultValue = "15") int size) {
+    public ResponseEntity getQuestions() {
 
-        Page<Question> pages = questionService.findQuestions(page - 1, size);
-        List<Question> questions = pages.getContent();
+        List<Question> questions = questionService.findQuestions();
 
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.questionsToQuestionResponse(questions),
-                        pages), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.questionsToQuestionResponse(questions), HttpStatus.OK);
     }
 
     @GetMapping("/search")
