@@ -21,9 +21,6 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    @Column(nullable = false, updatable = false)
-    private Long questionId;
-
     @Column(nullable = false)
     private String nickname;
 
@@ -42,6 +39,6 @@ public class Comment {
     //한개의 질문에 여러개의 답변이 달릴 수 있음
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "POST_ID")
+    @JoinColumn(name = "QUESTION_ID")
     private Question question;
 }

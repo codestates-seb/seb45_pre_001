@@ -13,7 +13,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/questions/{question-id}/comments")
@@ -48,8 +47,8 @@ public class CommentController {
     //답변 조회
     @GetMapping
     public ResponseEntity getComments (@PathVariable("question-id") @Positive long questionId){
+        Comment comment = commentService.findCommentAll(questionId);
 
-        Comment response = (Comment) commentService.findCommentAll(questionId);
-        return new ResponseEntity<>(mapper.commentToCommentResponseDto(response),HttpStatus.OK);
+        return new ResponseEntity<>(mapper.commentToCommentResponseDto(comment),HttpStatus.OK);
     }
 }
