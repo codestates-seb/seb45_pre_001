@@ -1,5 +1,6 @@
 package com.stackoverflow.Server.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stackoverflow.Server.comment.entity.Comment;
 import com.stackoverflow.Server.question.entity.Question;
 import lombok.Getter;
@@ -36,9 +37,11 @@ public class Member{
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
