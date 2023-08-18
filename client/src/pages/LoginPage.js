@@ -5,6 +5,8 @@ import icon from '../images/small-logo.svg';
 import googleIcon from '../images/google-icon.svg';
 import githubIcon from '../images/github-icon.svg';
 import facebookIcon from '../images/facebook-icon.svg';
+import axios from 'axios'; // Import axios here
+import { useState } from 'react';
 
 const StyleLoginPage = styled.div`
   background-color: #f1f2f3;
@@ -17,11 +19,21 @@ const StyleLoginPage = styled.div`
     width: 288.45px;
   }
 
+  //에러 발생 시 전체 컨테이너 크기 커짐
+  .container.error {
+    width: 300px;
+  }
+
   .img-contaienr {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 24px;
+  }
+
+  .img-contaienr a > img {
+    width: 32px;
+    height: 37px;
   }
 
   .link-button-container {
@@ -76,7 +88,6 @@ const StyleLoginPage = styled.div`
     width: 100%;
     margin-top: 16px;
     margin-bottom: 24px;
-    height: 234px;
     border-radius: 7px;
     background: #ffffff;
     box-shadow:
@@ -88,7 +99,6 @@ const StyleLoginPage = styled.div`
   #login-form {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     gap: 15px;
   }
 
@@ -99,9 +109,10 @@ const StyleLoginPage = styled.div`
     border-radius: 5px;
     border: 1px solid #babfc4;
     background: #fff;
-    height: 35px;
+    height: 33px;
     flex-shrink: 0;
     width: 100%;
+    padding: 8px 9px;
   }
 
   .login-button-container {
@@ -117,6 +128,7 @@ const StyleLoginPage = styled.div`
 
   .login-button {
     color: #ffffff;
+    width: 100%;
   }
   .password-lable {
     display: flex;
@@ -145,12 +157,63 @@ const StyleLoginPage = styled.div`
   .fa-up-right-from-square {
     margin-left: 5px;
   }
+
+  .error-message {
+    color: #d0393e;
+    font-size: 13px;
+    margin: 2px 0;
+    padding: 2px;
+  }
 `;
 
 function LoginPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setemailError] = useState('');
+  const [error, setError] = useState('');
+
+  const isEmailValid = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailRegex.test(email);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // 이메일 양식 유효성 검사
+    if (!isEmailValid(username)) {
+      setemailError('The email is not a valid email address.');
+      return;
+    }
+
+    if (!username || !password) {
+      setemailError('The email is not a valid email address.');
+      return;
+    }
+
+    const ipv4 = 'http://13.124.105.17:8080'; // 서버 주소
+
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    for (const keyValue of formData) console.log(keyValue);
+
+    try {
+      const response = await axios.post(`${ipv4}/users/login`, formData);
+
+      if (response.status === 200) {
+        console.log('로그인 성공:', response.data);
+      }
+    } catch (error) {
+      console.error('로그인 오류:', error);
+      setError('로그인 정보가 올바르지 않습니다. 다시 확인하고 로그인하세요.'); // 에러 메시지 설정
+    }
+  };
+
   return (
     <StyleLoginPage>
-      <div className="container">
+      <div className={`container ${error ? 'error' : ''}`}>
         <div className="img-contaienr">
           <a href="https://stackoverflow.com">
             <img src={icon} alt="stackoverflow-logo"></img>
@@ -186,16 +249,19 @@ function LoginPage() {
           </button>
         </div>
         <div className="form-container">
-          <form id="login-form">
+          <form id="login-form" onSubmit={handleSubmit}>
             <div className="login-box">
-              <form className="login-form">
+              <form className="email-form">
                 <label htmlFor="email">Email</label>
                 <div>
                   <input
                     className="email-input"
                     id="email"
                     type="email"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                   ></input>
+                  {emailError && <p className="error-message">{emailError}</p>}
                 </div>
               </form>
             </div>
@@ -212,12 +278,19 @@ function LoginPage() {
                     className="password-input"
                     id="password"
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   ></input>
                 </div>
+                {error && <p className="error-message">{error}</p>}{' '}
+                {/* 에러 메시지 표시 */}
               </form>
             </div>
+
             <div className="login-button-container">
-              <button className="login-button">Log in</button>
+              <button className="login-button" type="submit">
+                Log in
+              </button>
             </div>
           </form>
         </div>
