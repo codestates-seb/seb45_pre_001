@@ -1,5 +1,6 @@
 package com.stackoverflow.Server.comment.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.stackoverflow.Server.member.entity.Member;
 import com.stackoverflow.Server.question.entity.Question;
 import lombok.Getter;
@@ -20,9 +21,6 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    @Column(nullable = false, updatable = false)
-    private Long questionId;
-
     @Column(nullable = false)
     private String nickname;
 
@@ -34,11 +32,13 @@ public class Comment {
 
     //한명의 유저가 여러개의 답변을 남길 수 있음
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     //한개의 질문에 여러개의 답변이 달릴 수 있음
     @ManyToOne
-    @JoinColumn(name = "POST_ID")
+    @JsonBackReference
+    @JoinColumn(name = "QUESTION_ID")
     private Question question;
 }
