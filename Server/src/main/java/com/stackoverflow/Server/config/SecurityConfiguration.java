@@ -2,10 +2,13 @@ package com.stackoverflow.Server.config;
 
 import com.stackoverflow.Server.auth.MemberAuthorityUtils;
 import com.stackoverflow.Server.jwt.filter.JwtAuthenticationFilter;
+import com.stackoverflow.Server.jwt.filter.JwtVerificationFilter;
+import com.stackoverflow.Server.jwt.handler.CustomAuthenticationFailureHandler;
 import com.stackoverflow.Server.jwt.handler.CustomAuthenticationSuccessHandler;
 import com.stackoverflow.Server.jwt.token.JwtTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,6 +48,9 @@ public class SecurityConfiguration {
                 .logoutSuccessUrl("/users/login")
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers(HttpMethod.POST, "/*/members").permitAll()
+                        .antMatchers(HttpMethod.POST, "/questions/new-questions").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/questions/{question-id}/comments").hasRole("USER")
                         .antMatchers("/**").permitAll());
         return http.build();
     }
@@ -72,8 +78,14 @@ public class SecurityConfiguration {
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
             jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");
 
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new CustomAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new CustomAuthenticationFailureHandler());
+
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+
             builder
-                    .addFilter(jwtAuthenticationFilter);
+                    .addFilter(jwtAuthenticationFilter)
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
 }
