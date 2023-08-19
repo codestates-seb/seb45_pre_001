@@ -1,13 +1,18 @@
 package com.stackoverflow.Server.config;
 
+import com.stackoverflow.Server.auth.MemberAuthorityUtils;
+import com.stackoverflow.Server.jwt.filter.JwtAuthenticationFilter;
+import com.stackoverflow.Server.jwt.handler.CustomAuthenticationSuccessHandler;
+import com.stackoverflow.Server.jwt.token.JwtTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -16,6 +21,14 @@ import java.util.Arrays;
 
 @Configuration
 public class SecurityConfiguration {
+    private JwtTokenizer jwtTokenizer;
+
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, MemberAuthorityUtils authorityUtils) {
+        this.jwtTokenizer = jwtTokenizer;
+        this.authorityUtils = authorityUtils;
+    }
+
+    private MemberAuthorityUtils authorityUtils;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -23,11 +36,9 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(Customizer.withDefaults())
-                .formLogin()
-                .loginPage("/users/login")
-                .loginProcessingUrl("/users/login")
-                .successHandler(new CustomAuthenticationSuccessHandler())
-//                .failureUrl() // 로그인 실패하면 뭐 보여줄지 물어보기
+                .formLogin().disable()
+                .httpBasic().disable()
+                .apply(new CustomFilterConfigurer())
                 .and()
                 .logout()
                 .logoutUrl("/users/logout")
@@ -52,5 +63,17 @@ public class SecurityConfiguration {
         // 모든 url에 앞서 설정한 cors 설정을 적용시킨다.
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");
+
+            builder
+                    .addFilter(jwtAuthenticationFilter);
+        }
     }
 }

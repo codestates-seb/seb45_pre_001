@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class MemberAuthorityUtils {
-    private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN");
+    private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
 
     private final List<String> USER_ROLES_STRING = List.of("USER");
 
