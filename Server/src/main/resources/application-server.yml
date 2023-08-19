@@ -26,3 +26,8 @@ spring:
 
   config:
     domain: http://bprojectbucket01.s3-website.ap-northeast-2.amazonaws.com
+
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420

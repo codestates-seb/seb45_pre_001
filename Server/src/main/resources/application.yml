@@ -2,6 +2,6 @@
 # 공통 정보가 없어 비워두었습니다.
 
 jwt:
-  key: "asdjklhalsdjkhaljsdkhasdjkhasdjkalsdjkajsdkl123412344"
+  key: "ajsdhflahefkjlaweh324123341243jasdfkuajsdfalukjh12313"
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
