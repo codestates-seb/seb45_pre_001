@@ -239,10 +239,10 @@ const DeatailArticle = styled.article`
 
 export default function QuestionDetail() {
   //questionData 상태 만들기
-  const [questionData, setQuestionData] = useState(null);
+  const [questionData, setQuestionData] = useState('');
 
   useEffect(() => {
-    fetch('https://koreanjson.com/posts/1')
+    fetch('https://koreanjson.com/posts/8')
       .then((response) => response.json())
       .then((json) => {
         setQuestionData(json);
@@ -255,7 +255,7 @@ export default function QuestionDetail() {
     <DeatailArticle>
       <div className="question-header">
         <h1>
-          <a href="/questions/{question-id}">TITLE</a>
+          <a href="/questions/{question-id}">{questionData.title}</a>
         </h1>
         <div className="ask-btn">
           <Link to="/questions/new-questions">Ask Question</Link>
@@ -264,11 +264,11 @@ export default function QuestionDetail() {
       <div className="question-info">
         <div>
           <span>Asked</span>
-          <time>2023-08-18</time>
+          <time>{questionData.createdAt}</time>
         </div>
         <div>
           <span>Modified</span>
-          <a href="?lastactivity">2023-08-18</a>
+          <a href="?lastactivity">{questionData.updatedAt}</a>
         </div>
         <div>
           <span>Viewed</span>
@@ -289,23 +289,7 @@ export default function QuestionDetail() {
         </div>
         <div className="content-section">
           <div className="question-content">
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <p>여기에 질문 내용을 받아야와 합니다.</p>
-            <ol>
-              <li>어떻게 요소별로 가져오지?</li>
-              <li>웹 에디터로 저장하면 html 요소까지 저장되나?</li>
-            </ol>
+            <div>{questionData.content}</div>
           </div>
           <div className="sub-function">
             <div className="social-btn-box">
@@ -320,7 +304,7 @@ export default function QuestionDetail() {
               <div className="user-info">
                 <div className="user-action-time">
                   Asked&nbsp;
-                  <span>2023-08-18</span>
+                  <span>{questionData.createdAt}</span>
                 </div>
                 <div className="user-avatar">
                   <a href="/">
@@ -328,7 +312,7 @@ export default function QuestionDetail() {
                   </a>
                 </div>
                 <div className="user-detail">
-                  <a href="/">작성자</a>
+                  <a href="/">{questionData.id}</a>
                 </div>
               </div>
               <div className="etc">
