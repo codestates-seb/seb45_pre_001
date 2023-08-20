@@ -1,4 +1,4 @@
-package com.stackoverflow.Server.config;
+package com.stackoverflow.Server.jwt.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
