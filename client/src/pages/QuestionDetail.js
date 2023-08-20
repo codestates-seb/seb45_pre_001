@@ -250,8 +250,7 @@ export default function QuestionDetail() {
       .catch((error) => console.log(error));
   }, []);
 
-  console.log(questionData.title);
-
+  console.log(questionData);
   return (
     <DeatailArticle>
       <div className="question-header">
