@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Question from '../components/question';
 import Header from '../components/Header';
 import { styled } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const QuestionPage = styled.div`
   display: flex;
@@ -97,7 +98,9 @@ export default function QuestionListPage() {
         <div className="main_container">
           <div className="main_header">
             <h1>All Question </h1>
-            <button className="qa_btn">Ask Question</button>
+            <Link to="/questions/new-questions">
+              <button className="qa_btn">Ask Question</button>
+            </Link>
           </div>
           <div className="main_question_filer">
             <div className="question_item">{questions.length} questions</div>

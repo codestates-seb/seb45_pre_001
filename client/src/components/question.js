@@ -2,7 +2,16 @@
 // 선택 데이터 : 태그, 조회수
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { styled } from 'styled-components';
+import PropTypes from 'prop-types';
 
+Question.propTypes = {
+  question: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    questionBody: PropTypes.string.isRequired,
+    nickname: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+  }).isRequired,
+};
 const QuestionStyle = styled.div`
   display: flex;
   flex-direction: column;

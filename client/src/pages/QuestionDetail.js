@@ -1,6 +1,8 @@
 import { styled } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const DeatailArticle = styled.article`
   /* header와 겹치지 않게 position 설정*/
@@ -13,7 +15,11 @@ const DeatailArticle = styled.article`
   padding-left: 16px;
   padding-right: 16px;
   font-size: 13px;
-
+  /* footer하고 겹치지 않게 100vh로 설정했으나, 
+  article의 길이가 100vh를 넘어가면 footer하고 겹치게 됨.. 
+  app.css파일에서 flex 또는 grid를 사용하여 
+  전체 요소의 배열을 조정할 필요 있음 */
+  height: 100vh;
   .question-header {
     display: flex;
     justify-content: space-between;
@@ -233,6 +239,19 @@ const DeatailArticle = styled.article`
 
 export default function QuestionDetail() {
   //questionData 상태 만들기
+  const [questionData, setQuestionData] = useState(null);
+
+  useEffect(() => {
+    fetch('https://koreanjson.com/posts/1')
+      .then((response) => response.json())
+      .then((json) => {
+        setQuestionData(json);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  console.log(questionData.title);
+
   return (
     <DeatailArticle>
       <div className="question-header">
@@ -240,7 +259,7 @@ export default function QuestionDetail() {
           <a href="/questions/{question-id}">TITLE</a>
         </h1>
         <div className="ask-btn">
-          <a href="/questions/new-questions">Ask Question</a>
+          <Link to="/questions/new-questions">Ask Question</Link>
         </div>
       </div>
       <div className="question-info">
@@ -271,6 +290,18 @@ export default function QuestionDetail() {
         </div>
         <div className="content-section">
           <div className="question-content">
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
+            <p>여기에 질문 내용을 받아야와 합니다.</p>
             <p>여기에 질문 내용을 받아야와 합니다.</p>
             <ol>
               <li>어떻게 요소별로 가져오지?</li>
