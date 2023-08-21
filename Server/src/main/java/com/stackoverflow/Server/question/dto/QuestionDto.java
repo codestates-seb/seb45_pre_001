@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 public class QuestionDto {
 
     @Getter
@@ -13,22 +14,33 @@ public class QuestionDto {
     @NoArgsConstructor
     public static class Post {
         private long memberId;
+        private String nickname;
         private String title;
         private String questionBody;
 
         public Member getMember() {
             Member member = new Member();
             member.setMemberId(memberId);
+            member.setNickname(nickname);
             return member;
         }
     }
-
-    @AllArgsConstructor
     @Getter
-    public static class response {
+    @Setter
+    @NoArgsConstructor
+    public static class Patch{
         private long questionId;
+        private long memberId;
+        private String nickname;
         private String title;
         private String questionBody;
+
+        public Member getMember() {
+            Member member = new Member();
+            member.setMemberId(memberId);
+            member.setNickname(nickname);
+            return member;
+        }
     }
 
     @Getter

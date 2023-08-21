@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,33 +31,50 @@ public class QuestionController {
     @PostMapping("/new-questions")
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postDto) {
 
-
-
         Question question = mapper.questionPostToQuestion(postDto);
         Question createQuestion = questionService.createQuestion(question);
 
-        return new ResponseEntity<>(createQuestion, HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.questionToQuestionResponse(createQuestion), HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{question-id}")
+    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
+                                        @RequestBody QuestionDto.Patch patchDto) {
+        patchDto.setQuestionId(questionId);
+        Question question = questionService.updateQuestion(mapper.questionPatchDtoToQuestion(patchDto));
+
+        return new ResponseEntity<>(mapper.questionToQuestionResponse(question), HttpStatus.OK);
+    }
+
+    @GetMapping("/{question-id}")
+    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId) {
+        Question question = questionService.findQuestion(questionId);
+        return new ResponseEntity<>(mapper.questionToQuestionResponse(question), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity findQuestions(@Positive @RequestParam int page,
-                                        @Positive @RequestParam int size) {
+    public ResponseEntity getQuestions() {
 
-        Page<Question> pages = questionService.findQuestions(page - 1, size);
-        List<Question> questions = pages.getContent();
+        List<Question> questions = questionService.findQuestions();
 
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.questionsToQuestionResponse(questions),
-                        pages), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.questionsToQuestionResponse(questions), HttpStatus.OK);
     }
 
     @GetMapping("/search")
     public ResponseEntity questionFindByTitle(@RequestBody QuestionDto.search search,
-                                              @RequestParam @Positive int page) {
-        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+                                              @RequestParam(required = false, defaultValue = "1") @Positive int page,
+                                              @RequestParam(required = false, defaultValue = "15") int size) {
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("createdAt").descending());
         Page<Question> questionPage = questionService.searchQuestions(search.getTitle(), pageable);
         List<Question> questions = questionPage.getContent();
 
         return new ResponseEntity(new MultiResponseDto(mapper.questionsToQuestionResponse(questions), questionPage), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{question-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId){
+        questionService.removeQuestion(questionId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

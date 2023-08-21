@@ -1,5 +1,7 @@
 package com.stackoverflow.Server.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stackoverflow.Server.comment.entity.Comment;
 import com.stackoverflow.Server.member.entity.Member;
 import lombok.Getter;
@@ -23,6 +25,9 @@ public class Question {
     @Column(nullable = false)
     private String title;
 
+    @Enumerated(value = EnumType.STRING)
+    private QuestionStatus questionStatus = QuestionStatus.QUESTION_NOT_COMMENTED;
+
     @Column(nullable = false)
     private String questionBody;
 
@@ -31,8 +36,21 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
+    @JsonBackReference
     private Member member;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
+
+    public enum QuestionStatus {
+        QUESTION_COMMENTED("답변 존재"),
+        QUESTION_NOT_COMMENTED("답변 없음");
+
+        @Getter
+        private String status;
+        QuestionStatus(String status) {
+            this.status = status;
+        }
+    }
 }
