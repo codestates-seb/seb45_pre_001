@@ -6,7 +6,6 @@ import googleIcon from '../images/google-icon.svg';
 import githubIcon from '../images/github-icon.svg';
 import facebookIcon from '../images/facebook-icon.svg';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const StyleLoginPage = styled.div`
   background-color: #f1f2f3;
@@ -167,7 +166,6 @@ const StyleLoginPage = styled.div`
 `;
 
 function LoginPage() {
-  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setemailError] = useState('');
@@ -208,8 +206,8 @@ function LoginPage() {
         if (data === 'login Failed') {
           throw new Error('An error occurred with log in.');
         } else {
-          // 로그인 성공한 경우 페이지 이동
-          navigate('/questions/{question-id}'); // 적절한 경로로 변경하세요
+          const token = data;
+          localStorage.setItem('jwtToken', token); // 토큰 저장
         }
       })
       .catch((error) => {

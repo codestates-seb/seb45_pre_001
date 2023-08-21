@@ -1,6 +1,6 @@
 import './App.css';
-import AskQuestionPage from './pages/AskQuestionPage';
-// import LoginPage from './pages/LoginPage';
+// import AskQuestionPage from './pages/AskQuestionPage';
+import LoginPage from './pages/LoginPage';
 // import QuestionListPage from './pages/QuestionPageList';
 
 // import SignupPage from './pages/SignupPage';
@@ -12,13 +12,13 @@ import AskQuestionPage from './pages/AskQuestionPage';
 function App() {
   return (
     <div className="App">
-      <AskQuestionPage />
+      {/* <AskQuestionPage /> */}
       {/* <Header />
       <Sidebar />
       <Footer /> */}
       {/* <SignupPage /> */}
       {/* <QuestionListPage /> */}
-      {/* <LoginPage /> */}
+      <LoginPage />
     </div>
   );
 }
