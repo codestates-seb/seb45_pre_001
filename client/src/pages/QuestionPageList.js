@@ -56,6 +56,10 @@ const QuestionPage = styled.div`
     padding: 9.6px;
     border-radius: 6px;
   }
+  /* .pagination_btn:hover {
+    background-color: rgb(227, 230, 232);
+    cursor: pointer;
+  } */
 `;
 
 const Button = styled.button`
@@ -76,12 +80,26 @@ const Button = styled.button`
   font-size: 12px;
   &:hover {
     background-color: rgb(227, 230, 232);
+    cursor: pointer;
+  }
+  &.pagination_btn {
+    margin-right: 7px;
+    border-radius: 4px;
+    border: solid 1px rgb(227, 230, 232);
+  }
+  &.active {
+    background-color: rgb(244, 130, 37);
+    border: none;
+    color: white;
   }
 `;
 
 export default function QuestionListPage() {
+  // 질문 목록 저장
   const [questions, setQuestions] = useState([]);
+  // 현재 페이지와 페이지당 아이템 수를 나타내는 상태 설정
   const [currentPage, setCurrentPage] = useState(1);
+  // 각 페이지에 표시될 아이템의 수
   const itemsPerPage = 15;
 
   useEffect(() => {
@@ -91,8 +109,9 @@ export default function QuestionListPage() {
         setQuestions(json);
         console.log(json);
       });
-  }, []);
+  }, []); // 첫렌더링시에만 api호출이 되게 빈 배열을 넣어줌
 
+  // 페이지 번호를 변경할 때마다 호툴되는 핸들러 함수
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -108,7 +127,11 @@ export default function QuestionListPage() {
   );
 
   const renderPageNumbers = pageNumbers.map((number) => (
-    <Button key={number} onClick={() => handlePageChange(number)}>
+    <Button
+      className={`pagination_btn ${currentPage === number ? 'active' : ''}`}
+      key={number}
+      onClick={() => handlePageChange(number)}
+    >
       {number}
     </Button>
   ));
