@@ -1,5 +1,6 @@
 import './App.css';
-import LoginPage from './pages/LoginPage';
+import AskQuestionPage from './pages/AskQuestionPage';
+// import LoginPage from './pages/LoginPage';
 // import LoginPage from './pages/LoginPage';
 // import QuestionListPage from './pages/QuestionPageList';
 
@@ -17,7 +18,8 @@ function App() {
       <Footer /> */}
       {/* <SignupPage /> */}
       {/* <QuestionListPage /> */}
-      <LoginPage />
+      {/* <LoginPage /> */}
+      <AskQuestionPage />
     </div>
   );
 }

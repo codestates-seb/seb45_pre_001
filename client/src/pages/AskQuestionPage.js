@@ -238,8 +238,8 @@ function AskQuestionPage() {
 
     // 요청 할 데이터값 정의
     const requestData = {
-      memberId: 2,
-      nickname: '닉네임1',
+      memberId: 1,
+      nickname: '',
       title,
       questionBody,
     };
@@ -248,11 +248,16 @@ function AskQuestionPage() {
     const ipv4 = 'http://13.124.105.17:8080';
 
     try {
-      // 백엔드 API로 HTTP POST 요청 보내기
       const response = await axios.post(
         `${ipv4}/questions/new-questions`,
         requestData,
+        {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sIm5pY2tuYW1lIjoi6rmA7ISg66-4IiwidXNlcm5hbWUiOiJ0anNhbEBnbWFpbC5jb20iLCJzdWIiOiJ0anNhbEBnbWFpbC5jb20iLCJpYXQiOjE2OTI2MDM1NzUsImV4cCI6MTY5MjYwNTM3NX0.5i9hfQsrB9o-2YkniJSCYs1JO33xADQBO_xu6NtCfZlslcp7sKtpPtV7vluo02vS`,
+          },
+        },
       );
+
       // 응답 처리 (예: 성공 메시지 표시)
       console.log('질문이 성공적으로 제출되었습니다:', response);
     } catch (error) {
