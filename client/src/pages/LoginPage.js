@@ -204,8 +204,7 @@ function LoginPage() {
         const token = response.headers.authorization; // 응답 객체에서 토큰 추출
         localStorage.setItem('jwtToken', token); // 토큰 저장
         console.log('성공');
-        // 로그인 성공 시 페이지 이동
-
+        // 로그인 성공 시 메인 페이지 이동
         navigate('/questions/');
       }
     } catch (error) {
