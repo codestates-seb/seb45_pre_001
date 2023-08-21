@@ -7,11 +7,15 @@ import com.stackoverflow.Server.member.entity.Member;
 import com.stackoverflow.Server.member.repository.MemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +58,22 @@ public class MemberService {
 
     public void verifyExistsEmail(String email) {
         Optional<Member> findMember = memberRepository.findByEmail(email);
-        if(findMember.isPresent()) throw new BusinessLogicException(ExceptionCode.MEMBER_EXIST);
+        if (findMember.isPresent()) throw new BusinessLogicException(ExceptionCode.MEMBER_EXIST);
+    }
+
+    public void verifyMemberOwnership(String nickname) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        }
+        Object principal = authentication.getPrincipal();
+
+        System.out.println(nickname);
+        System.out.println(principal);
+
+        if (!nickname.equals(principal.toString())) {
+            throw new BusinessLogicException(ExceptionCode.PERMISSION_NOT_EXIST);
+        }
+
     }
 }
