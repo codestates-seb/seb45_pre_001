@@ -37,8 +37,10 @@ public class MemberController {
     public ResponseEntity postMember(@RequestBody MemberPostDto memberPostDto) {
 
         Member member = memberService.creatMember(mapper.memberPostDtoToMember(memberPostDto));
+        member.setNickname(member.getNickname());
+        member.setEmail(member.getEmail());
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(mapper.memberToMemberResponseDto(member), HttpStatus.CREATED);
     }
 
     @GetMapping("/{user_id}")
