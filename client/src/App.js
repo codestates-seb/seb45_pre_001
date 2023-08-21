@@ -1,7 +1,5 @@
-import { BrowserRouter as Router } from 'react-router-dom';
-import './App.css';
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
 
 /*page*/
 import LoginPage from './pages/LoginPage';
@@ -17,7 +15,6 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-
     <BrowserRouter>
       <div className="App">
         <Header />
