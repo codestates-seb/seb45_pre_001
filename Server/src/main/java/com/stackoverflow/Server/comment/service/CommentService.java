@@ -10,6 +10,7 @@ import com.stackoverflow.Server.question.service.QuestionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,19 +43,36 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    //답변 조회
-    @Transactional(readOnly = true)
-    public Comment findCommentAll(long questionId){
-        return findVerifiedComment(questionId);
+    //답변 수정
+    public Comment updateComment (Comment comment){
+        Comment findComment = findVerifiedComment(comment.getCommentId());
+
+        Optional.ofNullable(comment.getCommentBody())
+                .ifPresent(body -> findComment.setCommentBody(body));
+
+        return commentRepository.save(findComment);
     }
 
 
-    //답변 찾기
-    public Comment findVerifiedComment (long questionId){
-        Optional<Comment> comment = commentRepository.findById(questionId);
+    //질문에 대한 답변 전체 조회
+    public List<Comment> findCommentAll(long questionId){
+        return commentRepository.findByIdWithAll(questionId);
+    }
+
+
+    //해당 답변 조회
+    public Comment findVerifiedComment (long commentId){
+        Optional<Comment> comment = commentRepository.findById(commentId);
 
         Comment findComment = comment.orElseThrow(()-> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
         return findComment;
+    }
+
+    //답변 삭제
+    public void deleteComment (long commentId){
+        Comment findComment = findVerifiedComment(commentId);
+
+        commentRepository.deleteById(findComment.getCommentId());
     }
 
 }

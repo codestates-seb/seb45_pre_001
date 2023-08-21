@@ -1,5 +1,6 @@
 package com.stackoverflow.Server.comment.mapper;
 
+import com.stackoverflow.Server.comment.dto.CommentPatchDto;
 import com.stackoverflow.Server.comment.dto.CommentPostDto;
 import com.stackoverflow.Server.comment.dto.CommentResponseDto;
 import com.stackoverflow.Server.comment.entity.Comment;
@@ -18,17 +19,9 @@ public interface CommentMapper {
     @Mapping(source = "memberId", target = "member.memberId")
     Comment commentPostDtoToComment (CommentPostDto commentPostDto);
 
-    default CommentResponseDto commentToCommentResponseDto (Comment comment){
-        CommentResponseDto commentResponseDto = new CommentResponseDto();
+    Comment commentPatchDtoToComment (CommentPatchDto commentPatchDto);
 
-        commentResponseDto.setCommentId(comment.getCommentId());
-        commentResponseDto.setQuestionId(comment.getQuestion().getQuestionId());
-        commentResponseDto.setNickname(comment.getNickname());
-        commentResponseDto.setCommentBody(comment.getCommentBody());
-        commentResponseDto.setCreatedAt(comment.getCreatedAt());
-
-        return commentResponseDto;
-    }
+    CommentResponseDto commentToCommentResponseToDto (Comment comment);
 
     List<CommentResponseDto> commentsToCommentsResponseDto (List<Comment> comments);
 
