@@ -5,8 +5,8 @@ import icon from '../images/small-logo.svg';
 import googleIcon from '../images/google-icon.svg';
 import githubIcon from '../images/github-icon.svg';
 import facebookIcon from '../images/facebook-icon.svg';
-import axios from 'axios'; // Import axios here
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const StyleLoginPage = styled.div`
   background-color: #f1f2f3;
@@ -167,6 +167,7 @@ const StyleLoginPage = styled.div`
 `;
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setemailError] = useState('');
@@ -177,7 +178,8 @@ function LoginPage() {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = async (event) => {
+  // 새로고침 방지
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     // 이메일 양식 유효성 검사
@@ -186,29 +188,34 @@ function LoginPage() {
       return;
     }
 
-    if (!username || !password) {
-      setemailError('The email is not a valid email address.');
-      return;
-    }
+    // 서버 주소
+    const ipv4 = 'http://13.124.105.17:8080';
 
-    const ipv4 = 'http://13.124.105.17:8080'; // 서버 주소
+    const loginData = {
+      username: username,
+      password: password,
+    };
+    console.log(loginData);
 
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('password', password);
-
-    for (const keyValue of formData) console.log(keyValue);
-
-    try {
-      const response = await axios.post(`${ipv4}/users/login`, formData);
-
-      if (response.status === 200) {
-        console.log('로그인 성공:', response.data);
-      }
-    } catch (error) {
-      console.error('로그인 오류:', error);
-      setError('로그인 정보가 올바르지 않습니다. 다시 확인하고 로그인하세요.'); // 에러 메시지 설정
-    }
+    // 로그인 요청 보내기
+    fetch(`${ipv4}/users/login`, {
+      method: 'POST',
+      body: JSON.stringify(loginData), // JSON 형식으로 변환
+    })
+      .then((response) => response.text()) // 서버 응답 text 형식으로 변환
+      .then((data) => {
+        console.log('서버 응답:', data);
+        if (data === 'login Failed') {
+          throw new Error('An error occurred with log in.');
+        } else {
+          // 로그인 성공한 경우 페이지 이동
+          navigate('/questions/{question-id}'); // 적절한 경로로 변경하세요
+        }
+      })
+      .catch((error) => {
+        console.error('에러 발생:', error); // 에러 콘솔 출력
+        setError(error.message);
+      });
   };
 
   return (
@@ -282,7 +289,7 @@ function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                   ></input>
                 </div>
-                {error && <p className="error-message">{error}</p>}{' '}
+                {error && <p className="error-message">{error}</p>}
                 {/* 에러 메시지 표시 */}
               </form>
             </div>
