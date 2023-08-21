@@ -2,7 +2,17 @@
 // 선택 데이터 : 태그, 조회수
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { styled } from 'styled-components';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
+Question.propTypes = {
+  question: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    questionBody: PropTypes.string.isRequired,
+    nickname: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+  }).isRequired,
+};
 const QuestionStyle = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,7 +74,9 @@ export default function Question({ question }) {
     <QuestionStyle>
       <li className="qusestion_container">
         <div className="question_content">
-          <h3 className="question_content_title">{question.title}</h3>
+          <Link to={`/questions/${question.questionId}`}>
+            <h3 className="question_content_title">{question.title}</h3>
+          </Link>
           <span className="question_content_body">{question.questionBody}</span>
           <div className="question_content_post">
             <div className="question_post_user">{question.nickname}</div>

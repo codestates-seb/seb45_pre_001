@@ -5,13 +5,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import QuestionPageDropdown from '../components/QuestionPageDropdown';
 // import Header from '../components/Header';
 // import Footer from '../components/Footer';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
+import { useNavigate } from 'react-router-dom';
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   margin-top: 56px;
 
   // 사이드 여백 조정
@@ -140,10 +142,11 @@ const StyleAskPage = styled.div`
 `;
 
 function AskQuestionPage() {
+  const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수를 가져옴
+
   const editorRef = useRef(null);
   const editor2Ref = useRef(null);
   const TagRef = useRef(null);
-
   // 리덕스 스토어에 액션을 디스패치하여 상태를 업데이트 하는 dispatch함수
   const dispatch = useDispatch();
 
@@ -224,11 +227,60 @@ function AskQuestionPage() {
   };
 
   // 질문 검토 버튼 클릭 핸들러
-  const handleReviewButtonClick = () => {
+  const handleReviewButtonClick = async () => {
     // reviewButtonVisible 상태를 숨김(false)으로 변경
     dispatch({ type: 'SET_REVIEW_BUTTON_VISIBLE', payload: false });
     //checkContainerVisible 상태를 숨김(false)으로 변경
     dispatch({ type: 'SET_CHECK_CONTAINER_VISIBLE', payload: false });
+
+    const titleInput = document.querySelector('.title-input');
+    const contentInput = editorRef.current.editor.getData();
+
+    const title = titleInput.value; // 유저가 입력한 제목
+    const questionBody = contentInput; // 유저가 입력한 내용
+    const jwtToken = localStorage.getItem('jwtToken'); // 로그인 페이지에서 저장한 토큰 가져오기
+    console.log(jwtToken);
+
+    // 토큰 해독
+    const decodedToken = jwt_decode(jwtToken);
+    console.log(decodedToken);
+
+    // memberId와 nickname 얻기
+    const nickname = decodedToken.nickname;
+
+    // 요청 할 데이터값 정의
+    const requestData = {
+      memberId: 3, // memberId 사용
+      nickname: nickname, // nickname 사용
+      title,
+      questionBody,
+    };
+    console.log(requestData);
+
+    // 주소값 정의
+    const ipv4 = 'http://13.124.105.17:8080';
+
+    try {
+      const response = await axios.post(
+        `${ipv4}/questions/new-questions`,
+        requestData,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`, // 토큰을 Authorization 헤더에 추가
+          },
+        },
+      );
+
+      // 응답 처리 (예: 성공 메시지 표시)
+      const questionid = response.data.questionId;
+      navigate(`/questions/${questionid}`);
+
+      console.log(questionid);
+      console.log('질문이 성공적으로 제출되었습니다:', response);
+    } catch (error) {
+      // 오류 처리 (예: 오류 메시지 표시)
+      console.error('질문 제출 오류:', error);
+    }
   };
 
   // 체크박스 변경 핸들러 함수

@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { styled } from 'styled-components';
 import Header from '../components/Header';
+import { useState } from 'react';
 
 const SignUpPage = styled.div`
   display: flex;
@@ -134,6 +135,41 @@ const SignupFormContainer = styled.div`
 `;
 
 export default function SignupPage() {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [checkbox, setCheckbox] = useState('');
+
+  const handleSignup = async () => {
+    try {
+      const userData = {
+        // 서버에서 구축한 json형태로 보내야함
+        nickname: username,
+        email: email,
+        password: password,
+      };
+
+      const response = await fetch(`http://13.124.105.17:8080/users/new-user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+      const { token } = data;
+
+      localStorage.setItem('token', token);
+
+      setUsername('');
+      setEmail('');
+      setPassword('');
+      setCheckbox('');
+    } catch (error) {
+      console.error('Error signing up:', error);
+    }
+  };
   return (
     <>
       <Header />
@@ -180,29 +216,61 @@ export default function SignupPage() {
                 <div className="signup_form">
                   <SignupFormContainer className="signup_form_name">
                     <label htmlFor="sinup_form_displayname">Display name</label>
-                    <input type="text"></input>
+                    <input
+                      type="name"
+                      id="name"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    ></input>
                   </SignupFormContainer>
                   <SignupFormContainer className="signup_form_id">
                     <label htmlFor="sinup_form_email">Email</label>
-                    <input type="text"></input>
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    ></input>
                   </SignupFormContainer>
                   <SignupFormContainer className="signup_form_security">
                     <label htmlFor="sinup_form_password">Password</label>
-                    <input type="text"></input>
+                    <input
+                      type="password"
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    ></input>
                   </SignupFormContainer>
                   <p>
                     Password munst contatin at least eight characters, including
                     at least 1 letter and 1 number
                   </p>
                   <div className="signup_form_check">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      id="checkbox"
+                      // 체크 여부를 관리하기 위해 value가 아닌 checked로 사용
+                      checked={checkbox}
+                      onChange={(e) => setCheckbox(e.target.value)}
+                    />
                     <span className="text_check">
                       Opt-in to receive occastional product updates, user
                       research invitations, company announcements, and digests.
                     </span>
                   </div>
                   <div className="signup_form_submit">
-                    <button className="sinup_submit_btn">Sign up</button>
+                    <button
+                      className="sinup_submit_btn"
+                      onClick={() => {
+                        handleSignup();
+                        setUsername('');
+                        setEmail('');
+                        setPassword('');
+                        setCheckbox('');
+                      }}
+                    >
+                      Sign up
+                    </button>
                   </div>
                   <div className="signup_form_agree">
                     <span className="signup_agree_text">

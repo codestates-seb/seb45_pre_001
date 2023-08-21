@@ -2,19 +2,13 @@ import { styled } from 'styled-components';
 
 const StyledFooter = styled.footer`
   background-color: rgba(35, 38, 41, 1);
-  background-image: none;
-  background-position: top left;
-  background-repeat: no-repeat;
-  border-top: 0;
-  background-size: auto;
   color: rgba(145, 153, 161, 1);
   padding-top: 0;
   padding-bottom: 0;
-  box-sizing: border-box;
-  display: block;
   font-size: 13px;
 
   .footer-container {
+    /* 너비가 화면 크기에 상관없이 꽉 차게 만들기 */
     max-width: 1264px;
     width: 100%;
     margin: 0 auto;
