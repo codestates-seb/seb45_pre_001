@@ -26,7 +26,7 @@ function App() {
           />
           <Route path="/users/login" element={<LoginPage />} />
           <Route path="/users/new-user" element={<SignupPage />} />
-          <Route path="/questions/{question-id}" element={<QuestionDetail />} />
+          <Route path="/questions/:id" element={<QuestionDetail />} />
         </Routes>
         <Footer />
       </div>

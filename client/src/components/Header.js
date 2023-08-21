@@ -184,7 +184,7 @@ export default function Header() {
         </Link>
         <StyledOl>
           <li className="small-nav hidden-menu">
-            <Link to="/questions/{question-id}">About</Link>
+            <a href="/">About</a>
           </li>
           <li className="small-nav">
             <span>Product</span>

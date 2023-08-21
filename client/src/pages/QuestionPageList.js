@@ -83,10 +83,10 @@ export default function QuestionListPage() {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    fetch(`http://13.124.105.17:8080/questions?page=1`)
+    fetch(`http://13.124.105.17:8080/questions`)
       .then((res) => res.json())
       .then((json) => {
-        setQuestions(json.data);
+        setQuestions(json);
         console.log(json);
       });
   }, []);
