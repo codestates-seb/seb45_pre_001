@@ -7,6 +7,7 @@ import githubIcon from '../images/github-icon.svg';
 import facebookIcon from '../images/facebook-icon.svg';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const StyleLoginPage = styled.div`
   background-color: #f1f2f3;
@@ -171,6 +172,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [emailError, setemailError] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const isEmailValid = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -202,11 +204,13 @@ function LoginPage() {
         const token = response.headers.authorization; // 응답 객체에서 토큰 추출
         localStorage.setItem('jwtToken', token); // 토큰 저장
         console.log('성공');
-        // 이후 필요한 작업 수행
+        // 로그인 성공 시 페이지 이동
+
+        navigate('/questions/');
       }
     } catch (error) {
       console.error('에러 발생:', error);
-      setError(error.message);
+      setError('An error occurred with log in.');
     }
   };
 
