@@ -6,6 +6,7 @@ import googleIcon from '../images/google-icon.svg';
 import githubIcon from '../images/github-icon.svg';
 import facebookIcon from '../images/facebook-icon.svg';
 import { useState } from 'react';
+import axios from 'axios';
 
 const StyleLoginPage = styled.div`
   background-color: #f1f2f3;
@@ -177,7 +178,7 @@ function LoginPage() {
   };
 
   // 새로고침 방지
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // 이메일 양식 유효성 검사
@@ -193,27 +194,20 @@ function LoginPage() {
       username: username,
       password: password,
     };
-    console.log(loginData);
 
-    // 로그인 요청 보내기
-    fetch(`${ipv4}/users/login`, {
-      method: 'POST',
-      body: JSON.stringify(loginData), // JSON 형식으로 변환
-    })
-      .then((response) => response.text()) // 서버 응답 text 형식으로 변환
-      .then((data) => {
-        console.log('서버 응답:', data);
-        if (data === 'login Failed') {
-          throw new Error('An error occurred with log in.');
-        } else {
-          const token = data;
-          localStorage.setItem('jwtToken', token); // 토큰 저장
-        }
-      })
-      .catch((error) => {
-        console.error('에러 발생:', error); // 에러 콘솔 출력
-        setError(error.message);
-      });
+    try {
+      const response = await axios.post(`${ipv4}/users/login`, loginData);
+      console.log(response);
+      if (response.status === 200) {
+        const token = response.headers.authorization; // 응답 객체에서 토큰 추출
+        localStorage.setItem('jwtToken', token); // 토큰 저장
+        console.log('성공');
+        // 이후 필요한 작업 수행
+      }
+    } catch (error) {
+      console.error('에러 발생:', error);
+      setError(error.message);
+    }
   };
 
   return (
