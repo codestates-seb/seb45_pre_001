@@ -1,5 +1,6 @@
 package com.stackoverflow.Server.comment.controller;
 
+import com.stackoverflow.Server.comment.dto.CommentPatchDto;
 import com.stackoverflow.Server.comment.dto.CommentPostDto;
 import com.stackoverflow.Server.comment.entity.Comment;
 import com.stackoverflow.Server.comment.mapper.CommentMapper;
@@ -13,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/questions/{question-id}/comments")
@@ -44,11 +46,34 @@ public class CommentController {
         return ResponseEntity.created(location).build();
     }
 
+    //답변 수정
+    @PatchMapping("/{comment-id}")
+    public ResponseEntity patchComment (@PathVariable("question-id") @Positive long questionId,
+                                        @PathVariable("comment-id") @Positive long commentId,
+                                        @RequestBody @Valid CommentPatchDto commentPatchDto){
+
+        commentPatchDto.setCommentId(commentId);
+        Comment patchComment = mapper.commentPatchDtoToComment(commentPatchDto);
+        Comment response = commentService.updateComment(patchComment);
+
+        return new ResponseEntity<>(mapper.commentToCommentResponseToDto(response), HttpStatus.OK);
+    }
+
     //답변 조회
     @GetMapping
     public ResponseEntity getComments (@PathVariable("question-id") @Positive long questionId){
-        Comment comment = commentService.findCommentAll(questionId);
+        List<Comment> comment = (List<Comment>) commentService.findCommentAll(questionId);
 
-        return new ResponseEntity<>(mapper.commentToCommentResponseDto(comment),HttpStatus.OK);
+        return new ResponseEntity<>(mapper.commentsToCommentsResponseDto(comment), HttpStatus.OK);
+    }
+
+    //답변 삭제
+    @DeleteMapping("/{comment-id}")
+    public ResponseEntity deleteComment (@PathVariable("question-id") @Positive long questionId,
+                                         @PathVariable("comment-id") @Positive long commentId){
+
+        commentService.deleteComment(commentId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
