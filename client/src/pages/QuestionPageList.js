@@ -144,6 +144,7 @@ export default function QuestionListPage() {
         <div className="main_container">
           <div className="main_header">
             <h1>All Question </h1>
+            {/* 질문 페이지로 넘어가기 위한 Link 추가 */}
             <Link to="/questions/new-questions">
               <button className="qa_btn">Ask Question</button>
             </Link>

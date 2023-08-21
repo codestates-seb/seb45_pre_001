@@ -166,6 +166,8 @@ export default function SignupPage() {
       setEmail('');
       setPassword('');
       setCheckbox('');
+      window.alert('회원가입이 완료되었습니다!');
+      window.location.href = '/users/login';
     } catch (error) {
       console.error('Error signing up:', error);
     }
