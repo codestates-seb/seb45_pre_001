@@ -5,7 +5,6 @@ import icon from '../images/small-logo.svg';
 import googleIcon from '../images/google-icon.svg';
 import githubIcon from '../images/github-icon.svg';
 import facebookIcon from '../images/facebook-icon.svg';
-import axios from 'axios'; // Import axios here
 import { useState } from 'react';
 
 const StyleLoginPage = styled.div`
@@ -167,6 +166,7 @@ const StyleLoginPage = styled.div`
 `;
 
 function LoginPage() {
+  // const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setemailError] = useState('');
@@ -178,36 +178,37 @@ function LoginPage() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // 새로고침 방지
 
-    // 이메일 양식 유효성 검사
     if (!isEmailValid(username)) {
       setemailError('The email is not a valid email address.');
       return;
     }
 
-    if (!username || !password) {
-      setemailError('The email is not a valid email address.');
-      return;
-    }
-
-    const ipv4 = 'http://13.124.105.17:8080'; // 서버 주소
-
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('password', password);
-
-    for (const keyValue of formData) console.log(keyValue);
+    const loginData = {
+      username: username,
+      password: password,
+    };
 
     try {
-      const response = await axios.post(`${ipv4}/users/login`, formData);
+      const response = await fetch(`http://13.124.105.17:8080/users/login`, {
+        method: 'POST',
+        body: JSON.stringify(loginData),
+      });
+
+      const data = await response.text();
+      console.log('서버 응답:', data);
 
       if (response.status === 200) {
-        console.log('로그인 성공:', response.data);
+        setError('');
+        sessionStorage.setItem('jwtToken', data);
+        // 페이지 이동 로직 추가
+      } else {
+        setError('An error occurred with log in.');
       }
     } catch (error) {
-      console.error('로그인 오류:', error);
-      setError('로그인 정보가 올바르지 않습니다. 다시 확인하고 로그인하세요.'); // 에러 메시지 설정
+      console.error('에러 발생:', error);
+      setError(error.message);
     }
   };
 
@@ -228,7 +229,7 @@ function LoginPage() {
           </button>
 
           <button className="link-button github-btn">
-            <a href="https://https://github.com/login/oauth/authorize">
+            <a href="https://github.com/login">
               <img
                 className="link-icon"
                 src={githubIcon}
@@ -282,7 +283,7 @@ function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                   ></input>
                 </div>
-                {error && <p className="error-message">{error}</p>}{' '}
+                {error && <p className="error-message">{error}</p>}
                 {/* 에러 메시지 표시 */}
               </form>
             </div>
