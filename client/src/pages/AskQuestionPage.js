@@ -247,10 +247,11 @@ function AskQuestionPage() {
 
     // memberId와 nickname 얻기
     const nickname = decodedToken.nickname;
+    const memberId = decodedToken.memberId;
 
     // 요청 할 데이터값 정의
     const requestData = {
-      memberId: 3, // memberId 사용
+      memberId: memberId, // memberId 사용
       nickname: nickname, // nickname 사용
       title,
       questionBody,
