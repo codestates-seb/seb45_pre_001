@@ -1,3 +1,4 @@
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import AskQuestionPage from './pages/AskQuestionPage';
 // import LoginPage from './pages/LoginPage';
@@ -12,15 +13,17 @@ import AskQuestionPage from './pages/AskQuestionPage';
 
 function App() {
   return (
-    <div className="App">
-      {/* <Header />
+    <Router>
+      <div className="App">
+        {/* <Header />
       <Sidebar />
       <Footer /> */}
-      {/* <SignupPage /> */}
-      {/* <QuestionListPage /> */}
-      {/* <LoginPage /> */}
-      <AskQuestionPage />
-    </div>
+        {/* <SignupPage /> */}
+        {/* <QuestionListPage /> */}
+        {/* <LoginPage /> */}
+        <AskQuestionPage />
+      </div>
+    </Router>
   );
 }
 

@@ -7,6 +7,7 @@ import QuestionPageDropdown from '../components/QuestionPageDropdown';
 // import Footer from '../components/Footer';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
+import { useNavigate } from 'react-router-dom';
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
@@ -141,10 +142,11 @@ const StyleAskPage = styled.div`
 `;
 
 function AskQuestionPage() {
+  const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수를 가져옴
+
   const editorRef = useRef(null);
   const editor2Ref = useRef(null);
   const TagRef = useRef(null);
-
   // 리덕스 스토어에 액션을 디스패치하여 상태를 업데이트 하는 dispatch함수
   const dispatch = useDispatch();
 
@@ -248,7 +250,7 @@ function AskQuestionPage() {
 
     // 요청 할 데이터값 정의
     const requestData = {
-      memberId: 1, // memberId 사용
+      memberId: 3, // memberId 사용
       nickname: nickname, // nickname 사용
       title,
       questionBody,
@@ -270,6 +272,10 @@ function AskQuestionPage() {
       );
 
       // 응답 처리 (예: 성공 메시지 표시)
+      const questionid = response.data.questionId;
+      navigate(`/questions/${questionid}`);
+
+      console.log(questionid);
       console.log('질문이 성공적으로 제출되었습니다:', response);
     } catch (error) {
       // 오류 처리 (예: 오류 메시지 표시)
