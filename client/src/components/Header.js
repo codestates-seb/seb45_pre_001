@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header`
   margin: 0;
@@ -178,12 +179,12 @@ export default function Header() {
   return (
     <StyledHeader>
       <div className="header-container">
-        <a href="/" className="logo-box">
+        <Link to="/" className="logo-box">
           <span className="logo-img">Stack Overflow</span>
-        </a>
+        </Link>
         <StyledOl>
           <li className="small-nav hidden-menu">
-            <a href="https://stackoverflow.co/">About</a>
+            <a href="/">About</a>
           </li>
           <li className="small-nav">
             <span>Product</span>
@@ -201,14 +202,14 @@ export default function Header() {
         <Styelnav>
           <StyledOl className="membership-button-box">
             <li className="membership-btn">
-              <a href="/users/login" className="login-button">
+              <Link to="/users/login" className="login-button">
                 Log in
-              </a>
+              </Link>
             </li>
             <li className="membership-btn">
-              <a href="/users/new-user" className="signup-button">
+              <Link to="/users/new-user" className="signup-button">
                 Sign up
-              </a>
+              </Link>
             </li>
           </StyledOl>
         </Styelnav>
