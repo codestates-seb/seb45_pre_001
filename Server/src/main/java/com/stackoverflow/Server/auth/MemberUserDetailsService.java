@@ -4,6 +4,7 @@ import com.stackoverflow.Server.exception.BusinessLogicException;
 import com.stackoverflow.Server.exception.ExceptionCode;
 import com.stackoverflow.Server.member.entity.Member;
 import com.stackoverflow.Server.member.repository.MemberRepository;
+import lombok.Getter;
 import org.apache.catalina.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,7 +52,7 @@ public class MemberUserDetailsService implements UserDetailsService {
 
         @Override
         public String getUsername() {
-            return getEmail();
+            return getNickname();
         }
 
         @Override

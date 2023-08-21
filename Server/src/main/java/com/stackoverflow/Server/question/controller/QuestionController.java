@@ -34,7 +34,7 @@ public class QuestionController {
         Question question = mapper.questionPostToQuestion(postDto);
         Question createQuestion = questionService.createQuestion(question);
 
-        return new ResponseEntity<>(question, HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.questionToQuestionResponse(createQuestion), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{question-id}")

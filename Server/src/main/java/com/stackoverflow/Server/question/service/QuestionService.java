@@ -5,6 +5,7 @@ import com.stackoverflow.Server.exception.BusinessLogicException;
 import com.stackoverflow.Server.exception.ExceptionCode;
 import com.stackoverflow.Server.member.entity.Member;
 import com.stackoverflow.Server.member.repository.MemberRepository;
+import com.stackoverflow.Server.member.service.MemberService;
 import com.stackoverflow.Server.question.entity.Question;
 import com.stackoverflow.Server.question.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.util.Optional;
 @Transactional
 public class QuestionService {
 
+    private final MemberService memberService;
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
 
@@ -58,14 +60,16 @@ public class QuestionService {
     }
 
     public void removeQuestion(long questionId) {
-
         Question question = findQuestion(questionId);
+        memberService.verifyMemberOwnership(question.getMember().getNickname());
+        questionRepository.deleteById(questionId);
 
         if (question.getQuestionStatus() == Question.QuestionStatus.QUESTION_NOT_COMMENTED) {
             questionRepository.deleteById(questionId);
         } else {
             throw new BusinessLogicException(ExceptionCode.COMMENT_EXISTS);
         }
+
     }
 
     public Page<Question> searchQuestions(String title, Pageable pageable) {
