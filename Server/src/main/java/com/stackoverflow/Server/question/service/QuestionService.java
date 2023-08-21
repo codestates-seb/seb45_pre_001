@@ -63,6 +63,13 @@ public class QuestionService {
         Question question = findQuestion(questionId);
         memberService.verifyMemberOwnership(question.getMember().getNickname());
         questionRepository.deleteById(questionId);
+
+        if (question.getQuestionStatus() == Question.QuestionStatus.QUESTION_NOT_COMMENTED) {
+            questionRepository.deleteById(questionId);
+        } else {
+            throw new BusinessLogicException(ExceptionCode.COMMENT_EXISTS);
+        }
+
     }
 
     public Page<Question> searchQuestions(String title, Pageable pageable) {

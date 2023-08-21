@@ -8,6 +8,8 @@ public enum ExceptionCode {
     QUESTION_NOT_FOUND(405, "Question not found"),
     COMMENT_NOT_FOUND(405, "comment not found"),
     PERMISSION_NOT_EXIST(409, "You don't have permission to access this resource.");
+    COMMENT_EXISTS(400,"comment exists");
+
 
     @Getter
     private int status;
