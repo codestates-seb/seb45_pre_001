@@ -6,6 +6,7 @@ import QuestionPageDropdown from '../components/QuestionPageDropdown';
 // import Header from '../components/Header';
 // import Footer from '../components/Footer';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
@@ -235,14 +236,24 @@ function AskQuestionPage() {
 
     const title = titleInput.value; // 유저가 입력한 제목
     const questionBody = contentInput; // 유저가 입력한 내용
+    const jwtToken = localStorage.getItem('jwtToken'); // 로그인 페이지에서 저장한 토큰 가져오기
+    console.log(jwtToken);
+
+    // 토큰 해독
+    const decodedToken = jwt_decode(jwtToken);
+    console.log(decodedToken);
+
+    // memberId와 nickname 얻기
+    const nickname = decodedToken.nickname;
 
     // 요청 할 데이터값 정의
     const requestData = {
-      memberId: 1,
-      nickname: '',
+      memberId: 1, // memberId 사용
+      nickname: nickname, // nickname 사용
       title,
       questionBody,
     };
+    console.log(requestData);
 
     // 주소값 정의
     const ipv4 = 'http://13.124.105.17:8080';
@@ -253,7 +264,7 @@ function AskQuestionPage() {
         requestData,
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sIm5pY2tuYW1lIjoi6rmA7ISg66-4IiwidXNlcm5hbWUiOiJ0anNhbEBnbWFpbC5jb20iLCJzdWIiOiJ0anNhbEBnbWFpbC5jb20iLCJpYXQiOjE2OTI2MDM1NzUsImV4cCI6MTY5MjYwNTM3NX0.5i9hfQsrB9o-2YkniJSCYs1JO33xADQBO_xu6NtCfZlslcp7sKtpPtV7vluo02vS`,
+            Authorization: `Bearer ${jwtToken}`, // 토큰을 Authorization 헤더에 추가
           },
         },
       );

@@ -6,6 +6,7 @@ import googleIcon from '../images/google-icon.svg';
 import githubIcon from '../images/github-icon.svg';
 import facebookIcon from '../images/facebook-icon.svg';
 import { useState } from 'react';
+import axios from 'axios';
 
 const StyleLoginPage = styled.div`
   background-color: #f1f2f3;
@@ -166,7 +167,6 @@ const StyleLoginPage = styled.div`
 `;
 
 function LoginPage() {
-  // const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setemailError] = useState('');
@@ -177,13 +177,18 @@ function LoginPage() {
     return emailRegex.test(email);
   };
 
+  // 새로고침 방지
   const handleSubmit = async (event) => {
-    event.preventDefault(); // 새로고침 방지
+    event.preventDefault();
 
+    // 이메일 양식 유효성 검사
     if (!isEmailValid(username)) {
       setemailError('The email is not a valid email address.');
       return;
     }
+
+    // 서버 주소
+    const ipv4 = 'http://13.124.105.17:8080';
 
     const loginData = {
       username: username,
@@ -191,20 +196,13 @@ function LoginPage() {
     };
 
     try {
-      const response = await fetch(`http://13.124.105.17:8080/users/login`, {
-        method: 'POST',
-        body: JSON.stringify(loginData),
-      });
-
-      const data = await response.text();
-      console.log('서버 응답:', data);
-
+      const response = await axios.post(`${ipv4}/users/login`, loginData);
+      console.log(response);
       if (response.status === 200) {
-        setError('');
-        sessionStorage.setItem('jwtToken', data);
-        // 페이지 이동 로직 추가
-      } else {
-        setError('An error occurred with log in.');
+        const token = response.headers.authorization; // 응답 객체에서 토큰 추출
+        localStorage.setItem('jwtToken', token); // 토큰 저장
+        console.log('성공');
+        // 이후 필요한 작업 수행
       }
     } catch (error) {
       console.error('에러 발생:', error);
@@ -229,7 +227,7 @@ function LoginPage() {
           </button>
 
           <button className="link-button github-btn">
-            <a href="https://github.com/login">
+            <a href="https://https://github.com/login/oauth/authorize">
               <img
                 className="link-icon"
                 src={githubIcon}
