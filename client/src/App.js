@@ -1,21 +1,11 @@
 import './App.css';
-// import LoginPage from './pages/LoginPage';
-import QuestionListPage from './pages/QuestionPageList';
 
-// import SignupPage from './pages/SignupPage';
-
-// import Sidebar from './components/sidebar';
-// import Header from './components/Header';
-// import Footer from './components/Footer';
+import SignupPage from './pages/SignupPage';
 
 function App() {
   return (
     <div className="App">
-      {/* <Header />
-      <Sidebar />
-      <Footer /> */}
-      {/* <SignupPage /> */}
-      <QuestionListPage />
+      <SignupPage />
     </div>
   );
 }
