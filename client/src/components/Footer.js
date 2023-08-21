@@ -1,23 +1,14 @@
 import { styled } from 'styled-components';
 
 const StyledFooter = styled.footer`
-  box-sizing: border-box;
-  background-image: none;
   background-color: rgba(35, 38, 41, 1);
-  background-position: top left;
-  border-top: 0;
-  background-size: auto;
   color: rgba(145, 153, 161, 1);
   padding-top: 0;
   padding-bottom: 0;
-  display: block;
   font-size: 13px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
 
   .footer-container {
+    /* 너비가 화면 크기에 상관없이 꽉 차게 만들기 */
     max-width: 1264px;
     width: 100%;
     margin: 0 auto;
@@ -34,6 +25,7 @@ const StyledFooter = styled.footer`
       color: rgba(0, 116, 204, 1);
       text-decoration: none;
       cursor: pointer;
+      user-select: auto;
     }
 
     img {
@@ -46,17 +38,18 @@ const StyledFooter = styled.footer`
   .footer-nav {
     display: flex;
     flex: 2 1 auto;
+    flex-wrap: wrap;
   }
 
   .footer-col {
     padding: 0 12 24 0;
-    flex: 1 0;
+    flex: 1 0 auto;
   }
 
   .footer-title {
     text-transform: uppercase;
-    margin-bottom: 12px;
     font-weight: bold;
+    margin-bottom: 12px;
     color: rgba(186, 191, 196, 1);
     line-height: calc((13+4) / 13);
   }
@@ -69,6 +62,11 @@ const StyledFooter = styled.footer`
   .footer-title-list {
     margin: 0;
     list-style: none;
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   .footer-title-list-item {

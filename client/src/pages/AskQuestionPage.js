@@ -1,13 +1,18 @@
 import { styled } from 'styled-components';
 import Editor5 from '../components/Editor5';
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import QuestionPageDropdown from '../components/QuestionPageDropdown';
+// import Header from '../components/Header';
+// import Footer from '../components/Footer';
+import axios from 'axios';
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 56px;
 
   // 사이드 여백 조정
   .inner {
@@ -135,75 +140,139 @@ const StyleAskPage = styled.div`
 `;
 
 function AskQuestionPage() {
-  const [isChecked, SetIsChecked] = useState(false);
-
-  const handleCheckboxChange = (event) => {
-    const checkedValue = event.target.checked;
-    SetIsChecked(checkedValue); // 체크박스 상태 업데이트
-  };
-
-  const isButtonDisabled = !isChecked;
-
-  const [checkContainerVisible, setCheckContainerVisible] = useState(false);
-
-  const [titleButtonVisible, setTitleButtonVisible] = useState(true);
-  const [editorButtonVisible, setEditorButtonVisible] = useState(false);
-  const [editor2ButtonVisible, setEditor2ButtonVisible] = useState(false);
-
-  const [tagButtonVisible, setTagButtonVisible] = useState(false);
-  const [reviewButtonVisible, setReviewButtonVisible] = useState(false);
-
   const editorRef = useRef(null);
   const editor2Ref = useRef(null);
   const TagRef = useRef(null);
 
-  const handleTitleButtonClick = () => {
-    setTitleButtonVisible(false);
-    setEditorButtonVisible(true);
+  // 리덕스 스토어에 액션을 디스패치하여 상태를 업데이트 하는 dispatch함수
+  const dispatch = useDispatch();
 
-    // 첫 번째 에디터에 포커스 설정
+  const {
+    checkContainerVisible,
+    isChecked,
+    titleButtonVisible,
+    editorButtonVisible,
+    editor2ButtonVisible,
+    tagButtonVisible,
+    reviewButtonVisible,
+    isDropdownOpen,
+  } = useSelector((state) => ({
+    // 리덕스 스토어에서 상태값을 가져옴
+    checkContainerVisible: state.checkContainerVisible,
+    isChecked: state.isChecked,
+    titleButtonVisible: state.titleButtonVisible,
+    tagButtonVisible: state.tagButtonVisible,
+    reviewButtonVisible: state.reviewButtonVisible,
+    editorButtonVisible: state.editorButtonVisible,
+    editor2ButtonVisible: state.editor2ButtonVisible,
+    isDropdownOpen: state.isDropdownOpen,
+  }));
+
+  // isChecked 상태의 반전 값을 가짐
+  const isButtonDisabled = !isChecked;
+
+  // ========== 핸들러 함수내 액션을 디스패치하여 Redux 상태를 업데이트하는 부분입니다. ==========
+
+  // 제목 버튼 클릭 핸들러
+  const handleTitleButtonClick = () => {
+    // titleButtonVisible 상태를 숨김(false)으로 변경
+    dispatch({ type: 'SET_TITLE_BUTTON_VISIBLE', payload: false });
+    // editorButtonVisible 상태를 표시(true)로 변경
+    dispatch({ type: 'SET_EDITOR_BUTTON_VISIBLE', payload: true });
+    // 만약 editorRef가 현재 존재하고 에디터 인스턴스가 있는 경우,
+    // 첫 번째 에디터의 인스턴스에 포커스를 설정
     if (editorRef.current && editorRef.current.editor) {
       const editorInstance = editorRef.current.editor;
       editorInstance.focus();
     }
   };
 
+  // 첫 번째 에디터 버튼 클릭 핸들러
   const handleEditorButtonClick = () => {
-    setEditorButtonVisible(false);
-    setEditor2ButtonVisible(true);
-    // 두 번째 에디터에 포커스 설정
+    // editorButtonVisible 상태를 숨김(false)으로 변경
+    dispatch({ type: 'SET_EDITOR_BUTTON_VISIBLE', payload: false });
+    // editor2ButtonVisible 상태를 표시(true)로 변경
+    dispatch({ type: 'SET_EDITOR2_BUTTON_VISIBLE', payload: true });
+    // 만약 editor2Ref가 현재 존재하고 에디터 인스턴스가 있는 경우,
+    // 두 번째 에디터의 인스턴스에 포커스를 설정
     if (editor2Ref.current && editor2Ref.current.editor) {
       const editorInstance = editor2Ref.current.editor;
       editorInstance.focus();
     }
   };
 
+  // 두 번째 에디터 버튼 클릭 핸들러
   const handleEditor2ButtonClick = () => {
-    setEditor2ButtonVisible(false);
-    setTagButtonVisible(true);
-    // 태그에 포커스 설정
+    // editor2ButtonVisible 상태를 숨김(false)으로 변경
+    dispatch({ type: 'SET_EDITOR2_BUTTON_VISIBLE', payload: false });
+    // tagButtonVisible 상태를 표시(true)로 변경
+    dispatch({ type: 'SET_TAG_BUTTON_VISIBLE', payload: true });
+    // 만약 TagRef가 현재 존재하면 (태그 입력란이 마운트되어 있으면),해당 태그 인풋에 포커스를 설정
     if (TagRef.current) {
       TagRef.current.focus();
     }
   };
 
+  // 태그 버튼 클릭 핸들러
   const handleTagButtonClick = () => {
-    setTagButtonVisible(false);
-    setReviewButtonVisible(true);
-    setCheckContainerVisible(true);
+    // tagButtonVisible 상태를 숨김(false)으로 변경
+    dispatch({ type: 'SET_TAG_BUTTON_VISIBLE', payload: false });
+    // checkContainerVisible 상태를 표시(true)로 변경
+    dispatch({ type: 'SET_CHECK_CONTAINER_VISIBLE', payload: true });
+    // reviewButtonVisible 상태를 표시(true)로 변경
+    dispatch({ type: 'SET_REVIEW_BUTTON_VISIBLE', payload: true });
   };
 
-  const handleReviewButtonClick = () => {
-    setReviewButtonVisible(false);
-    setCheckContainerVisible(false);
+  // 질문 검토 버튼 클릭 핸들러
+  const handleReviewButtonClick = async () => {
+    // reviewButtonVisible 상태를 숨김(false)으로 변경
+    dispatch({ type: 'SET_REVIEW_BUTTON_VISIBLE', payload: false });
+    //checkContainerVisible 상태를 숨김(false)으로 변경
+    dispatch({ type: 'SET_CHECK_CONTAINER_VISIBLE', payload: false });
+
+    const titleInput = document.querySelector('.title-input');
+    const contentInput = editorRef.current.editor.getData();
+
+    const title = titleInput.value; // 유저가 입력한 제목
+    const questionBody = contentInput; // 유저가 입력한 내용
+
+    // 요청 할 데이터값 정의
+    const requestData = {
+      memberId: 2,
+      nickname: '닉네임1',
+      title,
+      questionBody,
+    };
+
+    // 주소값 정의
+    const ipv4 = 'http://13.124.105.17:8080';
+
+    try {
+      // 백엔드 API로 HTTP POST 요청 보내기
+      const response = await axios.post(
+        `${ipv4}/questions/new-questions`,
+        requestData,
+      );
+      // 응답 처리 (예: 성공 메시지 표시)
+      console.log('질문이 성공적으로 제출되었습니다:', response);
+    } catch (error) {
+      // 오류 처리 (예: 오류 메시지 표시)
+      console.error('질문 제출 오류:', error);
+    }
   };
 
-  // 드롭다운 상태를 관리하는 상태 변수
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // 체크박스 변경 핸들러 함수
+  const handleCheckboxChange = (event) => {
+    // 체크박스의 선택 여부를 가져옴
+    const checkedValue = event.target.checked;
+    // 리덕스 스토어에 액션을 디스패치하여 isChecked 상태를 업데이트함
+    dispatch({ type: 'SET_IS_CHECKED', payload: checkedValue });
+  };
 
   // 드롭다운 토글 함수
   const handleDropdownToggle = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    // isDropdownOpen 상태를 토글함
+    dispatch({ type: 'SET_IS_DROPDOWN_OPEN' });
   };
 
   return (
@@ -325,7 +394,6 @@ function AskQuestionPage() {
                 isOpen={isDropdownOpen}
                 onToggle={handleDropdownToggle}
               />
-              {/*     */}
             </div>
             {checkContainerVisible && (
               <div className="check-container">

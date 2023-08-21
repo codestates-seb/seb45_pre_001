@@ -2,8 +2,10 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+// import { useState } from 'react';
 
+// ========== styled-components ==========
 const StyledEditor = styled.div`
   max-width: 800px;
   background-color: #ffffff;
@@ -50,15 +52,20 @@ function Editor5({
   handleButtonClick,
   editorRef,
 }) {
-  const [editorContent, setEditorContent] = useState(''); // 텍스트 내용을 상태로 관리
+  const dispatch = useDispatch();
+
+  const editorContent = useSelector((state) => ({
+    editorContent: state.editorContent,
+  }));
 
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
-    setEditorContent(data); // 텍스트 내용 업데이트
+    dispatch({ type: 'SET_EDITOR_CONTENT', payload: data });
   };
 
   // 처음 글자입력시 <p> 태그까지 글자로 인식하여 8부터 시작함 때문에 length를 26으로 설정
-  const isButtonDisabled = editorContent.length < 26;
+  // editorContent가 객체 형태라서 editorContent.editorContent.length
+  const isButtonDisabled = editorContent.editorContent.length < 26;
   return (
     <StyledEditor isButtonDisabled={isButtonDisabled}>
       <div className="editor-container">
