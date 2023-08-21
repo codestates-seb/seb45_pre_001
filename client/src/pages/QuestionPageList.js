@@ -5,6 +5,7 @@ import Question from '../components/question';
 import Header from '../components/Header';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
+// import PaginationBtn from '../components/paginationBtn';
 
 const QuestionPage = styled.div`
   display: flex;
@@ -56,6 +57,10 @@ const QuestionPage = styled.div`
     padding: 9.6px;
     border-radius: 6px;
   }
+  /* .pagination_btn:hover {
+    background-color: rgb(227, 230, 232);
+    cursor: pointer;
+  } */
 `;
 
 const Button = styled.button`
@@ -76,11 +81,27 @@ const Button = styled.button`
   font-size: 12px;
   &:hover {
     background-color: rgb(227, 230, 232);
+    cursor: pointer;
+  }
+  &.pagination_btn {
+    margin-right: 7px;
+    border-radius: 4px;
+    border: solid 1px rgb(227, 230, 232);
+  }
+  &.active {
+    background-color: rgb(244, 130, 37);
+    border: none;
+    color: white;
   }
 `;
 
 export default function QuestionListPage() {
+  // 질문 목록 저장
   const [questions, setQuestions] = useState([]);
+  // 현재 페이지와 페이지당 아이템 수를 나타내는 상태 설정
+  const [currentPage, setCurrentPage] = useState(1);
+  // 각 페이지에 표시될 아이템의 수
+  const itemsPerPage = 15;
 
   useEffect(() => {
     fetch(`http://13.124.105.17:8080/questions`)
@@ -89,7 +110,32 @@ export default function QuestionListPage() {
         setQuestions(json);
         console.log(json);
       });
-  }, []);
+  }, []); // 첫렌더링시에만 api호출이 되게 빈 배열을 넣어줌
+
+  // 페이지 번호를 변경할 때마다 호툴되는 핸들러 함수
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const visibleQuestions = questions.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(questions.length / itemsPerPage);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1,
+  );
+
+  const renderPageNumbers = pageNumbers.map((number) => (
+    <Button
+      className={`pagination_btn ${currentPage === number ? 'active' : ''}`}
+      key={number}
+      onClick={() => handlePageChange(number)}
+    >
+      {number}
+    </Button>
+  ));
 
   return (
     <>
@@ -130,10 +176,11 @@ export default function QuestionListPage() {
             </div>
           </div>
           <div className="main_questions">
-            {questions.map((question, idx) => (
+            {visibleQuestions.map((question, idx) => (
               <Question question={question} key={idx} />
             ))}
           </div>
+          <div className="pagination">{renderPageNumbers}</div>
         </div>
       </QuestionPage>
     </>
