@@ -7,6 +7,7 @@ import Navbar from '../components/navbar';
 import Sidebar from '../components/sidebar';
 import { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
+import Header from '../components/Header';
 
 export default function QuestionDetail() {
   let params = useParams();
@@ -57,6 +58,7 @@ export default function QuestionDetail() {
 
   return (
     <QuestionDetailPage>
+      <Header />
       <Navbar />
       <QuestionDetailContainer>
         <ViewQuestionDetail questionId={params.id} />
