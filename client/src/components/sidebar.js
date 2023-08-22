@@ -13,6 +13,7 @@ const SidebarContainer = styled.div`
   margin-right: 0.5rem;
   font-size: 13px;
   background-color: #fbf3d5;
+  margin-top: 80px;
   .sidebar_widget_first {
     color: #3b4045;
     background-color: #f1e5bc;
@@ -42,6 +43,7 @@ const SidebarContainer = styled.div`
     padding-left: 10px;
     font-weight: bold;
     font-size: 12px;
+    list-style: none;
   }
   .sidebar_widget_firstitem1 {
     display: flex;
@@ -70,6 +72,9 @@ const SidebarContainer = styled.div`
   .sidebar_widget_seconditem5 {
     display: flex;
     margin: 10px 0px 10px 15px;
+  }
+  .sidebar_widget_thirditem1 {
+    list-style: none;
   }
   .sidebar_widget_thirditem1_text {
     margin: 10px 0px 10px 15px;

@@ -5,7 +5,13 @@ import Question from '../components/question';
 import Header from '../components/Header';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
-// import PaginationBtn from '../components/paginationBtn';
+import Sidebar from '../components/sidebar';
+import Navbar from '../components/navbar';
+
+const ContentContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const QuestionPage = styled.div`
   display: flex;
@@ -57,10 +63,11 @@ const QuestionPage = styled.div`
     padding: 9.6px;
     border-radius: 6px;
   }
-  /* .pagination_btn:hover {
-    background-color: rgb(227, 230, 232);
-    cursor: pointer;
-  } */
+  .content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 `;
 
 const Button = styled.button`
@@ -140,50 +147,54 @@ export default function QuestionListPage() {
   return (
     <>
       <Header />
-      <QuestionPage>
-        <div className="main_container">
-          <div className="main_header">
-            <h1>All Question </h1>
-            {/* 질문 페이지로 넘어가기 위한 Link 추가 */}
-            <Link to="/questions/new-questions">
-              <button className="qa_btn">Ask Question</button>
-            </Link>
-          </div>
-          <div className="main_question_filer">
-            <div className="question_item">{questions.length} questions</div>
-            <div className="question_filters">
-              <div className="question_filters_item">
-                {/* 버튼 클릭시 필터 기능이용해서 구현 진행 */}
-                <Button className="question_filter_newest" leftRadius>
-                  Newest
-                </Button>
-                <Button className="question_filter_active">Active</Button>
-                <Button className="question_filter_bountied">Bountied</Button>
-                <Button className="question_filter_unanswered">
-                  Unanswerd
-                </Button>
-                <Button className="question_filter_more" rightRadius>
-                  More
-                </Button>
-                {/* 버튼을 누르면 모달이 dropdown되면서 뜨게 구현 */}
-              </div>
-              <button className="select_filter_contatiner">
-                <FontAwesomeIcon
-                  icon={faArrowDownWideShort}
-                  className="select_filter_icon"
-                />
-                <div className="select_filer_text">Filter</div>
-              </button>
+      <ContentContainer>
+        <Navbar />
+        <QuestionPage>
+          <div className="main_container">
+            <div className="main_header">
+              <h1>All Question </h1>
+              {/* 질문 페이지로 넘어가기 위한 Link 추가 */}
+              <Link to="/questions/new-questions">
+                <button className="qa_btn">Ask Question</button>
+              </Link>
             </div>
+            <div className="main_question_filer">
+              <div className="question_item">{questions.length} questions</div>
+              <div className="question_filters">
+                <div className="question_filters_item">
+                  {/* 버튼 클릭시 필터 기능이용해서 구현 진행 */}
+                  <Button className="question_filter_newest" leftRadius>
+                    Newest
+                  </Button>
+                  <Button className="question_filter_active">Active</Button>
+                  <Button className="question_filter_bountied">Bountied</Button>
+                  <Button className="question_filter_unanswered">
+                    Unanswerd
+                  </Button>
+                  <Button className="question_filter_more" rightRadius>
+                    More
+                  </Button>
+                  {/* 버튼을 누르면 모달이 dropdown되면서 뜨게 구현 */}
+                </div>
+                <button className="select_filter_contatiner">
+                  <FontAwesomeIcon
+                    icon={faArrowDownWideShort}
+                    className="select_filter_icon"
+                  />
+                  <div className="select_filer_text">Filter</div>
+                </button>
+              </div>
+            </div>
+            <div className="main_questions">
+              {visibleQuestions.map((question, idx) => (
+                <Question question={question} key={idx} />
+              ))}
+            </div>
+            <div className="pagination">{renderPageNumbers}</div>
           </div>
-          <div className="main_questions">
-            {visibleQuestions.map((question, idx) => (
-              <Question question={question} key={idx} />
-            ))}
-          </div>
-          <div className="pagination">{renderPageNumbers}</div>
-        </div>
-      </QuestionPage>
+        </QuestionPage>
+        <Sidebar />
+      </ContentContainer>
     </>
   );
 }
