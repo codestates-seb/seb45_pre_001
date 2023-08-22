@@ -1,33 +1,48 @@
-import { useEffect, useRef } from 'react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useState } from 'react';
+import Editor5 from '../components/Editor5';
 import { styled } from 'styled-components';
 
 export default function CreateAnswer({ questionId }) {
-  const editorRef = useRef(null);
+  const [editorData, setEditorData] = useState('');
 
-  useEffect(() => {
-    if (!editorRef.current) {
-      editorRef.current = ClassicEditor.create(
-        document.querySelector('#editor'),
-      );
-    }
-  }, []);
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    console.log(data);
+    setEditorData(data);
+  };
 
-  useEffect(() => {
+  const handlePostClick = (memberId, nickname) => {
+    // POST 요청 보내기
+    const postData = {
+      memberId,
+      nickname,
+      commentBody: editorData,
+    };
+
     fetch(`http://13.124.105.17:8080/questions/${questionId}/comments`, {
       method: 'POST',
-      body: JSON.stringify({}),
-    }).then();
-  });
+      headers: {
+        'Content-Type': 'application/json', // 토큰을 Authorization 헤더에 추가
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log('Post request success:', json);
+      })
+      .catch((error) => {
+        console.error('Post request error:', error);
+      });
+  };
 
   return (
     <FuncCreateAnswer>
       <form>
         <h2>Your Answer</h2>
-        <div id="editor"></div>
+        <Editor5 onChange={handleEditorChange} />
       </form>
       <div>
-        <button>Post Your Answer</button>
+        <button onClick={handlePostClick}>Post Your Answer</button>
       </div>
     </FuncCreateAnswer>
   );
