@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 export default function ViewQuestionDetail({ questionId }) {
   //questionData 상태 만들기
   const [questionData, setQuestionData] = useState('');
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     fetch(`http://13.124.105.17:8080/questions/${questionId}`)
@@ -44,11 +45,19 @@ export default function ViewQuestionDetail({ questionId }) {
         <div className="body-container">
           <div className="vote-section">
             <div className="voting-btn-box">
-              <button>
+              <button
+                onClick={() => {
+                  setCount(count + 1);
+                }}
+              >
                 <FontAwesomeIcon icon={faSortUp} className="voting-up-btn" />
               </button>
-              <span className="voting-count">0</span>
-              <button>
+              <span className="voting-count">{count}</span>
+              <button
+                onClick={() => {
+                  setCount(count + -1);
+                }}
+              >
                 <FontAwesomeIcon
                   icon={faSortDown}
                   className="voting-down-btn"
@@ -112,7 +121,7 @@ const DeatailArticle = styled.article`
   /* header와 겹치지 않게 position 설정*/
   position: relative;
   top: 56px;
-  width: 75vw;
+  width: 50vw;
   margin-bottom: 56px;
   padding-top: 24px;
   padding-bottom: 24px;
@@ -138,8 +147,8 @@ const DeatailArticle = styled.article`
   }
 
   .ask-btn > a {
-    padding: 0.8em;
     margin-left: 12px;
+    padding: 0.8em;
     background-color: #0a95ff;
     color: white;
     display: inline-block;

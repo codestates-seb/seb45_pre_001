@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { styled } from 'styled-components';
 
-export default function CreateAnswer() {
+export default function CreateAnswer({ questionId }) {
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -13,18 +13,28 @@ export default function CreateAnswer() {
     }
   }, []);
 
+  useEffect(() => {
+    fetch(`http://13.124.105.17:8080/questions/${questionId}/comments`, {
+      method: 'POST',
+      body: JSON.stringify({}),
+    }).then();
+  });
+
   return (
     <FuncCreateAnswer>
       <form>
         <h2>Your Answer</h2>
         <div id="editor"></div>
       </form>
+      <div>
+        <button>Post Your Answer</button>
+      </div>
     </FuncCreateAnswer>
   );
 }
 
 const FuncCreateAnswer = styled.div`
-  width: 75vw;
+  width: 50vw;
   float: none;
   padding-top: 10px;
   padding-left: 16px;
@@ -44,6 +54,15 @@ const FuncCreateAnswer = styled.div`
     max-height: 260px;
     min-height: 260px;
     overflow-y: auto;
+    margin-bottom: 10px;
+  }
+
+  button {
     margin-bottom: 20px;
+    border-radius: 6px;
+    padding: 0.8em;
+    background-color: #0a95ff;
+    color: white;
+    display: inline-block;
   }
 `;
