@@ -11,8 +11,6 @@ import Navbar from '../components/navbar';
 const ContentContainer = styled.div`
   display: flex;
   justify-content: center;
-  /* 컨텐츠를 중앙으로 정렬 */
-  padding: 0px; /* 좌우 여백 추가 */
 `;
 
 const QuestionPage = styled.div`
