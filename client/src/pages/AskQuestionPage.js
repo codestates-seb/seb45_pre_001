@@ -8,6 +8,7 @@ import QuestionPageDropdown from '../components/QuestionPageDropdown';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
 const StyleAskPage = styled.div`
   background-color: #f8f9f9;
@@ -299,167 +300,176 @@ function AskQuestionPage() {
   };
 
   return (
-    <StyleAskPage isButtonDisabled={isButtonDisabled}>
-      {/* header 넣을자리 */}
-      <div className="inner">
-        {/* 질문 헤더 부분 */}
-        <div className="question-header">
-          <h1>Ask a public question</h1>
-        </div>
-
-        {/* 안내 메시지 부분 */}
-        <div className="notice-container">
-          <h2>Writing a good question</h2>
-          <p>
-            You’re ready to ask a programming-related question and this form
-            will help guide you through the process.
-          </p>
-          <p>
-            Looking to ask a non-programming question? See the topics here to
-            find a relevant site.
-          </p>
-          <h5>step</h5>
-          <ul>
-            <li>Summarize your problem in a one-line title.</li>
-            <li>Describe your problem in more detail.</li>
-            <li>Describe what you tried and what you expected to happen.</li>
-            <li>
-              Add “tags” which help surface your question to members of the
-              community.
-            </li>
-            <li>Review your question and post it to the site.</li>
-          </ul>
-        </div>
-
-        {/* 메인 컨텐츠 */}
-        <main>
-          {/* 제목 입력 부분 */}
-          <div className="title-container">
-            <div className="title-box">
-              <div className="title">Title</div>
-              <div className="explanation-box">
-                Be specific and imagine you’re asking a question to another
-                person.
-              </div>
-            </div>
-            <div>
-              <input
-                className="title-input"
-                type="text"
-                placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-              ></input>
-            </div>
-
-            {titleButtonVisible && (
-              <button onClick={handleTitleButtonClick} className="next-button">
-                Next
-              </button>
-            )}
+    <>
+      <Header />
+      <StyleAskPage isButtonDisabled={isButtonDisabled}>
+        {/* header 넣을자리 */}
+        <div className="inner">
+          {/* 질문 헤더 부분 */}
+          <div className="question-header">
+            <h1>Ask a public question</h1>
           </div>
 
-          {/* 문제 내용 입력 부분 */}
-          <Editor5
-            title="What are the details of your problem?"
-            explanation="Introduce the problem and expand on what you put in the title. Minimum 20 characters."
-            handleButtonClick={handleEditorButtonClick}
-            isButtonVisible={editorButtonVisible}
-            editorRef={editorRef} // 첫 번째 에디터의 ref 전달
-          />
+          {/* 안내 메시지 부분 */}
+          <div className="notice-container">
+            <h2>Writing a good question</h2>
+            <p>
+              You’re ready to ask a programming-related question and this form
+              will help guide you through the process.
+            </p>
+            <p>
+              Looking to ask a non-programming question? See the topics here to
+              find a relevant site.
+            </p>
+            <h5>step</h5>
+            <ul>
+              <li>Summarize your problem in a one-line title.</li>
+              <li>Describe your problem in more detail.</li>
+              <li>Describe what you tried and what you expected to happen.</li>
+              <li>
+                Add “tags” which help surface your question to members of the
+                community.
+              </li>
+              <li>Review your question and post it to the site.</li>
+            </ul>
+          </div>
 
-          {/* 시도한 내용 입력 부분 */}
-          <Editor5
-            title="What did you try and what were you expecting?"
-            explanation="Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters."
-            handleButtonClick={handleEditor2ButtonClick}
-            isButtonVisible={editor2ButtonVisible}
-            editorRef={editor2Ref}
-          />
-
-          {/* 태그 입력 부분 */}
-          <div className="tag-container">
-            <div className="tag-box">
-              <div className="tag">Tags</div>
-              <div className="explanation-box">
-                Add up to 5 tags to describe what your question is about. Start
-                typing to see suggestions.
+          {/* 메인 컨텐츠 */}
+          <main>
+            {/* 제목 입력 부분 */}
+            <div className="title-container">
+              <div className="title-box">
+                <div className="title">Title</div>
+                <div className="explanation-box">
+                  Be specific and imagine you’re asking a question to another
+                  person.
+                </div>
               </div>
-            </div>
-            <div>
-              <input
-                className="tag-input"
-                type="text"
-                placeholder="e.g. (c flutter django)"
-                ref={TagRef}
-              />
-              {tagButtonVisible && (
-                <button className="next-button" onClick={handleTagButtonClick}>
+              <div>
+                <input
+                  className="title-input"
+                  type="text"
+                  placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                ></input>
+              </div>
+
+              {titleButtonVisible && (
+                <button
+                  onClick={handleTitleButtonClick}
+                  className="next-button"
+                >
                   Next
                 </button>
               )}
             </div>
-          </div>
 
-          {/* 중복 확인 부분 */}
-          <div className="duplicate-check-container">
-            <div className="duplicate-box">
-              <div className="title">
-                Review questions already on Stack Overflow to see if your
-                question is a duplicate.
+            {/* 문제 내용 입력 부분 */}
+            <Editor5
+              title="What are the details of your problem?"
+              explanation="Introduce the problem and expand on what you put in the title. Minimum 20 characters."
+              handleButtonClick={handleEditorButtonClick}
+              isButtonVisible={editorButtonVisible}
+              editorRef={editorRef} // 첫 번째 에디터의 ref 전달
+            />
+
+            {/* 시도한 내용 입력 부분 */}
+            <Editor5
+              title="What did you try and what were you expecting?"
+              explanation="Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters."
+              handleButtonClick={handleEditor2ButtonClick}
+              isButtonVisible={editor2ButtonVisible}
+              editorRef={editor2Ref}
+            />
+
+            {/* 태그 입력 부분 */}
+            <div className="tag-container">
+              <div className="tag-box">
+                <div className="tag">Tags</div>
+                <div className="explanation-box">
+                  Add up to 5 tags to describe what your question is about.
+                  Start typing to see suggestions.
+                </div>
               </div>
-              <div className="explanation-box">
-                Clicking on these questions will open them in a new tab for you
-                to review. Your progress here will be saved so you can come back
-                and continue.
+              <div>
+                <input
+                  className="tag-input"
+                  type="text"
+                  placeholder="e.g. (c flutter django)"
+                  ref={TagRef}
+                />
+                {tagButtonVisible && (
+                  <button
+                    className="next-button"
+                    onClick={handleTagButtonClick}
+                  >
+                    Next
+                  </button>
+                )}
               </div>
             </div>
-            <div>
-              <QuestionPageDropdown
-                isOpen={isDropdownOpen}
-                onToggle={handleDropdownToggle}
-              />
-            </div>
-            {checkContainerVisible && (
-              <div className="check-container">
-                {/* 중복 질문 확인 부분 */}
+
+            {/* 중복 확인 부분 */}
+            <div className="duplicate-check-container">
+              <div className="duplicate-box">
                 <div className="title">
-                  Confirm that none of these existing posts on Stack Overflow
-                  answers your question.
+                  Review questions already on Stack Overflow to see if your
+                  question is a duplicate.
                 </div>
-
-                {/* 중복 확인 체크박스 */}
-                <div className="check-box">
-                  <input
-                    className="checkbox"
-                    id="verify-not-duplicate"
-                    type="checkbox"
-                    onClick={handleCheckboxChange}
-                  ></input>
-
-                  {/* 중복 확인 체크박스에 대한 라벨 */}
-                  <label htmlFor="verify-not-duplicate">
-                    I confirm that none of these posts answers my question.
-                  </label>
+                <div className="explanation-box">
+                  Clicking on these questions will open them in a new tab for
+                  you to review. Your progress here will be saved so you can
+                  come back and continue.
                 </div>
               </div>
-            )}
+              <div>
+                <QuestionPageDropdown
+                  isOpen={isDropdownOpen}
+                  onToggle={handleDropdownToggle}
+                />
+              </div>
+              {checkContainerVisible && (
+                <div className="check-container">
+                  {/* 중복 질문 확인 부분 */}
+                  <div className="title">
+                    Confirm that none of these existing posts on Stack Overflow
+                    answers your question.
+                  </div>
 
-            {/* 질문 검토 버튼 */}
-            <div>
-              {reviewButtonVisible && (
-                <button
-                  onClick={handleReviewButtonClick}
-                  className="review-button "
-                  disabled={isButtonDisabled}
-                >
-                  Review your question
-                </button>
+                  {/* 중복 확인 체크박스 */}
+                  <div className="check-box">
+                    <input
+                      className="checkbox"
+                      id="verify-not-duplicate"
+                      type="checkbox"
+                      onClick={handleCheckboxChange}
+                    ></input>
+
+                    {/* 중복 확인 체크박스에 대한 라벨 */}
+                    <label htmlFor="verify-not-duplicate">
+                      I confirm that none of these posts answers my question.
+                    </label>
+                  </div>
+                </div>
               )}
+
+              {/* 질문 검토 버튼 */}
+              <div>
+                {reviewButtonVisible && (
+                  <button
+                    onClick={handleReviewButtonClick}
+                    className="review-button "
+                    disabled={isButtonDisabled}
+                  >
+                    Review your question
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-        </main>
-      </div>
-      {/* footer 넣을자리 */}
-    </StyleAskPage>
+          </main>
+        </div>
+        {/* footer 넣을자리 */}
+      </StyleAskPage>
+    </>
   );
 }
 
