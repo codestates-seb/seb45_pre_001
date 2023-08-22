@@ -49,6 +49,8 @@ export default function CreateAnswer({ questionId }) {
 }
 
 const FuncCreateAnswer = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 50vw;
   float: none;
   padding-top: 10px;
@@ -58,18 +60,16 @@ const FuncCreateAnswer = styled.div`
   font-weight: 400;
   font-size: 1.3rem;
 
-  h2 {
-    padding-left: 0;
-    margin-bottom: 8px;
-    margin-top: 8px;
+  form {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
   }
 
-  .ck-editor__editable {
-    // 260px이상 스크롤 생김
-    max-height: 260px;
-    min-height: 260px;
-    overflow-y: auto;
-    margin-bottom: 10px;
+  h2 {
+    padding-left: 0;
+    margin-bottom: 16px;
+    margin-top: 8px;
   }
 
   button {
