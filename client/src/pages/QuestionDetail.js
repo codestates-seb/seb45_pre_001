@@ -7,20 +7,11 @@ import ViewAnswer from '../components/ViewAnswer';
 export default function QuestionDetail() {
   let params = useParams();
 
-  const handleQuestionDelete = () => {
-    // API 요청을 보내고 삭제 처리진행
-    // API 요청 성공 시 Redux 상태 업데이트 등
-    // 삭제 처리 후 질문 목록 페이지로 이동
-    // 이동 경로
-    history.push('/questions'); // 질문 목록 페이지로 이동
-  };
-
   return (
     <QuestionDetailPage>
       <ViewQuestionDetail questionId={params.id} />
       <ViewAnswer questionId={params.id} />
       <CreateAnswer questionId={params.id} />
-      <button onClick={handleQuestionDelete}>Delete Question</button>
     </QuestionDetailPage>
   );
 }
