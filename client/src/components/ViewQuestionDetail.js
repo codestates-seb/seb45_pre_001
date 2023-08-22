@@ -18,6 +18,13 @@ export default function ViewQuestionDetail({ questionId }) {
   }, [questionId]);
   const questionTime = new Date(questionData.createdAt);
   const updateTime = '';
+
+  // 수정 된 내용
+  const sanitizeQuestionBody = (body) => {
+    return body ? body.replace(/<\/?p>/g, '') : '';
+  };
+  // 수정 된 내용
+
   return (
     <>
       <DeatailArticle>
@@ -58,8 +65,15 @@ export default function ViewQuestionDetail({ questionId }) {
           </div>
           <div className="content-section">
             <div className="question-content">
-              <div>{questionData.questionBody}</div>
+              {/* 수정 된 내용 */}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeQuestionBody(questionData.questionBody),
+                }}
+              />
             </div>
+            {/* 수정 된 내용 */}
+
             <div className="sub-function">
               <div className="social-btn-box">
                 <div>

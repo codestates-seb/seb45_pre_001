@@ -12,7 +12,7 @@ const initialState = {
   editorButtonVisible: false,
   editor2ButtonVisible: false,
   isDropdownOpen: false,
-  editorContent: '',
+  // editorContent: '',
 };
 
 // 리듀서 함수, 액션에 따라 상태를 업데이트
@@ -34,8 +34,8 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, editor2ButtonVisible: action.payload };
     case 'SET_IS_DROPDOWN_OPEN':
       return { ...state, isDropdownOpen: !state.isDropdownOpen };
-    case 'SET_EDITOR_CONTENT':
-      return { ...state, editorContent: action.payload };
+    // case 'SET_EDITOR_CONTENT':
+    //   return { ...state, editorContent: action.payload };
     default:
       return state;
   }
