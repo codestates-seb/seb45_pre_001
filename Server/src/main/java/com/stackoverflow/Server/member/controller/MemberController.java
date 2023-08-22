@@ -37,8 +37,10 @@ public class MemberController {
     public ResponseEntity postMember(@RequestBody MemberPostDto memberPostDto) {
 
         Member member = memberService.creatMember(mapper.memberPostDtoToMember(memberPostDto));
+        member.setNickname(member.getNickname());
+        member.setEmail(member.getEmail());
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(mapper.memberToMemberResponseDto(member), HttpStatus.CREATED);
     }
 
     @GetMapping("/{user_id}")
@@ -47,8 +49,8 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity getMembers(@RequestParam @Positive int size,
-                                     @RequestParam @Positive int page) {
+    public ResponseEntity getMembers(@RequestParam(required = false, defaultValue = "15") @Positive int size,
+                                     @RequestParam(required = false, defaultValue = "1") @Positive int page) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("memberId").descending());
         Page<Member> pageMembers = memberService.findMembers(pageable);
         List<Member> members = pageMembers.getContent();
