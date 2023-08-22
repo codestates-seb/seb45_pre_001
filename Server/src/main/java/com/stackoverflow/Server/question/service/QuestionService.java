@@ -61,7 +61,7 @@ public class QuestionService {
 
     public void removeQuestion(long questionId) {
         Question question = findQuestion(questionId);
-        memberService.verifyMemberOwnership(question.getMember().getNickname());
+        //memberService.verifyMemberOwnership(question.getMember().getNickname());
         questionRepository.deleteById(questionId);
 
         if (question.getQuestionStatus() == Question.QuestionStatus.QUESTION_NOT_COMMENTED) {
