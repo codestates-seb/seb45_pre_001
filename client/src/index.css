@@ -1,0 +1,17 @@
+/* @import '~react-quill/dist/quill.snow.css'; */
+
+* {
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  padding: 0;
+  text-decoration: none;
+  margin: 0;
+}
+
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
