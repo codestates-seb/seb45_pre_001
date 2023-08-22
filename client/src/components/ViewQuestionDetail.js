@@ -3,11 +3,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function ViewQuestionDetail({ questionId }) {
   //questionData 상태 만들기
+  console.log(questionId);
   const [questionData, setQuestionData] = useState('');
   const [count, setCount] = useState(0);
+
+  const handleQuestionDelete = async () => {
+    try {
+      await axios.delete(`http://13.124.105.17:8080/questions/${questionId}`);
+      // 삭제 후 필요한 작업 수행
+      console.error('성공');
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+  };
 
   useEffect(() => {
     fetch(`http://13.124.105.17:8080/questions/${questionId}`)
@@ -126,6 +138,7 @@ export default function ViewQuestionDetail({ questionId }) {
             </div>
           </div>
         </div>
+        <button onClick={handleQuestionDelete}>Delete</button>
       </DeatailArticle>
     </>
   );
