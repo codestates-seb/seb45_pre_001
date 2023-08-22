@@ -72,7 +72,7 @@ public class CommentController {
     public ResponseEntity deleteComment (@PathVariable("question-id") @Positive long questionId,
                                          @PathVariable("comment-id") @Positive long commentId){
 
-        commentService.deleteComment(commentId);
+        commentService.deleteComment(questionId, commentId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
