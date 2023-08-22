@@ -3,7 +3,6 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useState } from 'react';
 
 // ========== styled-components ==========
 const StyledEditor = styled.div`
@@ -60,6 +59,7 @@ function Editor5({
 
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
+    console.log(data);
     dispatch({ type: 'SET_EDITOR_CONTENT', payload: data });
   };
 

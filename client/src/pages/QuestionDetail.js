@@ -3,30 +3,40 @@ import ViewQuestionDetail from '../components/ViewQuestionDetail';
 import { styled } from 'styled-components';
 import CreateAnswer from '../components/CreateAnswer';
 import ViewAnswer from '../components/ViewAnswer';
+import Navbar from '../components/navbar';
+import Sidebar from '../components/sidebar';
 
 export default function QuestionDetail() {
   let params = useParams();
 
   return (
     <QuestionDetailPage>
-      <ViewQuestionDetail questionId={params.id} />
-      <ViewAnswer questionId={params.id} />
-      <h2 className="answer-head">
-        Know someone who can answer? Share a link to this question via email,
-        Twitter, or Facebook.
-      </h2>
-      <CreateAnswer />
+      <Navbar />
+      <QuestionDetailContainer>
+        <ViewQuestionDetail questionId={params.id} />
+        <ViewAnswer questionId={params.id} />
+        <CreateAnswer questionId={params.id} />
+      </QuestionDetailContainer>
+      <Sidebar />
     </QuestionDetailPage>
   );
 }
 
 const QuestionDetailPage = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+`;
+
+const QuestionDetailContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   flex-wrap: wrap;
+  width: 50%;
+  margin: 0 20px;
 
   h2 {
-    width: 75vw;
+    width: 50vw;
     float: none;
     padding-top: 10px;
     padding-left: 16px;

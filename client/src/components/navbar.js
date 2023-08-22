@@ -9,12 +9,14 @@ import { styled } from 'styled-components';
 const NavbarContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 462px;
+  height: auto;
   border-right: 1px solid #e3e6e8;
-  width: 271px;
+  width: 270px;
   margin-right: 0.5rem;
+  margin-top: 20px;
   font-size: 13px;
   padding-bottom: 506px;
+  padding-top: 24px;
   position: sticky;
   color: #525960;
   .navbar_public {
