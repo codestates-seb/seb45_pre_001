@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
+import { useEffect, useState } from 'react';
 
 const StyledHeader = styled.header`
   margin: 0;
@@ -176,6 +178,32 @@ const StyledOl = styled.ol`
 `;
 
 export default function Header() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [userNickname, setUserNicknam] = useState('');
+
+  //로그인이 되었는지를 jwt 토큰이 저장되어 있는지를 가지고 판단한다.
+  const loginCheck = () => {
+    const token = localStorage.getItem('jwtToken');
+
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      setUserNicknam(decodedToken.nickname);
+      setIsLogin(true);
+    }
+  };
+
+  useEffect(() => {
+    loginCheck();
+  }, []);
+  console.log(isLogin, userNickname);
+
+  //로그아웃 기능 - 로컬스토리지에 저장된 jwt 토큰을 지운다.
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken');
+    setIsLogin(false);
+    setUserNicknam('');
+  };
+
   return (
     <StyledHeader>
       <div className="header-container">
@@ -200,18 +228,35 @@ export default function Header() {
           </div>
         </form>
         <Styelnav>
-          <StyledOl className="membership-button-box">
-            <li className="membership-btn">
-              <Link to="/users/login" className="login-button">
-                Log in
-              </Link>
-            </li>
-            <li className="membership-btn">
-              <Link to="/users/new-user" className="signup-button">
-                Sign up
-              </Link>
-            </li>
-          </StyledOl>
+          {isLogin ? (
+            <StyledOl className="membership-button-box">
+              <li className="membership-btn">
+                <span>Welcome, {userNickname}</span>
+              </li>
+              <li className="membership-btn">
+                <Link
+                  to="/"
+                  className="signup-button logout-button"
+                  onClick={handleLogout}
+                >
+                  Log out
+                </Link>
+              </li>
+            </StyledOl>
+          ) : (
+            <StyledOl className="membership-button-box">
+              <li className="membership-btn">
+                <Link to="/users/login" className="login-button">
+                  Log in
+                </Link>
+              </li>
+              <li className="membership-btn">
+                <Link to="/users/new-user" className="signup-button">
+                  Sign up
+                </Link>
+              </li>
+            </StyledOl>
+          )}
         </Styelnav>
       </div>
     </StyledHeader>
