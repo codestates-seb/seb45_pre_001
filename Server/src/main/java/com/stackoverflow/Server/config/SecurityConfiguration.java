@@ -56,7 +56,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/*/members").permitAll()
                         .antMatchers(HttpMethod.POST, "/questions/new-questions").hasRole("USER")
-                        .antMatchers(HttpMethod.POST, "/questions/{question-id}/comments").hasRole("USER")
+//                        .antMatchers(HttpMethod.POST, "/questions/{question-id}/comments").hasRole("USER")
 //                        .antMatchers(HttpMethod.DELETE, "/questions/{question-id}").hasRole("USER")
 //                        .antMatchers(HttpMethod.POST, "/questions/{question-id}/comments").hasRole("USER")
                         .antMatchers("/**").permitAll());
