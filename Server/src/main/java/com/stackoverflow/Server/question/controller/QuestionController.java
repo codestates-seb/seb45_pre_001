@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class QuestionController {
     private final QuestionMapper mapper;
 
     @PostMapping("/new-questions")
-    public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postDto) {
+    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post postDto) {
 
         Question question = mapper.questionPostToQuestion(postDto);
         Question createQuestion = questionService.createQuestion(question);
