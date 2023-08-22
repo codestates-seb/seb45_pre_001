@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 
 public class QuestionDto {
 
@@ -14,8 +16,11 @@ public class QuestionDto {
     @NoArgsConstructor
     public static class Post {
         private long memberId;
+        @NotBlank
         private String nickname;
+        @NotBlank
         private String title;
+        @NotBlank
         private String questionBody;
 
         public Member getMember() {
