@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 export default function ViewQuestionDetail({ questionId }) {
   //questionData 상태 만들기
+  console.log(questionId);
   const [questionData, setQuestionData] = useState('');
   const [count, setCount] = useState(0);
 
