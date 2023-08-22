@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/questions/{question-id}/comments")
 @Validated
 public class CommentController {
-    private final static String REPLY_DEFAULT_URL = "/questions/{question-id}/comments";
     private final CommentService commentService;
     private final CommentMapper mapper;
 
@@ -38,12 +37,7 @@ public class CommentController {
         Comment postComment = mapper.commentPostDtoToComment(commentPostDto);
         Comment response = commentService.createComment(postComment);
 
-        URI location = UriComponentsBuilder.newInstance()
-                .path(REPLY_DEFAULT_URL+"/{comment-id}")
-                .buildAndExpand(questionId,response.getCommentId())
-                .toUri();
-
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<>(mapper.commentToCommentResponseToDto(response), HttpStatus.CREATED);
     }
 
     //답변 수정
