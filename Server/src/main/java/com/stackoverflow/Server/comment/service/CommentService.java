@@ -31,7 +31,6 @@ public class CommentService {
         //회원이 존재하는지 확인
         memberService.findMember(comment.getMember().getMemberId());
 
-
         //질문이 존재하는지 확인
      Question question = questionService.findQuestion(comment.getQuestion().getQuestionId());
 
@@ -39,6 +38,10 @@ public class CommentService {
         question.setQuestionStatus(Question.QuestionStatus.QUESTION_COMMENTED);
 
         comment.setQuestion(question);
+
+        //질문의 댓글 카운트 증가
+        long count = question.getCommentCount();
+        question.setCommentCount(count+1);
 
         return commentRepository.save(comment);
     }
@@ -69,10 +72,24 @@ public class CommentService {
     }
 
     //답변 삭제
-    public void deleteComment (long commentId){
+    public void deleteComment (long questionId , long commentId){
         Comment findComment = findVerifiedComment(commentId);
 
-        commentRepository.deleteById(findComment.getCommentId());
+        //질문이 존재하는지 확인
+        Question question = questionService.findQuestion(questionId);
+
+        //답변 카운트 제거
+        long count = question.getCommentCount();
+        question.setCommentCount(count-1);
+        System.out.println(count);
+        System.out.println(question.getCommentCount());
+
+        //질문 상태 변경
+        if (question.getCommentCount() == 0){
+            question.setQuestionStatus(Question.QuestionStatus.QUESTION_NOT_COMMENTED);
+        }
+
+        commentRepository.deleteById(commentId);
     }
 
 }
