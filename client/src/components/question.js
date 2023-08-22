@@ -13,6 +13,15 @@ Question.propTypes = {
     createdAt: PropTypes.string.isRequired,
   }).isRequired,
 };
+
+//수정된 내용
+function sanitizeHTML(html) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+}
+//수정된 내용
+
 const QuestionStyle = styled.div`
   display: flex;
   flex-direction: column;
@@ -70,6 +79,10 @@ export default function Question({ question }) {
   const period = hours >= 12 ? 'PM' : 'AM';
   const twelveHour = hours % 12 || 12;
   const formattedTime = `${month} ${day}, ${year} at ${twelveHour}:${minutes} ${period}`;
+
+  // Sanitize the question body content
+  const sanitizedQuestionBody = sanitizeHTML(question.questionBody);
+
   return (
     <QuestionStyle>
       <li className="qusestion_container">
@@ -77,7 +90,11 @@ export default function Question({ question }) {
           <Link to={`/questions/${question.questionId}`}>
             <h3 className="question_content_title">{question.title}</h3>
           </Link>
-          <span className="question_content_body">{question.questionBody}</span>
+          {/* 수정된 내용 */}
+          <span className="question_content_body">
+            {sanitizedQuestionBody}
+          </span>{' '}
+          {/* 수정된 내용 */}
           <div className="question_content_post">
             <div className="question_post_user">{question.nickname}</div>
             <div className="question_post_time">

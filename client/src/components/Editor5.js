@@ -4,6 +4,8 @@ import { styled } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 // import { useState } from 'react';
+// import CKEditorConfig from '../Config.js';
+// config.js 파일을 임포트
 
 // ========== styled-components ==========
 const StyledEditor = styled.div`
@@ -60,12 +62,13 @@ function Editor5({
 
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
+    console.log(data);
     dispatch({ type: 'SET_EDITOR_CONTENT', payload: data });
   };
 
   // 처음 글자입력시 <p> 태그까지 글자로 인식하여 8부터 시작함 때문에 length를 26으로 설정
   // editorContent가 객체 형태라서 editorContent.editorContent.length
-  const isButtonDisabled = editorContent.editorContent.length < 26;
+  const isButtonDisabled = editorContent?.editorContent?.length < 26;
   return (
     <StyledEditor isButtonDisabled={isButtonDisabled}>
       <div className="editor-container">
@@ -80,6 +83,7 @@ function Editor5({
           editor={ClassicEditor}
           data=""
           onChange={handleEditorChange} // 텍스트 변경 시 호출되는 함수
+          // config={CKEditorConfig} // config.js에서 가져온 설정을 전달
         />
 
         {isButtonVisible && (
