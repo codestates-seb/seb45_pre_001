@@ -8,6 +8,7 @@ import Sidebar from '../components/sidebar';
 
 export default function QuestionDetail() {
   let params = useParams();
+  console.log(params);
 
   return (
     <QuestionDetailPage>

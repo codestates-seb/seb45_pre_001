@@ -9,6 +9,7 @@ export default function ViewAnswer({ questionId }) {
       .then((res) => res.json())
       .then((json) => {
         setAnswerList(json);
+        console.log(json);
       })
       .catch((err) => console.log(err));
   }, [questionId]);

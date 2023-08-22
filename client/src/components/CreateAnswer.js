@@ -1,56 +1,63 @@
 import { useState } from 'react';
-import Editor5 from '../components/Editor5';
 import { styled } from 'styled-components';
+import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
 
 export default function CreateAnswer({ questionId }) {
-  const [editorData, setEditorData] = useState('');
+  const [answerData, setAnswerData] = useState('');
 
-  const handleEditorChange = (event, editor) => {
-    const data = editor.getData();
-    console.log(data);
-    setEditorData(data);
-  };
+  const HandleClickPost = () => {
+    const token = localStorage.getItem('jwtToken');
+    console.log(token);
+    const decodedToken = jwt_decode(token);
+    console.log(decodedToken);
 
-  const handlePostClick = (memberId, nickname) => {
-    // POST 요청 보내기
     const postData = {
-      memberId,
-      nickname,
-      commentBody: editorData,
+      questionId: questionId,
+      memberId: decodedToken.memberId,
+      nickname: decodedToken.nickname,
+      commentBody: answerData,
     };
 
     fetch(`http://13.124.105.17:8080/questions/${questionId}/comments`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // 토큰을 Authorization 헤더에 추가
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // JWT 토큰을 Authorization 헤더에 포함시킵니다.
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
-      .then((json) => {
-        console.log('Post request success:', json);
+      .then((data) => {
+        console.log(data);
       })
       .catch((error) => {
-        console.error('Post request error:', error);
+        console.error(error);
       });
+    /*if (token) {
+    } else {
+      console.log('JWT token not available.');
+    }*/
   };
 
   return (
     <FuncCreateAnswer>
       <form>
         <h2>Your Answer</h2>
-        <Editor5 onChange={handleEditorChange} />
+        <textarea
+          value={answerData}
+          onChange={(e) => {
+            setAnswerData(e.target.value);
+          }}
+        ></textarea>
       </form>
       <div>
-        <button onClick={handlePostClick}>Post Your Answer</button>
+        <button onClick={HandleClickPost}>Post Your Answer</button>
       </div>
     </FuncCreateAnswer>
   );
 }
 
 const FuncCreateAnswer = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 50vw;
   float: none;
   padding-top: 10px;
@@ -60,16 +67,17 @@ const FuncCreateAnswer = styled.div`
   font-weight: 400;
   font-size: 1.3rem;
 
-  form {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-
   h2 {
     padding-left: 0;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     margin-top: 8px;
+  }
+
+  textarea {
+    width: 50vw;
+    height: 30vh;
+    border: 1px solid #232629;
+    margin-bottom: 10px;
   }
 
   button {

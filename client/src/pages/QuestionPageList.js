@@ -114,8 +114,13 @@ export default function QuestionListPage() {
     fetch(`http://13.124.105.17:8080/questions`)
       .then((res) => res.json())
       .then((json) => {
-        setQuestions(json);
-        console.log(json);
+        const sortedQuestions = json.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+        );
+
+        setQuestions(sortedQuestions);
+
+        setCurrentPage(1);
       });
   }, []); // 첫렌더링시에만 api호출이 되게 빈 배열을 넣어줌
 
