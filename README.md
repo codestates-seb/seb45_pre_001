@@ -1,12 +1,15 @@
 # seb45_pre_001
+
 <img src="https://img1.daumcdn.net/thumb/S1200x630/?fname=https://t1.daumcdn.net/news/202304/15/akn/20230415080046943dehb.png" width="500" height="250"/>
 
 ## 💻B전공
+
 > 비전공자 6명이 함께하는 프리프로젝트!
 
 ## 🌟 팀원 소개
 
 ### ✨ Back-end
+
 <table style="table-layout:fixed">
   <thead>
   <th align="center"><a href="https://github.com/yawning5">이미지태그</a></th>
@@ -38,6 +41,7 @@
 </table>
 
 ### ✨ Front-end
+
 <table style="display:grid" >
   <thead>
   <th align="center"><a href="https://github.com/YongILTree1">이미지태그</a></th>
@@ -71,14 +75,16 @@
 </table>
 
 ## 🎯프로젝트 명
+
 - Stackoverflow
 
 ## 📅프로젝트 기간
+
 - 2023년 8월 4일(금) ~ 2023년 8월 23일(수)
 
 ## 🗂️프로젝트 핵심기술 및 기능
+
 ### ✨ Back-end
-![Java](https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white)
 ![Spring](https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/spring_boot_jpa-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/spring_security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white)
@@ -87,6 +93,7 @@
 ![Ngrok](https://img.shields.io/badge/ngrok-1F1E37?style=for-the-badge&logo=ngrok&logoColor=white)
 
 ### ✨ Front-end
+
 ![HTML](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
@@ -96,6 +103,7 @@
 ![Redux](https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white)
 
 ## 🛠️협업툴
+
 ![Github](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)
 ![Discord](https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)
 ![Notion](https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white)

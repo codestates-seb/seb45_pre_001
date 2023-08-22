@@ -1,21 +1,7 @@
-spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
-  datasource:
-    url: jdbc:h2:mem:test
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        highlight_sql: true
-        color-codes: true
-        use_sql_comments: true
-    defer-datasource-initialization: true
-  output:
-    ansi:
-      enabled: ALWAYS
+# 일반적으로 애플리케이션 실행 환경에 상관없는 공통 정보들은 application.yml에 설정할 수 있습니다.
+# 공통 정보가 없어 비워두었습니다.
+
+jwt:
+  key: "ajsdhflahefkjlaweh324123341243jasdfkuajsdfalukjh12313"
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420

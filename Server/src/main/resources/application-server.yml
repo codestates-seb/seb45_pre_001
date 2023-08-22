@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_DATABASE_URL}
+    username: ${MYSQL_DATABASE_USERNAME}
+    password: ${MYSQL_DATABASE_PASSWORD}
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        color-codes: true
+        use_sql_comments: true
+    defer-datasource-initialization: true
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  config:
+    domain: http://bprojectbucket01.s3-website.ap-northeast-2.amazonaws.com
+
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
