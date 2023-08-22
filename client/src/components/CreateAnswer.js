@@ -1,9 +1,13 @@
-import { useState } from 'react';
+/*import { useState } from 'react';
+import jwt_decode from 'jwt-decode'; */ // jwt-decode 패키지를 import
 import { styled } from 'styled-components';
-import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
 
-export default function CreateAnswer({ questionId }) {
-  const [answerData, setAnswerData] = useState('');
+export default function CreateAnswer({
+  answerData,
+  setAnswerData,
+  HandleClickPost,
+}) {
+  /*const [answerData, setAnswerData] = useState('');
 
   const HandleClickPost = () => {
     const token = localStorage.getItem('jwtToken');
@@ -36,9 +40,9 @@ export default function CreateAnswer({ questionId }) {
     /*if (token) {
     } else {
       console.log('JWT token not available.');
-    }*/
+    }
   };
-
+*/
   return (
     <FuncCreateAnswer>
       <form>
