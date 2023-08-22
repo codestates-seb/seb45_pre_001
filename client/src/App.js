@@ -9,7 +9,6 @@ import AskQuestionPage from './pages/AskQuestionPage';
 import QuestionDetail from './pages/QuestionDetail';
 
 /*component*/
-import Header from './components/Header';
 import Footer from './components/Footer';
 // import Sidebar from './components/sidebar';
 
@@ -17,7 +16,6 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
         <Routes>
           <Route path="/" element={<QuestionListPage />} />
           <Route
