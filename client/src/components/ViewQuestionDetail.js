@@ -15,6 +15,7 @@ export default function ViewQuestionDetail({ questionId }) {
       .then((response) => response.json())
       .then((json) => {
         setQuestionData(json);
+        console.log(json);
       })
       .catch((error) => console.log(error));
   }, [questionId]);

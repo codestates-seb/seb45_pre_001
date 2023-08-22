@@ -2,33 +2,27 @@ import { useState } from 'react';
 import { styled } from 'styled-components';
 import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
 
-export default function CreateAnswer() {
+export default function CreateAnswer({ questionId }) {
   const [answerData, setAnswerData] = useState('');
 
-  const jwtToken = localStorage.getItem('jwtToken'); // 로그인 페이지에서 저장한 토큰 가져오기
-  console.log(jwtToken);
-
-  // 토큰 해독
-  const decodedToken = jwt_decode(jwtToken);
-  console.log(decodedToken);
-
-  // memberId와 nickname 얻기
-  const nickname = decodedToken.nickname;
-  const memberId = decodedToken.memberId;
-
   const HandleClickPost = () => {
+    const token = localStorage.getItem('jwtToken');
+    console.log(token);
+    const decodedToken = jwt_decode(token);
+    console.log(decodedToken);
+
     const postData = {
-      questionId: 1,
-      memberId,
-      nickname,
-      commentId: answerData,
+      questionId: questionId,
+      memberId: decodedToken.memberId,
+      nickname: decodedToken.nickname,
+      commentBody: answerData,
     };
 
-    fetch(`http://13.124.105.17:8080/questions/1/comments`, {
+    fetch(`http://13.124.105.17:8080/questions/${questionId}/comments`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${jwtToken}`,
-        withCredentials: true,
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // JWT 토큰을 Authorization 헤더에 포함시킵니다.
       },
       body: JSON.stringify(postData),
     })
@@ -39,11 +33,15 @@ export default function CreateAnswer() {
       .catch((error) => {
         console.error(error);
       });
+    /*if (token) {
+    } else {
+      console.log('JWT token not available.');
+    }*/
   };
 
   return (
     <FuncCreateAnswer>
-      <div>
+      <form>
         <h2>Your Answer</h2>
         <textarea
           value={answerData}
@@ -51,7 +49,7 @@ export default function CreateAnswer() {
             setAnswerData(e.target.value);
           }}
         ></textarea>
-      </div>
+      </form>
       <div>
         <button onClick={HandleClickPost}>Post Your Answer</button>
       </div>
@@ -60,8 +58,6 @@ export default function CreateAnswer() {
 }
 
 const FuncCreateAnswer = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 50vw;
   float: none;
   padding-top: 10px;
@@ -71,18 +67,11 @@ const FuncCreateAnswer = styled.div`
   font-weight: 400;
   font-size: 1.3rem;
 
-  form {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-
   h2 {
     padding-left: 0;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     margin-top: 8px;
   }
-
 
   textarea {
     width: 50vw;
