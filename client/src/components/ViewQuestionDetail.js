@@ -117,6 +117,7 @@ export default function ViewQuestionDetail({ questionId }) {
             </div>
           </div>
         </div>
+        <div>edit delete</div>
       </DeatailArticle>
     </>
   );
