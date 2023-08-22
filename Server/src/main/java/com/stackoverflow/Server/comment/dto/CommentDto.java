@@ -47,7 +47,7 @@ public class CommentDto {
     public static class Patch{
         private Long commentId;
 
-        @NotEmpty(message = "답변 내용을 작성해주세요.") //논의 필요
+        @NotEmpty(message = "답변 내용을 작성해주세요.")
         private String commentBody;
     }
 }

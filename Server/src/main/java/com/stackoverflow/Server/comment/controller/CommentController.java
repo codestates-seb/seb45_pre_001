@@ -15,12 +15,16 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/questions/{question-id}/comments")
 @Validated
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper mapper;
+
+    public CommentController(CommentService commentService, CommentMapper mapper) {
+        this.commentService = commentService;
+        this.mapper = mapper;
+    }
 
     //질문에 대한 답변을 등록
     @PostMapping

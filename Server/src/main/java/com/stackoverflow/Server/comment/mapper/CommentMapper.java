@@ -19,16 +19,10 @@ public interface CommentMapper {
     Comment commentPatchDtoToComment (CommentDto.Patch patch);
 
 
-    default CommentResponseDto commentToCommentResponseToDto(Comment comment){
-        CommentResponseDto commentResponseDto = new CommentResponseDto();
-        commentResponseDto.setCommentId(comment.getCommentId());
-        commentResponseDto.setNickname(comment.getMember().getNickname());
-        commentResponseDto.setMemberId(comment.getMember().getMemberId());
-        commentResponseDto.setQuestionId(comment.getQuestion().getQuestionId());
-        commentResponseDto.setCommentBody(comment.getCommentBody());
-        commentResponseDto.setCreatedAt(comment.getCreatedAt());
-        return commentResponseDto;
-    }
+    @Mapping(source = "question.questionId", target = "questionId")
+    @Mapping(source = "member.memberId", target = "memberId")
+    @Mapping(source = "member.nickname", target = "nickname")
+    CommentResponseDto commentToCommentResponseToDto(Comment comment);
 
     List<CommentResponseDto> commentsToCommentsResponseDto (List<Comment> comments);
 
