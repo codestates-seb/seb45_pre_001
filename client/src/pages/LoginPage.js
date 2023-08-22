@@ -205,7 +205,7 @@ function LoginPage() {
         localStorage.setItem('jwtToken', token); // 토큰 저장
         console.log('성공');
         // 로그인 성공 시 메인 페이지 이동
-        navigate('/questions/');
+        navigate('/questions');
       }
     } catch (error) {
       console.error('에러 발생:', error);

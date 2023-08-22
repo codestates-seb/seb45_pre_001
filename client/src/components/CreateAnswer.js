@@ -60,6 +60,8 @@ export default function CreateAnswer() {
 }
 
 const FuncCreateAnswer = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 50vw;
   float: none;
   padding-top: 10px;
@@ -69,11 +71,18 @@ const FuncCreateAnswer = styled.div`
   font-weight: 400;
   font-size: 1.3rem;
 
+  form {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
   h2 {
     padding-left: 0;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
     margin-top: 8px;
   }
+
 
   textarea {
     width: 50vw;
