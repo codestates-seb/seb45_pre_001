@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react';
 import Answer from './Answer';
 
-export default function ViewAnswer({ questionId }) {
-  const [answerList, setAnswerList] = useState([]);
+export default function ViewAnswer({ answerList }) {
+  /*const [answerList, setAnswerList] = useState([]);
 
   useEffect(() => {
     fetch(`http://13.124.105.17:8080/questions/${questionId}/comments`)
       .then((res) => res.json())
       .then((json) => {
         setAnswerList(json);
-        console.log(json);
       })
       .catch((err) => console.log(err));
-  }, [questionId]);
+  }, [questionId]);*/
 
   return (
     <div>

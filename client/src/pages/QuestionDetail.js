@@ -5,18 +5,67 @@ import CreateAnswer from '../components/CreateAnswer';
 import ViewAnswer from '../components/ViewAnswer';
 import Navbar from '../components/navbar';
 import Sidebar from '../components/sidebar';
+import { useEffect, useState } from 'react';
+import jwt_decode from 'jwt-decode'; // jwt-decode 패키지를 import
 
 export default function QuestionDetail() {
   let params = useParams();
-  console.log(params);
+  const [answerData, setAnswerData] = useState('');
+  const [answerList, setAnswerList] = useState([]);
+
+  const getAnswerList = () => {
+    fetch(`http://13.124.105.17:8080/questions/${params.id}/comments`)
+      .then((res) => res.json())
+      .then((json) => {
+        setAnswerList(json);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getAnswerList();
+  }, [params.id]);
+
+  const HandleClickPost = () => {
+    const token = localStorage.getItem('jwtToken');
+    const decodedToken = jwt_decode(token);
+
+    const postData = {
+      questionId: params.id,
+      memberId: decodedToken.memberId,
+      nickname: decodedToken.nickname,
+      commentBody: answerData,
+    };
+
+    fetch(`http://13.124.105.17:8080/questions/${params.id}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // JWT 토큰을 Authorization 헤더에 포함시킵니다.
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setAnswerList([...answerList, data]);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <QuestionDetailPage>
       <Navbar />
       <QuestionDetailContainer>
         <ViewQuestionDetail questionId={params.id} />
-        <ViewAnswer questionId={params.id} />
-        <CreateAnswer questionId={params.id} />
+        <ViewAnswer answerList={answerList} />
+        <CreateAnswer
+          answerData={answerData}
+          setAnswerData={setAnswerData}
+          HandleClickPost={HandleClickPost}
+        />
       </QuestionDetailContainer>
       <Sidebar />
     </QuestionDetailPage>

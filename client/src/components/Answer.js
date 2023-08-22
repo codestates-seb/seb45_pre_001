@@ -4,26 +4,37 @@ import { styled } from 'styled-components';
 import { useState } from 'react';
 
 export default function Answer({ answerList }) {
-  const [count, setCount] = useState(0);
+  const initialCounts = Array(answerList.length).fill(0); //카운트 초기화
+  const [counts, setCounts] = useState(initialCounts); // 초기화된 카운트를 사용
+
+  const handleVote = (index, voteType) => {
+    const updateCounts = [...counts];
+    if (voteType === 'up') {
+      updateCounts[index]++;
+    } else if (voteType === 'down') {
+      updateCounts[index]--;
+    }
+    setCounts(updateCounts);
+  };
 
   return (
     <AnswerContainer>
       <h2>{answerList.length} Answer</h2>
-      {answerList.map((item) => (
+      {answerList.map((item, index) => (
         <div key={item.commentId} className="answer-box">
           <div className="vote-section">
             <div className="voting-btn-box">
               <button
                 onClick={() => {
-                  setCount(count + 1);
+                  handleVote(index, 'up');
                 }}
               >
                 <FontAwesomeIcon icon={faSortUp} className="voting-up-btn" />
               </button>
-              <span className="voting-count">{count}</span>
+              <span className="voting-count">{counts[index]}</span>
               <button
                 onClick={() => {
-                  setCount(count - 1);
+                  handleVote(index, 'down');
                 }}
               >
                 <FontAwesomeIcon
