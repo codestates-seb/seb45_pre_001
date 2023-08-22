@@ -8,6 +8,7 @@ import facebookIcon from '../images/facebook-icon.svg';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
 const StyleLoginPage = styled.div`
   background-color: #f1f2f3;
@@ -214,109 +215,117 @@ function LoginPage() {
   };
 
   return (
-    <StyleLoginPage>
-      <div className={`container ${error ? 'error' : ''}`}>
-        <div className="img-contaienr">
-          <a href="https://stackoverflow.com">
-            <img src={icon} alt="stackoverflow-logo"></img>
-          </a>
-        </div>
-        <div className="link-button-container">
-          <button className="link-button google-btn">
-            <a href="https://accounts.google.com/o/oauth2/auth">
-              <img className="link-icon" src={googleIcon} alt="google-icon" />
-              Log in with Google
-            </a>
-          </button>
-
-          <button className="link-button github-btn">
-            <a href="https://https://github.com/login/oauth/authorize">
-              <img
-                className="link-icon"
-                src={githubIcon}
-                alt="github-icon"
-              ></img>
-              Log in with GitHub
-            </a>
-          </button>
-          <button className="link-button facebook-btn">
-            <a href="https://www.facebook.com/v2.0/dialog/oauth">
-              <img
-                className="link-icon"
-                src={facebookIcon}
-                alt="facebook-icon"
-              ></img>
-              Log in with Facebook{' '}
-            </a>
-          </button>
-        </div>
-        <div className="form-container">
-          <form id="login-form" onSubmit={handleSubmit}>
-            <div className="login-box">
-              <form className="email-form">
-                <label htmlFor="email">Email</label>
-                <div>
-                  <input
-                    className="email-input"
-                    id="email"
-                    type="email"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  ></input>
-                  {emailError && <p className="error-message">{emailError}</p>}
-                </div>
-              </form>
-            </div>
-            <div className="password-box">
-              <form className="password-form">
-                <div className="password-lable">
-                  <label htmlFor="password">Password</label>
-                  <a className="forgot-password" href="/users/account-recovery">
-                    Forgot password?
-                  </a>
-                </div>
-                <div>
-                  <input
-                    className="password-input"
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  ></input>
-                </div>
-                {error && <p className="error-message">{error}</p>}
-                {/* 에러 메시지 표시 */}
-              </form>
-            </div>
-
-            <div className="login-button-container">
-              <button className="login-button" type="submit">
-                Log in
-              </button>
-            </div>
-          </form>
-        </div>
-        <div className="join-guide-container">
-          Don’t have an account?
-          <a
-            className="join-link "
-            href="/users/signup?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2f"
-          >
-            Sign Up
-          </a>
-          <div className="talent-guide-container">
-            Are you an employer?
-            <a
-              className="join-link "
-              href="https://careers.stackoverflow.com/employer/login"
-            >
-              Sign up on Talent
-              <FontAwesomeIcon icon={faUpRightFromSquare} />{' '}
+    <>
+      <Header />
+      <StyleLoginPage>
+        <div className={`container ${error ? 'error' : ''}`}>
+          <div className="img-contaienr">
+            <a href="https://stackoverflow.com">
+              <img src={icon} alt="stackoverflow-logo"></img>
             </a>
           </div>
+          <div className="link-button-container">
+            <button className="link-button google-btn">
+              <a href="https://accounts.google.com/o/oauth2/auth">
+                <img className="link-icon" src={googleIcon} alt="google-icon" />
+                Log in with Google
+              </a>
+            </button>
+
+            <button className="link-button github-btn">
+              <a href="https://https://github.com/login/oauth/authorize">
+                <img
+                  className="link-icon"
+                  src={githubIcon}
+                  alt="github-icon"
+                ></img>
+                Log in with GitHub
+              </a>
+            </button>
+            <button className="link-button facebook-btn">
+              <a href="https://www.facebook.com/v2.0/dialog/oauth">
+                <img
+                  className="link-icon"
+                  src={facebookIcon}
+                  alt="facebook-icon"
+                ></img>
+                Log in with Facebook{' '}
+              </a>
+            </button>
+          </div>
+          <div className="form-container">
+            <form id="login-form" onSubmit={handleSubmit}>
+              <div className="login-box">
+                <form className="email-form">
+                  <label htmlFor="email">Email</label>
+                  <div>
+                    <input
+                      className="email-input"
+                      id="email"
+                      type="email"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    ></input>
+                    {emailError && (
+                      <p className="error-message">{emailError}</p>
+                    )}
+                  </div>
+                </form>
+              </div>
+              <div className="password-box">
+                <form className="password-form">
+                  <div className="password-lable">
+                    <label htmlFor="password">Password</label>
+                    <a
+                      className="forgot-password"
+                      href="/users/account-recovery"
+                    >
+                      Forgot password?
+                    </a>
+                  </div>
+                  <div>
+                    <input
+                      className="password-input"
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    ></input>
+                  </div>
+                  {error && <p className="error-message">{error}</p>}
+                  {/* 에러 메시지 표시 */}
+                </form>
+              </div>
+
+              <div className="login-button-container">
+                <button className="login-button" type="submit">
+                  Log in
+                </button>
+              </div>
+            </form>
+          </div>
+          <div className="join-guide-container">
+            Don’t have an account?
+            <a
+              className="join-link "
+              href="/users/signup?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2f"
+            >
+              Sign Up
+            </a>
+            <div className="talent-guide-container">
+              Are you an employer?
+              <a
+                className="join-link "
+                href="https://careers.stackoverflow.com/employer/login"
+              >
+                Sign up on Talent
+                <FontAwesomeIcon icon={faUpRightFromSquare} />{' '}
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-    </StyleLoginPage>
+      </StyleLoginPage>
+    </>
   );
 }
 
