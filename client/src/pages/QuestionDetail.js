@@ -11,11 +11,7 @@ export default function QuestionDetail() {
     <QuestionDetailPage>
       <ViewQuestionDetail questionId={params.id} />
       <ViewAnswer questionId={params.id} />
-      <h2 className="answer-head">
-        Know someone who can answer? Share a link to this question via email,
-        Twitter, or Facebook.
-      </h2>
-      <CreateAnswer />
+      <CreateAnswer questionId={params.id} />
     </QuestionDetailPage>
   );
 }
@@ -24,9 +20,10 @@ const QuestionDetailPage = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  margin: 0 20px;
 
   h2 {
-    width: 75vw;
+    width: 50vw;
     float: none;
     padding-top: 10px;
     padding-left: 16px;
