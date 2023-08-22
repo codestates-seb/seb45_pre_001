@@ -28,8 +28,6 @@ public class Question {
     @Enumerated(value = EnumType.STRING)
     private QuestionStatus questionStatus = QuestionStatus.QUESTION_NOT_COMMENTED;
 
-    private Long commentCount = 0l;
-
     @Column(nullable = false)
     private String questionBody;
 
